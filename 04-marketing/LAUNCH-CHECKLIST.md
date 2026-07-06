@@ -12,9 +12,11 @@ Working document. Each step gets checked off with its date and outcome; the repo
 
 ## B. Truth (before anything is published)
 
-- [ ] B1. Real stories collected (origin, builds, client moments) → replace placeholder scenes in posts #1–#2; feed the bouwlog backlog. **Blocker for publishing any post.**
-- [ ] B2. NL voice calibrated: Olivia corrects posts #1–3 → corrections mined into M5 §5/§8 → all NL assets re-checked. **Blocker for volume publishing; a first corrected post may go out as the calibration itself.**
-- [ ] B3. Identity fields filled: name/brand, LinkedIn URL, site/domain, booking link → placeholders replaced across landing page, lead magnet, scripts, previews
+- [x] B1. Real stories collected (2026-07-06): founders/admin-drain pattern, her real builds (notes→documentation workflow, book-to-course skill, BC agents, AI-native workshops, webinar), observed reactions (overwhelm/frustration/retirement denial), posting-groups story cleared for reuse, acquisition thesis recorded (M2 §0), cannot-claim list captured (no Kickstart delivered, no voice agents) → posts #1–3 rewritten on true material, lived-ground inventory added to M5 §3, invented scenes removed
+- [ ] B2. NL voice calibrated: Olivia corrects posts #1–3 → corrections mined into M5 §5/§8 → all NL assets re-checked. **Blocker for volume publishing; a first corrected post may go out as the calibration itself.** ← NEXT
+- [~] B3. Identity: **personal brand, own name** (Olivia Vanmalleghem), LinkedIn = linkedin.com/in/olivia-vanmalleghem (filled in assets). Still open: booking link (Cal.com setup, 10 min — spec below), site/domain deferred (LinkedIn featured section carries the scan link for now)
+
+**B3 booking-link spec (Olivia does this once, ~10 min):** create a free cal.com account with the gmail address → New event type: "AI-Scan debrief (gratis)", 20 min, videocall or phone, buffer 10 min after, limit 2/day, availability blocks you choose → questions on booking: bedrijfsnaam, sector, "heb je de AI-Scan al ingevuld?" → copy the link and paste it here; I replace every {{CALENDLY}} placeholder across the assets.
 
 ## C. Build (week-1 foundations, per M3 Phase A)
 

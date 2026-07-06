@@ -24,38 +24,40 @@ The bouwlog pillar usually wears shape 1 or 2; nuchterheid wears shape 3.
 
 ## 30 post ideas (mark ✍ = drafted below)
 
-1 ✍ Why I do this (origin) · 2 ✍ The missed-call reasoning · 3 Voice-note werkbon build log · 4 ✍ "Gaat AI mijn mensen vervangen?" · 5 Quote-turnaround: 5 days → 24h, the mechanism · 6 Question post: which admin eats your evenings? · 7 The €50k admin hire vs. automation reasoning · 8 What ChatGPT gets wrong about your price book · 9 Review-response agent demo · 10 The paper werkbon archive photo + what it costs · 11 ✍ Case teaser: first Kickstart results (when available) · 12 Payment-chasing sequence build · 13 "Mijn gasten zijn geen computermensen": how field adoption actually went (F5, observed register) · 14 kmo-portefeuille explainer for AI advice [HOLD until registered as dienstverlener] · 15 Maintenance contracts: the recurring revenue in your install base · 16 What I tell owners who bought licenses nobody uses · 17 EU AI Act in plain language for KMO's · 18 The 3 automations I'd build first in any installatiebedrijf, and why in that order · 19 Dispatch chaos, noticed precisely · 20 Photo-diagnosis assistant demo · 21 Your planning tool's AI button: what it does and doesn't solve · 22 The office admin who became customer-coordinator (role story, F4) · 23 Your team already uses ChatGPT quietly, and what that signal means · 24 The agent that drafts my own outreach personalizations (meta build log) · 25 Fair/event recap: three things I noticed · 26 ✍ (EN, ICP-B) Why AI programs fail at the organigram · 27 The guarantee, and the reasoning behind putting my fee on the line · 28 The automation I killed and what it taught me · 29 Season prep with AI · 30 What should I build next? (asked genuinely)
+1 ✍ Why I do this (origin) · 2 ✍ The missed-call reasoning · 3 Voice-note werkbon build log · 4 ✍ "Gaat AI mijn mensen vervangen?" · 5 Quote-turnaround: 5 days → 24h, the mechanism · 6 Question post: which admin eats your evenings? · 7 The €50k admin hire vs. automation reasoning · 8 What ChatGPT gets wrong about your price book · 9 Review-response agent demo · 10 The paper werkbon archive photo + what it costs · 11 ✍ Case teaser: first Kickstart results (when available) · 12 Payment-chasing sequence build · 13 "Mijn gasten zijn geen computermensen": how field adoption actually went (F5, observed register) · 14 kmo-portefeuille explainer for AI advice [HOLD until registered as dienstverlener] · 15 Maintenance contracts: the recurring revenue in your install base · 16 What I tell owners who bought licenses nobody uses · 17 EU AI Act in plain language for KMO's · 18 The 3 automations I'd build first in any installatiebedrijf, and why in that order · 19 Dispatch chaos, noticed precisely · 20 Photo-diagnosis assistant demo · 21 Your planning tool's AI button: what it does and doesn't solve · 22 The office admin who became customer-coordinator (role story, F4) · 23 Your team already uses ChatGPT quietly, and what that signal means · 24 The agent that drafts my own outreach personalizations (meta build log) · 25 Fair/event recap: three things I noticed · 26 ✍ (EN, ICP-B) Why AI programs fail at the organigram · 27 The guarantee, and the reasoning behind putting my fee on the line · 28 The automation I killed and what it taught me · 29 Season prep with AI · 30 What should I build next? (asked genuinely) · **Lived-ground additions (2026-07, from B1):** 31 Bouwlog: handwritten notes → searchable text → handover docs & client documentation (her real build) · 32 The book-to-course skill: reading vs. actually applying · 33 (EN, ICP-B) Agents that read/write Business Central: what the collaboration taught her · 34 What running internal AI-native workshops taught her about how colleagues actually adopt · 35 The founders pattern: admin drains the people who should be building (source material of post #1/#2) · 36 [GATHER FIRST: real installer conversation] the missed-call math — do not post until the anecdote is real
+
+**Truth rule (from the pre-publish filter):** ideas 3, 5, 9, 12, 18, 20, 21 describe sector builds she hasn't done yet. They unlock one by one as Kickstart pilots ship; until then they may only run in the observed/researched register ("what similar businesses report", "the pattern in the sector") or wait.
 
 ## 5 drafted posts [NL-VOICE: awaiting calibration]
 
 *(Formatted as posted: stanzas separated by blank lines. #1 and #4 are the designated ask-posts of their week; the rest end open.)*
 
-**#1 — Origin (NL, week 1 — ask-post)**
-> Mijn eerste kennismaking met digitalisering in de sector was een kartonnen doos vol werkbonnen.
+**#1 — Origin (NL, week 1 — ask-post — TRUE MATERIAL, B1 answers 1/2/5)**
+> De voorbije maanden sprak ik verschillende oprichters over hun zaak. Ze weten precies hoe ze willen bijdragen aan de wereld, en ze willen vooral bouwen aan hun product, omdat daar hun waarde zit.
 >
-> De zaakvoerder kende elke klant en elke ketel uit het hoofd. En net daarom zat hij elke avond twee uur aan de keukentafel, omdat al die kennis ergens in facturen en planning moest geraken.
+> Maar wie klanten wil, moet ook administratie en verkoop doen. En daar zag ik telkens hetzelfde: al hun tijd ging naar werk dat hun sterkte niet is en waar ze geen energie van krijgen, alleen maar om de zaak draaiende te houden.
 >
-> Vandaag help ik installatie- en servicebedrijven die uren terug te winnen met AI en automatisering. Niet met rapporten, maar met oplossingen die blijven werken omdat het team ze mee bouwt en begrijpt.
+> Zelf werk ik dagelijks met AI in ERP-consulting. Ik bouwde workflows die mijn handgeschreven notities omzetten in documentatie, werkte mee aan agents voor Business Central, en help ons team vertrouwd te worden met AI.
 >
-> Ik deel hier elke week wat ik bouw, met echte cijfers, ook wanneer het tegenvalt. En wie nu al wil weten waar de uren in zijn eigen zaak lekken: de gratis AI-Scan staat in mijn profiel.
+> Die twee werelden breng ik nu samen: ik help service- en installatiebedrijven hun administratie te automatiseren, zodat de uren teruggaan naar het werk waar ze sterk in zijn. Ik bouw mijn eerste cases op, en wie wil weten waar de uren in zijn eigen zaak lekken: de gratis AI-Scan staat in mijn profiel.
 
-**#2 — Missed-call reasoning (NL — shape 1, The Observation)**
-> Een installateur vertelde me vorige week dat hij op een werfdag makkelijk zes oproepen mist, omdat je op een dak nu eenmaal niet opneemt.
+**#2 — The admin drain (NL — shape 1, The Observation — TRUE MATERIAL, B1 answer 1)**
+> Elke oprichter die ik de voorbije maanden sprak, wil vooral één ding: bouwen aan zijn product, omdat daar zijn bijdrage zit.
 >
-> Een deel daarvan zijn nieuwe klanten, en die bellen gewoon de volgende in hun lijstje. Reken het na voor je eigen zaak: zes gemiste oproepen per dag, waarvan een derde nieuwe aanvragen, aan een gemiddelde werf van 1.800 euro. Zelfs als je er maar één op vijf van had binnengehaald, loopt dat op tot enkele duizenden euro's per maand.
+> Maar zodra er klanten komen, komt er ook administratie en verkoop bij. Dat werk neemt stilletjes hun tijd over, omdat er zoveel onbekend in zit en het hun sterkte niet is. Het houdt de zaak overeind en het put hen tegelijk uit.
 >
-> De oplossing hoeft geen callcenter te zijn. Een automatisch bericht binnen de minuut, met de vraag of het dringend is en of er een foto kan meekomen, houdt die klant bij jou tot je pauze.
+> Wat me daarbij opviel: geen van hen wil daarvoor zomaar iemand extra aannemen. Als het goedkoper en automatisch kan, kiezen ze dat meteen, omdat elke euro die vrijkomt terug de zaak in kan.
 >
-> Hoeveel oproepen mis jij op een werfdag?
+> Ik denk dat dit voor elke zaakvoerder geldt, van start-up tot installatiebedrijf. Het werk dat je energie vreet, is meestal ook het werk dat een systeem kan overnemen.
 
-**#3 — Replacement question (NL — shape 3, The Reframe)**
-> Er is één vraag die in bijna elk eerste gesprek terugkomt: gaat AI mijn mensen vervangen?
+**#3 — The three reactions (NL — shape 3, The Reframe — TRUE MATERIAL, B1 answer 3 + her lived freeze arc)**
+> Als ik met mensen over AI praat, zie ik telkens dezelfde drie reacties: overweldigd zijn en niet weten waar te beginnen, afhaken bij de eerste frustratie, of ontkennen dat het hun werk zal raken, zeker als het pensioen in zicht komt.
 >
-> Het eerlijke antwoord is nee, maar het verandert wel wie wat doet. Je beste technieker is goud waard op de werf, niet om 19 uur achter een klavier. Als hij zijn werkbon inspreekt onderweg naar huis en het systeem er de administratie van maakt, doet iedereen meer van het werk waar hij sterk in is.
+> Ik herken ze alle drie, want ik ben er zelf door gegaan. Ik raakte overweldigd door het tempo en deed een tijd gewoon niets. Maar niets doen bleek zijn eigen kost te hebben, omdat de stress ondertussen bleef opbouwen.
 >
-> Bij de bedrijven waar dit lukt, is het werk bewust herverdeeld tussen mensen, automatisering en AI. Bij de bedrijven waar het mislukt, zijn er licenties gekocht en bleef verder alles hetzelfde.
+> Wat mij weer op gang bracht, was geen beter leerplan. Het was mezelf toestaan om opnieuw beginner te zijn, en fouten te maken terwijl ik leerde.
 >
-> Waar ik telkens op uitkom: vervang niemand, maar herverdeel het werk.
+> Daarom geloof ik zo in klein beginnen: één automatisering die echt werkt, verandert meer dan tien plannen.
 
 **#4 — Case teaser (NL, template — fill with real numbers at first case — ask-post)**
 > Negentig dagen geleden vertrok een offerte bij een [sector]bedrijf met [Z] medewerkers gemiddeld na [X] dagen. Vandaag is dat [Y] uur.

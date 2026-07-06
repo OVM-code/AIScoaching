@@ -10,7 +10,7 @@ Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → sel
 
 **Hoeveel uren lekt jouw bedrijf per week?**
 De AI-Scan voor installatie- en servicebedrijven: 12 vragen, 10 minuten, jouw score en de 10 automatiseringen met de snelste terugverdientijd.
-*Door {{NAAM}}, AI-integratiecoach voor de vakman-sector*
+*Door Olivia Vanmalleghem, AI-integratiecoach voor de vakman-sector*
 
 ## Pagina 1 — Waarom deze scan
 
@@ -69,7 +69,7 @@ Je krijgt: (1) wat jouw score betekent voor jouw bedrijf, (2) de twee automatise
 Geen verkooppraatje, want als het niets voor je is, zeg ik je dat even duidelijk.
 **Boek hier: {{CALENDLY-LINK}}**
 
-*{{NAAM}} helpt installatie- en servicebedrijven tien of meer uur per week terugwinnen met AI en automatisering, zonder extra aanwervingen. {{LINKEDIN}} · {{SITE}}*
+*Olivia Vanmalleghem helpt installatie- en servicebedrijven tien of meer uur per week terugwinnen met AI en automatisering, zonder extra aanwervingen. linkedin.com/in/olivia-vanmalleghem · {{SITE — optional, later}}*
 
 ---
 

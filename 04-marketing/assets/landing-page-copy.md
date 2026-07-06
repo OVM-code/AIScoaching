@@ -23,7 +23,7 @@ Het probleem is niet dat je te weinig doet. Het is dat te veel van je beste uren
 
 **Kop:** Geen hype, wel werkende oplossingen.
 
-Ik ben {{NAAM}}, AI-integratiecoach voor de vakman-sector. Ik heb geleerd dat de technologie het makkelijke deel is, en dat het verschil gemaakt wordt door wie wat doet: welk werk bij je mensen blijft, welk werk een automatisering overneemt, en waar AI echt iets toevoegt. Daarom werk ik met een vaste methode, van scan tot werkende automatisering tot een team dat er zelfstandig mee verder kan, en meet ik het resultaat in uren en euro's.
+Ik ben Olivia Vanmalleghem, AI-integratiecoach voor de vakman-sector. Ik werk dagelijks met AI en automatisering in ERP-consulting, en ik heb daar geleerd dat de technologie het makkelijke deel is. Het verschil wordt gemaakt door wie wat doet: welk werk bij je mensen blijft, welk werk een automatisering overneemt, en waar AI echt iets toevoegt. Daarom werk ik met een vaste methode, van scan tot werkende automatisering tot een team dat er zelfstandig mee verder kan, en meet ik het resultaat in uren en euro's.
 
 *(Zodra beschikbaar: case-cijfers/testimonial hier. Tot dan deze regel weglaten, niets verzinnen.)*
 

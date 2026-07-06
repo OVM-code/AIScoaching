@@ -2,6 +2,16 @@
 
 Implements: POS-1/2/3, OFFER-1/2/3/4/5, BIZ-1/2 (see M1).
 
+## 0. Private north star (NOT for prospect-facing copy)
+
+Recorded 2026-07, from Olivia directly: the long-term intent behind the home-services niche is **building an ecosystem of home-service companies through eventual acquisition**, making it easier for affluent homeowners to manage their homes (hers included). The coaching practice is the first step: it builds sector knowledge, relationships, operational playbooks and deal flow.
+
+Implications, kept quietly in every choice:
+- **Target selection:** owner-led businesses with maintenance-contract potential and owners in the succession window are doubly valuable — coaching clients today, acquisition candidates tomorrow. (Note the observed denial pattern: "AI won't matter, I retire soon" — those owners are exactly the succession conversations.)
+- **Playbook design:** every Kickstart artifact (process maps, role cards, automations, benefits trackers) is built transferable, because the same assets that free a client's hours raise a business's value and de-risk a future acquisition.
+- **Every engagement doubles as diligence learning:** what makes these businesses healthy, what they trade at, where the operational leverage is.
+- **Disclosure rule:** never in sales assets ("I coach you with intent to acquire you" poisons trust and distorts the coaching). In personal content (Onderweg pillar), an honest general version is allowed and is in-voice: *she wants to build and one day own service businesses herself, and believes the ones that master people + AI will be worth the most.* Specific acquisition intent toward a named client is never published and never mixed into a live coaching relationship without transparency and advice on the conflict of interest.
+
 ## 1. Who we serve (two motions, two ICPs)
 
 ### ICP-A — the public motion (content, outreach, lead magnet)

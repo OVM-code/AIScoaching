@@ -24,7 +24,9 @@ For this business that lands as: **the coach who has actually done the work, tel
 
 Three positions of knowledge, each with its own phrasing. Never borrow authority upward.
 
-- **Lived** (she built/did it: ERP and AI implementation work, Kickstart builds, her own automations): full first-person confidence. "This is how I assess a use case now." / "Zo pak ik dat vandaag aan."
+- **Lived** (she built/did it): full first-person confidence. "This is how I assess a use case now." / "Zo pak ik dat vandaag aan."
+  **Current lived-ground inventory (2026-07 — update as cases land):** handwritten-notes-to-searchable-text workflow feeding handover docs, client documentation and to-do/question tracking · thought capture & processing systems · a book-to-course skill (apply knowledge, not just absorb) · collaboration on agents that read/write Business Central data · internal workshops making her consulting team AI-native · a webinar on agents for Business Central · conversations with founders about admin/sales drain · her own overwhelm-freeze-restart arc.
+  **NOT lived yet (never claim as lived):** a delivered Kickstart, home-services sector work, voice agents. Home-services specifics run on the observed register ("what founders/SME owners tell me", sector patterns as patterns) or researched, until the first real cases exist — then this inventory gets updated and the copy gets stronger honestly.
 - **Observed** (clients, scan debriefs, the sector): noticing, not diagnosing. "I keep meeting owners who…" / "Ik kom veel zaakvoerders tegen die…". **The AI Strategy Preview lives entirely in this register** — it reports signals and says what they suggest, it never pretends to know their business better than they do (which is also why its 80%-mirror mechanic works).
 - **Researched** (MIT NANDA, sector studies, vendor data): synthesis only. Name the source lightly inline, then pivot to what *she* recognizes from her own work. Never "studies show". Contested findings are signals, not gospel, and saying so is in-voice.
 
