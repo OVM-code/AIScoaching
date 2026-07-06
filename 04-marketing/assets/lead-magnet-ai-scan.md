@@ -1,6 +1,6 @@
 # Lead Magnet — "De AI-Scan voor installatie- en servicebedrijven"
 
-Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → self-diagnosis in 10 minutes; the score reveals the bigger problem the Kickstart solves). Format: 8–10 page PDF (design in Canva/Gamma) + optional interactive version (Tally/Typeform with auto-score). Delivery: email after opt-in; last page CTA = free 20-min debrief.
+Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → self-diagnosis in 10 minutes; the score reveals the bigger problem the Kickstart solves). Voice per `M5-voice-and-tone.md` [NL-VOICE: awaiting calibration]. Format: 8–10 page PDF (design in Canva/Gamma) + optional interactive version (Tally/Typeform with auto-score). Delivery: email after opt-in; last page CTA = free 20-min debrief.
 
 **Production note:** the full text is below — paste per section into your design tool. Keep the scoring honest: a high score must genuinely mean "you're fine without me" (trust > leads).
 
@@ -9,16 +9,16 @@ Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → sel
 ## Cover
 
 **Hoeveel uren lekt jouw bedrijf per week?**
-De AI-Scan voor installatie- en servicebedrijven — 12 vragen, 10 minuten, jouw score + de 10 automatiseringen met de snelste terugverdientijd.
-*Door {{NAAM}} — AI-integratiecoach voor de vakman-sector*
+De AI-Scan voor installatie- en servicebedrijven: 12 vragen, 10 minuten, jouw score en de 10 automatiseringen met de snelste terugverdientijd.
+*Door {{NAAM}}, AI-integratiecoach voor de vakman-sector*
 
 ## Pagina 1 — Waarom deze scan
 
-Je hoort overal dat je "iets met AI" moet. Ondertussen: offertes die te laat vertrekken, avonden vol administratie, en techniekers vind je niet.
+Je hoort overal dat je iets met AI moet, terwijl je dagen al vol zitten: offertes die te laat vertrekken, avonden vol administratie, en een vacature die maar niet ingevuld raakt.
 
-Goed nieuws: de meeste winst zit niet in dure software of een data-afdeling. Ze zit in 5 à 10 taken die vandaag mensenuren opeten en dat morgen niet meer hoeven te doen. Deze scan toont je in 10 minuten waar die zitten — met de cijfers om het aan jezelf te bewijzen.
+Wat ik in de praktijk zie: de meeste winst zit niet in dure software of een data-afdeling, maar in vijf à tien taken die vandaag mensenuren opeten en dat morgen niet meer hoeven te doen. Deze scan toont je in tien minuten waar die zitten, met de cijfers erbij om het aan jezelf te bewijzen.
 
-Geen hype. Wat niet werkt voor een bedrijf van jouw grootte, staat er niet in.
+Wat niet werkt voor een bedrijf van jouw grootte, staat er niet in.
 
 ## Pagina 2–4 — De scan (12 vragen, score 0/1/2 elk)
 
@@ -46,11 +46,11 @@ Geen hype. Wat niet werkt voor een bedrijf van jouw grootte, staat er niet in.
 
 ## Pagina 5 — Jouw score
 
-- **0–8 · Rood: de uren lekken hard.** Reken op 10–15 uur per week aan recupereerbare capaciteit. Het goede nieuws: bij deze score liggen de snelste winsten voor het rapen — de terugverdientijd van de eerste automatisering is typisch 2 à 3 maanden.
-- **9–16 · Oranje: fundament aanwezig, motor sputtert.** Je hebt tools, maar het werk stroomt er niet doorheen. Winst zit in het verbinden (automatiseren) en het herverdelen van taken — niet in méér software.
+- **0–8 · Rood: de uren lekken hard.** Reken op 10 à 15 uur per week aan recupereerbare capaciteit. Het goede nieuws is dat bij deze score de snelste winsten voor het rapen liggen, want de terugverdientijd van de eerste automatisering is hier typisch twee à drie maanden.
+- **9–16 · Oranje: het fundament staat er, maar de motor sputtert.** Je hebt tools, maar het werk stroomt er niet doorheen. De winst zit in het verbinden en in het herverdelen van taken, niet in nog meer software.
 - **17–24 · Groen: sterk bezig.** Jij haalt meer uit een groeigerichte aanpak (nieuwe diensten, onderhoudscontracten, capaciteit naar verkoop) dan uit basisautomatisering. Eerlijk is eerlijk: een Kickstart heb je waarschijnlijk niet nodig.
 
-**De valkuil bij elke score:** losse tools kopen zonder het werk te herverdelen. Een licentie verandert niets; wie-doet-wat veranderen, alles. *(Dat is het echte probleem dat achter de score zit — en precies wat een goede aanpak oplost.)*
+**De valkuil bij elke score:** losse tools kopen zonder het werk te herverdelen. Een licentie op zich verandert niets, omdat het pas beweegt wanneer wie-doet-wat mee verandert. Dat is het echte probleem achter de score, en precies wat een goede aanpak oplost.
 
 ## Pagina 6–7 — De top-10 automatiseringen met de snelste terugverdientijd
 
@@ -64,20 +64,21 @@ Geen hype. Wat niet werkt voor een bedrijf van jouw grootte, staat er niet in.
 
 ## Pagina 9 — Volgende stap (één CTA)
 
-**Gratis debrief van jouw scan — 20 minuten, telefoon of Teams.**
-Je krijgt: (1) wat jouw score betekent voor jóuw bedrijf, (2) de 2 automatiseringen waar ik bij jou zou beginnen en waarom, (3) het eerlijke antwoord of dit iets voor jou is of (nog) niet.
-Geen verkooppraatje — als het niets voor je is, zeg ik dat ook.
-👉 **Boek hier: {{CALENDLY-LINK}}**
+**Gratis debrief van jouw scan: 20 minuten, telefoon of Teams.**
+Je krijgt: (1) wat jouw score betekent voor jouw bedrijf, (2) de twee automatiseringen waar ik bij jou zou beginnen en waarom, (3) het eerlijke antwoord of dit iets voor jou is of nog niet.
+Geen verkooppraatje, want als het niets voor je is, zeg ik je dat even duidelijk.
+**Boek hier: {{CALENDLY-LINK}}**
 
-*{{NAAM}} helpt installatie- en servicebedrijven 10+ uur per week terugwinnen met AI en automatisering — zonder extra aanwervingen. {{LINKEDIN}} · {{SITE}}*
+*{{NAAM}} helpt installatie- en servicebedrijven tien of meer uur per week terugwinnen met AI en automatisering, zonder extra aanwervingen. {{LINKEDIN}} · {{SITE}}*
 
 ---
 
 ## Regeneration prompt (new niche / language)
 
 ```
-Using M1 (LEADS-2 rules), M2's new positioning for {{NICHE}}, and the top-10
-use-case list from the niche-swap output, rewrite this lead magnet completely:
+Using M1 (LEADS-2 rules), M2's new positioning for {{NICHE}}, M5-voice-and-
+tone.md (mid-form register, forbidden list), and the top-10 use-case list
+from the niche-swap output, rewrite this lead magnet completely:
 same structure (cover, why, 12-question self-scan in 4 blocks scored 0/1/2,
 score interpretation incl. an honest "you don't need me" tier, top-10 quick-
 payback automations, 3 classic mistakes, single debrief CTA). Questions must

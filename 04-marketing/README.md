@@ -10,6 +10,7 @@ Everything needed to bring the AI-integration coaching practice to market: build
 | `M2-positioning-and-offer.md` | ICPs, positioning, the Grand Slam Offer for the AI Kickstart, value ladder, pricing & guarantee options | Before writing any copy; revisit quarterly |
 | `M3-gtm-90-day-plan.md` | Week-by-week plan to first client(s): warm outreach + content + ecosystem + the corporate track | Execution — this is the to-do list |
 | `M4-content-engine.md` | Pillars, cadence, 30 post ideas, 5 drafted posts, repurposing flow, generation prompts | Weekly content production |
+| `M5-voice-and-tone.md` | Olivia's voice, adapted to this business: register map, authority rules, disclosure policy, NL adaptation, forbidden list, QA + prompt block | Upload with EVERY copy-generating Project; check every asset against it |
 | `assets/lead-magnet-ai-scan.md` | The volume lead magnet (NL): "De AI-Scan voor service- en installatiebedrijven" | Publish week 1-2 |
 | `assets/ai-strategy-preview.md` | The sniper lead magnet: personalized AI Strategy Preview generated from a company URL (research → document → feedback-to-context pipeline) | Named targets, cold outreach upgrades, corporate doors |
 | `assets/landing-page-copy.md` | Landing page copy (NL) + structure notes | Build the page week 1-2 |
@@ -42,4 +43,5 @@ Content (M4) + Warm & cold outreach (assets/outreach) + Ecosystem events (M3)
 
 1. **Principles are blocks with IDs** (e.g., `OFFER-1 Value Equation`). Strategy and asset files cite the block IDs they implement, so you can audit any asset against principles — and swap niches without losing the logic.
 2. **Every asset file ends with its regeneration prompt.** New niche (e.g., accountancy firms, medical practices, logistics SMEs)? Run the niche-swap prompt in `M2` §6 first, then each asset's own prompt — the entire engine re-targets in an afternoon with your Claude Pro subscription.
-3. **Client-facing SME copy is in Dutch** (the Flemish home-services market); strategy files are in English; corporate-track assets note FR/EN variants. Ask Claude to translate any asset — tone rules are embedded in each file.
+3. **Client-facing SME copy is in Dutch** (the Flemish home-services market); strategy files are in English; corporate-track assets note FR/EN variants. Ask Claude to translate any asset.
+4. **One voice everywhere.** `M5-voice-and-tone.md` governs every word a prospect, client or audience reads, in every language. Hormozi provides the skeleton (M1 mechanics); M5 provides the words. NL drafts stay marked [NL-VOICE: awaiting calibration] until Olivia's corrections have been mined into M5.

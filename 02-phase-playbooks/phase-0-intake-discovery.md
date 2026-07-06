@@ -86,7 +86,8 @@ of this type/size and mark them [ASSUMED - VERIFY].
 Using client-context.md, draft a kickoff presentation for the leadership team
 of this client. Slide-by-slide outline: title, 3-5 bullets, one concrete data
 point or client verbatim where available, and speaker notes (2-3 sentences,
-conversational, in my voice as their coach).
+conversational, in my voice as their coach — per M5-voice-and-tone.md if
+uploaded).
 
 Slides:
 1. Why now — their strategic priorities + what's changed in AI, in THEIR sector

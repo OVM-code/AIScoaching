@@ -12,6 +12,7 @@ For each client, create a Project named `AI Coaching – <Client>` and upload:
 |---|---|
 | `client-context.md` (the living client dossier) | The relevant framework file(s) from `01-frameworks/` |
 | `00-system/engagement-flow.md` | The current phase playbook from `02-phase-playbooks/` |
+| `04-marketing/M5-voice-and-tone.md` (voice guide for all client-facing text) | |
 
 Set the **Project instructions** (custom instructions field) to:
 
@@ -30,6 +31,10 @@ Rules:
   and estimates as [ESTIMATE] with the reasoning.
 - When a prompt references a framework (F1–F6), follow that framework's
   structure and scoring rules exactly.
+- All client-facing and public-facing text follows M5-voice-and-tone.md
+  (upload it): grounded, hype-free, honest about uncertainty; no em-dashes,
+  no emoji, no consultant-speak; authority register respected (lived /
+  observed / researched).
 ```
 
 ## 2. Session discipline (working within Pro limits)

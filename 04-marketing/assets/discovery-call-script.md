@@ -1,6 +1,6 @@
 # Discovery Call Script (30–45 min)
 
-The conversation that turns a scan-debrief or referral into a Kickstart. Structure = Hormozi's **CLOSER** frame; posture = Enns (POS-3): you are the diagnosing expert, not the pitching vendor. Price comes AFTER the quantified gap (BIZ-2), sold as outcome (BIZ-4). Works in NL or FR — key lines given in NL.
+The conversation that turns a scan-debrief or referral into a Kickstart. Structure = Hormozi's **CLOSER** frame; posture = Enns (POS-3): you are the diagnosing expert, not the pitching vendor. Price comes AFTER the quantified gap (BIZ-2), sold as outcome (BIZ-4). Spoken register per M5 (the scripts are prompts, not lines to recite; anything that sounds like a closer's trick gets dropped). Key lines in NL.
 
 **Before the call:** their scan answers open · their website/reviews skimmed · the 2 most likely use cases pre-identified · your calendar open for a proposed S1 date.
 
@@ -22,7 +22,7 @@ Invite objections explicitly: *"Wat zou dit voor jou doen mislukken?"* Standard 
 
 | Objection | Response core |
 |---|---|
-| "Te duur." | Reframe vs. alternatives (POS-1): *"Een extra bediende: €50k per jaar — als je die vindt. Dit is er binnen 6 weken voor een fractie, en de meting toont het rendement zwart op wit. Plus de garantie: geen 10 uur/week aangetoond = ik werk gratis verder."* Then kmo-portefeuille if eligible [VERIFY]. Never drop price; trade instead (OFFER-4): case-study terms for the founder slots. |
+| "Te duur." | Reframe vs. alternatives (POS-1): *"Een extra bediende kost €50.000 per jaar, als je die al vindt. Dit traject is er binnen zes weken voor een fractie daarvan, en de meting toont het rendement zwart op wit. En de garantie staat op papier: geen tien uur per week aangetoond, dan werk ik gratis verder."* Then kmo-portefeuille if eligible [VERIFY]. Never drop price; trade instead (OFFER-4): case-study terms for the founder slots. |
 | "Geen tijd." | *"Dat ís het probleem dat we oplossen. Jouw investering: 5 sessies + je mensen erbij op de bouwmomenten. De rest doe ik. Wanneer is het seizoen bij jullie het rustigst — dan plannen we daarop."* |
 | "Mijn mensen gaan niet mee zijn." | *"Daarom bouwt je team mee en beslist het mee wat we bouwen — dat is de helft van mijn methode. En we beginnen met werk dat niemand graag doet; daar staat je ploeg sneller achter dan jij denkt."* |
 | "Werkt dat wel bij ons? Wij zijn speciaal." | *"Kan zijn — daarom starten we met de scan/S1 en niet met een contract van een jaar. Na sessie 4 heb je een wérkende automatisering op je eigen dossiers. Dan weet je het zeker, niet op basis van mijn slides."* |
@@ -42,8 +42,9 @@ Summarize in their words: label → after-state → the plan (3 steps, MSG-1) �
 ## Regeneration prompt
 
 ```
-Using M2's positioning, offer, price and guarantee for {{NICHE}}, rewrite
-this CLOSER call script in {{LANGUAGE}}: niche-appropriate clarify/label
+Using M2's positioning, offer, price and guarantee for {{NICHE}}, and M5's
+spoken register, rewrite this CLOSER call script in {{LANGUAGE}}: niche-
+appropriate clarify/label
 questions, a sell-the-vacation paragraph in the niche's numbers (use the
 top use cases), and the objection table rebuilt from this niche's real
 top-6 objections (infer from the ICP's buying psychology). Keep: diagnose-

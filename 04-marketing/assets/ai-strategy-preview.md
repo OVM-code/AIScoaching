@@ -74,13 +74,18 @@ a home-services company. Language: {{NL for Flemish SMEs / EN or FR for
 corporates}}. Length: max 4 pages. Tone: vakman-taal / boardroom register
 to match the target; zero hype; every claim sourced or tagged [AANNAME].
 
+VOICE: follow M5-voice-and-tone.md throughout (mid-form register; the
+observed authority position: noticing, not diagnosing; u-register; no
+em-dashes, no hype). The document reports what public signals suggest and
+says plainly what only they can confirm.
+
 EXACT STRUCTURE:
 
 ── Cover ──
 "AI Strategy Preview — {{COMPANY}}" + one-line promise in their terms.
 The honesty line, prominent: "Gebaseerd op wat wij publiek konden zien.
-Reken op 80% juist — de overige 20% verbetert u in één gesprek van 20
-minuten. Precies dat gesprek stellen we voor."
+Reken op 80% juist. De overige 20% verbetert u in één gesprek van 20
+minuten, en precies dat gesprek stellen we voor."
 
 ── 1. Wat wij zagen (the mirror, ~1 page) ──
 Their business in 6-8 sharp observations WITH the signal that produced
@@ -148,8 +153,8 @@ plus the 2 claims you're least sure of.
 
 Replaces touch 1-2 of the cold sequence for sniper targets:
 
-> **Onderwerp: Wat AI voor {{BEDRIJF}} kan betekenen — wij zochten het al eens uit**
-> Dag {{VOORNAAM}}, in plaats van u een folder te sturen, hebben we ons huiswerk gedaan: in bijlage een korte AI-preview specifiek voor {{BEDRIJF}}, gebaseerd op wat publiek te zien is (uw site, vacatures, reviews). Reken op 80% juist — de andere 20% kent alleen u. Als u me in 20 minuten vertelt wat we fout hebben, krijgt u er gratis onze eerlijke inschatting bovenop of AI bij u de moeite loont. Wedden dat minstens één van de drie kansen op pagina 2 u bekend voorkomt? {{CALENDLY}} — Groeten, {{NAAM}}
+> **Onderwerp: wat AI voor {{BEDRIJF}} kan betekenen, alvast uitgezocht**
+> Dag {{VOORNAAM}}, in plaats van u een folder te sturen heb ik mijn huiswerk gedaan: in bijlage vindt u een korte AI-preview specifiek voor {{BEDRIJF}}, gebaseerd op wat publiek te zien is (uw site, vacatures, reviews). Reken op 80% juist, want de overige 20% kent alleen u. Als u me in twintig minuten vertelt wat ik fout heb, krijgt u er mijn eerlijke inschatting bovenop of AI bij u de moeite loont. Ik vermoed dat minstens één van de drie kansen op pagina twee u bekend zal voorkomen. {{CALENDLY}} Groeten, {{NAAM}}
 
 Corporate variant (EN/FR): same mechanic, reference their public transformation priorities instead of reviews; CTA = "30 minutes of your corrections" (the Enns feedback-ask, now with a personalized artifact attached).
 
@@ -192,7 +197,7 @@ If they convert, the seed context from P-C becomes the input to **Prompt 0.1** �
 
 ## Tone calibration snippet (what "good" reads like — fictional example)
 
-> **Wat wij zagen:** Jullie beloven op de site "offerte binnen 5 werkdagen" — jullie 4,6★ op Google bevestigt dat klanten jullie stiptheid op de werf prijzen, maar in 3 van de 14 recente reviews klinkt "lang moeten wachten op de offerte". Tegelijk zoeken jullie al 4 maanden een administratief bediende (vacature op VDAB, hernieuwd in mei). Onze lezing: het kantoor is de flessenhals, niet de werf — en de arbeidsmarkt gaat die vacature niet voor jullie oplossen. [PUBLIC — bronnen: website/offertepagina, Google Reviews mei-juni, VDAB]
+> **Wat wij zagen:** U belooft op de site "offerte binnen 5 werkdagen", en uw 4,6★ op Google bevestigt dat klanten uw stiptheid op de werf prijzen, maar in 3 van de 14 recente reviews klinkt "lang moeten wachten op de offerte". Tegelijk zoekt u al vier maanden een administratief bediende (vacature op VDAB, hernieuwd in mei). Onze lezing: het kantoor is de flessenhals, niet de werf, en de arbeidsmarkt gaat die vacature waarschijnlijk niet voor u oplossen. [PUBLIC — bronnen: website/offertepagina, Google Reviews mei-juni, VDAB]
 
 ## Regeneration prompt (new niche)
 

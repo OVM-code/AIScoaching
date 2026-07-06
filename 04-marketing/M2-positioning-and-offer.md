@@ -39,7 +39,7 @@ One-liner (for bios, MSG-2): *"Ik help installatie- en servicebedrijven 10+ uur 
 | **Stack value** | | **€10.000** |
 | **Price** | **[SET: €4.950–6.950 ex btw]** — kmo-portefeuille subsidy may reduce net cost further [VERIFY eligibility & your registration] | |
 
-**Category of one:** compare to the alternatives, not to other AI offers: *"Een extra bediende kost €50.000 per jaar — als je die vindt. Dit traject kost er een tiende van, is er binnen 6 weken, en blijft."*
+**Category of one:** compare to the alternatives, not to other AI offers: *"Een extra bediende kost €50.000 per jaar, als je die al vindt. Dit traject kost er een fractie van, staat er binnen zes weken, en blijft daarna gewoon werken."*
 
 **Scarcity/urgency (only true ones):** max 2 Kickstarts per month (solo capacity — true); founder pricing for the first 3 case-study clients (expires when the 3 are filled — true).
 
