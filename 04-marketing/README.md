@@ -10,7 +10,8 @@ Everything needed to bring the AI-integration coaching practice to market: build
 | `M2-positioning-and-offer.md` | ICPs, positioning, the Grand Slam Offer for the AI Kickstart, value ladder, pricing & guarantee options | Before writing any copy; revisit quarterly |
 | `M3-gtm-90-day-plan.md` | Week-by-week plan to first client(s): warm outreach + content + ecosystem + the corporate track | Execution — this is the to-do list |
 | `M4-content-engine.md` | Pillars, cadence, 30 post ideas, 5 drafted posts, repurposing flow, generation prompts | Weekly content production |
-| `assets/lead-magnet-ai-scan.md` | The lead magnet itself (NL): "De AI-Scan voor service- en installatiebedrijven" | Publish week 1-2 |
+| `assets/lead-magnet-ai-scan.md` | The volume lead magnet (NL): "De AI-Scan voor service- en installatiebedrijven" | Publish week 1-2 |
+| `assets/ai-strategy-preview.md` | The sniper lead magnet: personalized AI Strategy Preview generated from a company URL (research → document → feedback-to-context pipeline) | Named targets, cold outreach upgrades, corporate doors |
 | `assets/landing-page-copy.md` | Landing page copy (NL) + structure notes | Build the page week 1-2 |
 | `assets/outreach-scripts.md` | Warm/cold/partner/corporate scripts + follow-up sequences (NL + EN) | Daily outreach |
 | `assets/discovery-call-script.md` | The sales conversation (CLOSER), objection handling, price presentation | Every call |
@@ -21,8 +22,12 @@ Everything needed to bring the AI-integration coaching practice to market: build
 Content (M4) + Warm & cold outreach (assets/outreach) + Ecosystem events (M3)
         │                                   │
         ▼                                   ▼
-  Lead magnet: AI-Scan ────────► 20-min debrief call (free, diagnostic)
-        (assets/lead-magnet)               │
+  Volume: AI-Scan          Sniper: AI Strategy Preview (per URL)
+  (assets/lead-magnet)      (assets/ai-strategy-preview)
+        └────────────┬──────────────┘
+                     ▼
+      20-min debrief / reaction call (free, diagnostic)
+                     │  reactions → seed client-context.md (Prompt P-C)
                                            ▼
                               Discovery call (assets/discovery-call)
                                            │

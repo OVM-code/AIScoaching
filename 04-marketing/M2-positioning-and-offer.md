@@ -54,7 +54,8 @@ One-liner (for bios, MSG-2): *"Ik help installatie- en servicebedrijven 10+ uur 
 | Rung | Offer | Price | Purpose |
 |---|---|---|---|
 | 0 | Content (M4) | free | Attention & trust |
-| 1 | **AI-Scan** (lead magnet) + 20-min debrief | free | Diagnose, qualify, reveal the gap (LEADS-2) |
+| 1 | **AI-Scan** (volume lead magnet) + 20-min debrief | free | Diagnose, qualify, reveal the gap (LEADS-2) |
+| 1b | **AI Strategy Preview** (sniper lead magnet, per company URL — `assets/ai-strategy-preview.md`) + reaction call | free | Open named-target and corporate doors; reactions seed client-context.md |
 | 2 | *(optional filler)* AI-werksessie voor teams/federatie-events | €250–750 | Paid discovery at scale; feeds rung 3 |
 | 3 | **AI Kickstart** (the Grand Slam Offer) | €5–7k | The productized core |
 | 4 | Retainer "AI-onderhoudscontract" (mirrors their own maintenance-contract logic — they get it instantly) | €750–1.500/mo | Recurring revenue, compounding results |

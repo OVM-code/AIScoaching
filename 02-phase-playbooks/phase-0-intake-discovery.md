@@ -21,6 +21,8 @@
 
 *Inputs: paste your raw intake notes/transcript. Output: the master `client-context.md`.*
 
+> **Came in via the AI Strategy Preview?** (`04-marketing/assets/ai-strategy-preview.md`) Then a seed client-context already exists from Prompt P-C. Paste it below your intake notes and add to the prompt: "Merge with the seed context: keep its [CONFIRMED]/[CORRECTED] facts, resolve its [STILL UNKNOWN] items from my notes, and flag any contradiction between seed and intake." The intake interview then only needs the ⭐ questions still open in the seed.
+
 ```
 You are helping me, an AI-integration coach, create the master context document
 for a new client engagement. Below are my raw intake interview notes following

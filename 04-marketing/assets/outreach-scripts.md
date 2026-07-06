@@ -29,6 +29,8 @@ All follow LEADS-5 (A-C-A: Acknowledge → Compliment → Ask; give before any p
 
 *Volume per M3: 5/dag vanaf week 4. Bouw voor jezelf een agent die touch-1-personalisaties voorstelt vanuit website/reviews — en maak daar een bouwlog-post over (M4 pijler 1).*
 
+**Sniper upgrade:** voor doelbedrijven die de moeite waard zijn, vervang touch 1-2 door de **AI Strategy Preview** (gepersonaliseerd document vanuit hun URL) — pipeline, verzendmail en opvolging in `ai-strategy-preview.md`. Hogere kost per contact, veel hogere respons; ideaal ook als opvolger na een event-gesprek of partner-intro.
+
 ## 4. Partner pitch — accountants & software-resellers (NL)
 
 > Dag {{NAAM}}, jullie zien bij {{klanten in de bouw-/installatiesector}} dagelijks wat late facturatie en losse administratie kosten. Ik ben AI-integratiecoach voor precies die sector: ik bouw in 6 weken werkende automatiseringen (werkbon→factuur, offerte-opvolging, betalingsherinneringen) mét het team erbij. Voorstel: ik geef jullie cliënteel een gratis sessie "10 uur per week terugwinnen met AI" — jullie leveren de zaal en de uitnodiging, ik de inhoud. Jullie cliënten krijgen waarde, jullie de eer, ik de kennismakingen. Eens bellen?
