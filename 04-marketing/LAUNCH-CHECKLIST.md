@@ -22,7 +22,7 @@ Working document. Each step gets checked off with its date and outcome; the repo
 
 - [ ] C1. LinkedIn profile rewritten (headline = one-liner, about = StoryBrand arc, featured = scan link)
 - [ ] C2. Lead magnet designed as PDF (copy is ready in assets/) + optional Tally/Typeform version
-- [ ] C3. Landing page live (copy ready) + calendar link + email capture connected
+- [~] C3. Website BUILT (2026-07-06, `05-website/`: NL one-pager + EN page, self-contained, lead capture via Tally links, tracker CSV, full deploy guide in its README). Still to do, ~1 hour total, all spec'd in 05-website/README.md: deploy to Netlify (10 min) · create the 2 Tally forms incl. the interactive AI-Scan with score (30 min) · Cal.com link (10 min) · replace the 3 placeholders + photo · import tracker CSV into Google Sheets
 - [ ] C4. Outreach sheet created; first 100 warm contacts listed
 - [ ] C5. Post #1 published (after B1+B2)
 

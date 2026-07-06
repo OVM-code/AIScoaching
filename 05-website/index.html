@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olivia Vanmalleghem — AI en automatisering voor installatie- en servicebedrijven</title>
+<meta name="description" content="Win tien uur per week terug, zonder extra aanwervingen. AI en automatisering voor installatie- en servicebedrijven, gebouwd met jouw mensen, werkend binnen zes weken.">
+<style>
+  :root{
+    --bg:#FBF8F3; --card:#FFFFFF; --ink:#22272E; --muted:#5C6672;
+    --accent:#D9480F; --accent-dark:#B23A0A; --accent-soft:#FCEEE4;
+    --green:#2B8A3E; --line:#E8E2D8; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent)}
+  h1,h2,h3{line-height:1.2;font-weight:750}
+  h2{font-size:1.7rem;margin-bottom:.6em}
+  section{padding:64px 0}
+  .btn{display:inline-block;padding:14px 26px;border-radius:999px;font-weight:650;text-decoration:none;transition:.15s}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-dark)}
+  .btn-ghost{border:2px solid var(--accent);color:var(--accent)}
+  .btn-ghost:hover{background:var(--accent-soft)}
+  .small{font-size:.9rem;color:var(--muted)}
+
+  nav{position:sticky;top:0;background:rgba(251,248,243,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:10}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;max-width:1060px;margin:0 auto}
+  .brand{font-weight:800;text-decoration:none;color:var(--ink);font-size:1.05rem}
+  .nav-links{display:flex;gap:22px;align-items:center;font-size:.95rem}
+  .nav-links a{color:var(--ink);text-decoration:none}
+  .nav-links a:hover{color:var(--accent)}
+  .nav-links .btn{padding:9px 18px}
+
+  .hero{padding:84px 0 72px}
+  .hero h1{font-size:clamp(2rem,5vw,3.1rem);max-width:17ch}
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:56ch;margin:20px 0 30px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .small{margin-top:14px}
+
+  .band{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .card .num{display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:800;align-items:center;justify-content:center;margin-bottom:12px}
+  .card h3{margin-bottom:8px;font-size:1.08rem}
+  .card p{font-size:.97rem;color:var(--muted)}
+
+  ul.checks{list-style:none;margin-top:18px}
+  ul.checks li{padding-left:32px;position:relative;margin-bottom:12px}
+  ul.checks li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800}
+
+  .photo{width:230px;height:230px;border-radius:20px;background:linear-gradient(135deg,#F3B183,#D9480F);display:flex;align-items:center;justify-content:center;color:#fff;font-size:3.2rem;font-weight:800;flex:none}
+  /* TODO: vervang de div.photo door <img src="olivia.jpg" alt="Olivia Vanmalleghem" class="photo" style="object-fit:cover"> */
+  .bio-flex{display:flex;gap:40px;align-items:flex-start}
+  .cred{margin-top:16px}
+  .cred li{margin-bottom:9px}
+
+  .guarantee{background:var(--accent-soft);border:1px solid #F3C7AC;border-radius:var(--radius);padding:26px 28px;margin-top:30px}
+  .guarantee strong{color:var(--accent-dark)}
+
+  details{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin-bottom:12px}
+  details summary{font-weight:650;cursor:pointer}
+  details p{margin-top:10px;color:var(--muted)}
+
+  .final{text-align:center;padding:80px 0}
+  .final h2{font-size:2rem}
+
+  footer{background:#22272E;color:#C8CDD3;padding:38px 0;font-size:.92rem}
+  footer a{color:#F3B183}
+  .foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  @media(max-width:760px){
+    .cols,.cards{grid-template-columns:1fr}
+    .bio-flex{flex-direction:column}
+    .nav-links{gap:14px}
+    .nav-links .hide-m{display:none}
+    section{padding:48px 0}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#top">Olivia Vanmalleghem</a>
+    <div class="nav-links">
+      <a href="#aanpak" class="hide-m">Aanpak</a>
+      <a href="#over" class="hide-m">Over mij</a>
+      <a href="#faq" class="hide-m">Vragen</a>
+      <a href="en/">EN</a>
+      <a class="btn btn-primary" href="{{TALLY_SCAN_URL}}">Doe de gratis AI-Scan</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <h1>Win tien uur per week terug, zonder extra aanwervingen.</h1>
+  <p class="lead">AI en automatisering voor installatie- en servicebedrijven, gebouwd met jouw mensen op jouw echte dossiers, en werkend binnen zes weken.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="{{TALLY_SCAN_URL}}">Doe de gratis AI-Scan (10 min)</a>
+    <a class="btn btn-ghost" href="{{CAL_URL}}">Boek een gratis debrief (20 min)</a>
+  </div>
+  <p class="small">12 vragen, meteen je score, en de tien automatiseringen met de snelste terugverdientijd.</p>
+</header>
+
+<section class="band">
+  <div class="wrap cols">
+    <div>
+      <h2>Je zaak groeit, maar je avonden krimpen.</h2>
+      <p>Offertes die pas na dagen vertrekken omdat er overdag geen tijd voor is. Oproepen die je mist omdat je op een werf staat, en die naar de volgende in het lijstje bellen. Werkbonnen die 's avonds nog overgetypt moeten worden, facturen die daardoor te laat vertrekken, en betalingen waar iemand achteraan moet. En ondertussen raakt die vacature maar niet ingevuld.</p>
+    </div>
+    <div>
+      <p>Het probleem is niet dat je te weinig doet. Het is dat te veel van je beste uren naar admin gaan die een systeem intussen beter kan, terwijl het werk waar je écht goed in bent daardoor in de verdrukking komt.</p>
+      <p style="margin-top:14px;font-weight:650">En daar is vandaag zoveel aan te doen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="aanpak">
+  <h2>Zo pakken we het aan</h2>
+  <div class="cards">
+    <div class="card"><span class="num">1</span><h3>Scan</h3><p>We vinden waar de uren lekken, in jouw cijfers. Geen buikgevoel maar een som die je zelf kan nadoen.</p></div>
+    <div class="card"><span class="num">2</span><h3>Bouw</h3><p>In zes weken bouwen we samen met je team de twee automatiseringen met de snelste terugverdientijd. Werkend, op jullie echte dossiers.</p></div>
+    <div class="card"><span class="num">3</span><h3>Veranker</h3><p>Je team is opgeleid, de afspraken staan op papier, en negentig dagen lang stuur ik mee bij. Het resultaat staat gemeten op één blad.</p></div>
+  </div>
+
+  <div class="guarantee">
+    <strong>De garantie, zwart op wit:</strong> toont de meting na negentig dagen geen tien uur per week aan vrijgekomen capaciteit, dan werk ik gratis verder tot het er staat.
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Wat het oplevert</h2>
+    <ul class="checks">
+      <li>Offertes de deur uit binnen 24 uur, en systematisch opgevolgd</li>
+      <li>Werkbonnen ingesproken onderweg, factuur dezelfde dag buiten</li>
+      <li>Gemiste oproepen die meteen een antwoord krijgen, en dus klant blijven</li>
+      <li>Een team dat AI gebruikt met duidelijke afspraken, in plaats van stiekem of helemaal niet</li>
+      <li>Groeien zonder te wachten op de vacature die toch niet ingevuld raakt</li>
+    </ul>
+  </div>
+</section>
+
+<section class="wrap" id="over">
+  <h2>Wie is Olivia?</h2>
+  <div class="bio-flex">
+    <div class="photo">OV</div>
+    <div>
+      <p>Ik werk elke dag met AI en automatisering als AI- en ERP-consultant (Microsoft Business Central). Daar heb ik geleerd dat de technologie het makkelijke deel is: het verschil wordt gemaakt door wie wat doet. Welk werk blijft bij je mensen, welk werk neemt een automatisering over, en waar voegt AI echt iets toe?</p>
+      <ul class="cred checks">
+        <li>Bouwde workflows die handgeschreven notities omzetten in kant-en-klare documentatie</li>
+        <li>Werkte mee aan agents die gegevens lezen en schrijven in Business Central</li>
+        <li>Geeft interne workshops die een consultingteam AI-native maken, en gaf een webinar over agents</li>
+        <li>Werkt met een volledig uitgeschreven methode: van scan tot werkende automatisering tot een team dat er zelfstandig mee verder kan</li>
+      </ul>
+      <p style="margin-top:16px">Ik bouw momenteel mijn eerste cases in de sector op, en dat vertel ik je er eerlijk bij. Daarom werken de eerste drie bedrijven aan founder-voorwaarden, in ruil voor een gedocumenteerde case. Ik start elke maand met maximaal twee bedrijven.</p>
+      <p style="margin-top:12px"><a href="https://www.linkedin.com/in/olivia-vanmalleghem/">Volg mijn bouwlog op LinkedIn →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq">
+  <div class="wrap">
+    <h2>Veelgestelde vragen</h2>
+    <details>
+      <summary>"Mijn mensen zijn geen computermensen."</summary>
+      <p>Dat hoeft ook niet, want een spraakmemo inspreken kan iedereen, en de rest gebeurt in de achtergrond. Het team bouwt mee en beslist mee wat er komt. Dat is geen detail: het is de reden waarom het blijft werken nadat ik weg ben.</p>
+    </details>
+    <details>
+      <summary>"Wat met onze klantgegevens?"</summary>
+      <p>Alles verloopt GDPR-proof: zakelijke AI-omgevingen, geen consumententools, en duidelijke afspraken op papier. De nieuwe Europese AI-regels zitten in de aanpak verwerkt.</p>
+    </details>
+    <details>
+      <summary>"Wij zijn te klein hiervoor."</summary>
+      <p>Vanaf ongeveer acht medewerkers is de terugverdientijd doorgaans twee tot vier maanden. Kleiner? Doe de scan, want het eerlijke antwoord kan ook "nog niet" zijn, en dat zeg ik je dan even duidelijk.</p>
+    </details>
+    <details>
+      <summary>"Wéér een consultant?"</summary>
+      <p>Ik lever geen rapport maar werkende automatiseringen, een opgeleid team en gemeten cijfers. En de garantie staat gewoon in het contract.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final wrap">
+  <h2>Weet binnen tien minuten waar jouw uren lekken.</h2>
+  <div class="cta-row" style="justify-content:center;margin-top:22px">
+    <a class="btn btn-primary" href="{{TALLY_SCAN_URL}}">Doe de gratis AI-Scan</a>
+  </div>
+  <p class="small" style="margin-top:14px">Liever meteen praten? <a href="{{CAL_URL}}">Boek een gratis debrief van twintig minuten</a>. Of laat je gegevens achter via <a href="{{TALLY_CONTACT_URL}}">dit korte formulier</a>, dan neem ik contact op.</p>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <strong style="color:#fff">Olivia Vanmalleghem</strong><br>
+      AI-integratiecoach voor installatie- en servicebedrijven
+      <!-- TODO: ondernemingsnummer + adres toevoegen zodra geregistreerd (wettelijk verplicht op commerciële site in BE) -->
+    </div>
+    <div>
+      <a href="https://www.linkedin.com/in/olivia-vanmalleghem/">LinkedIn</a><br>
+      <a href="mailto:vanmalleghem.olivia@gmail.com">vanmalleghem.olivia@gmail.com</a><br>
+      <a href="en/">English</a>
+    </div>
+  </div>
+  <!-- Optionele privacy-vriendelijke bezoekersstatistieken (gratis): maak account op goatcounter.com en zet deze regel aan:
+  <script data-goatcounter="https://JOUWCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
+</footer>
+
+</body>
+</html>
