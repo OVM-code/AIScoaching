@@ -47,7 +47,7 @@ Ik ben {{NAAM}}, AI-integratiecoach voor de vakman-sector. Ik heb geleerd dat de
 
 Elke week zonder deze stap kost ongeveer tien uur aan capaciteit, en dat is geen dramatiek maar rekenwerk: de scan toont je de som voor jouw zaak. De technologie is er intussen voor kmo-budgetten. Het verschil zit bij wie ze eerst goed organiseert.
 
-## De garantie (indien gekozen in M2 §4 — anders sectie weglaten)
+## De garantie
 
 **Zwart op wit:** toont de meting na negentig dagen geen tien uur per week aan vrijgekomen capaciteit, dan werk ik gratis verder tot het er staat.
 
@@ -56,7 +56,7 @@ Elke week zonder deze stap kost ongeveer tien uur aan capaciteit, en dat is geen
 - **"Mijn mensen zijn geen computermensen."** Dat hoeft ook niet, want een spraakmemo inspreken kan iedereen, en de rest gebeurt in de achtergrond. Het team bouwt mee en beslist mee wat er komt. Dat is geen detail: het is de reden waarom het blijft werken nadat ik weg ben.
 - **"Wat met onze klantgegevens?"** Alles verloopt GDPR-proof: zakelijke AI-omgevingen, geen consumententools, en duidelijke afspraken op papier. De nieuwe Europese AI-regels zitten in de aanpak verwerkt.
 - **"Wij zijn te klein hiervoor."** Vanaf ongeveer acht medewerkers is de terugverdientijd doorgaans twee tot vier maanden. Kleiner? Doe de scan, want het eerlijke antwoord kan ook "nog niet" zijn, en dat zeg ik je dan even duidelijk.
-- **"Wéér een consultant?"** Ik lever geen rapport maar werkende automatiseringen, een opgeleid team en gemeten cijfers. Via de kmo-portefeuille kan een deel bovendien gesubsidieerd zijn [VERIFY].
+- **"Wéér een consultant?"** Ik lever geen rapport maar werkende automatiseringen, een opgeleid team en gemeten cijfers. En de garantie hierboven staat gewoon in het contract.
 
 ## Slot-CTA
 

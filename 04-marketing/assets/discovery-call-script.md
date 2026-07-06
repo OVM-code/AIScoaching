@@ -22,7 +22,7 @@ Invite objections explicitly: *"Wat zou dit voor jou doen mislukken?"* Standard 
 
 | Objection | Response core |
 |---|---|
-| "Te duur." | Reframe vs. alternatives (POS-1): *"Een extra bediende kost €50.000 per jaar, als je die al vindt. Dit traject is er binnen zes weken voor een fractie daarvan, en de meting toont het rendement zwart op wit. En de garantie staat op papier: geen tien uur per week aangetoond, dan werk ik gratis verder."* Then kmo-portefeuille if eligible [VERIFY]. Never drop price; trade instead (OFFER-4): case-study terms for the founder slots. |
+| "Te duur." | Reframe vs. alternatives (POS-1): *"Een extra bediende kost €50.000 per jaar, als je die al vindt. Dit traject is er binnen zes weken voor een fractie daarvan, en de meting toont het rendement zwart op wit. En de garantie staat op papier: geen tien uur per week aangetoond, dan werk ik gratis verder."* Never drop price; trade instead (OFFER-4): case-study terms for the founder slots (€3.950). No subsidy claims until kmo-portefeuille registration is done. |
 | "Geen tijd." | *"Dat ís het probleem dat we oplossen. Jouw investering: 5 sessies + je mensen erbij op de bouwmomenten. De rest doe ik. Wanneer is het seizoen bij jullie het rustigst — dan plannen we daarop."* |
 | "Mijn mensen gaan niet mee zijn." | *"Daarom bouwt je team mee en beslist het mee wat we bouwen — dat is de helft van mijn methode. En we beginnen met werk dat niemand graag doet; daar staat je ploeg sneller achter dan jij denkt."* |
 | "Werkt dat wel bij ons? Wij zijn speciaal." | *"Kan zijn — daarom starten we met de scan/S1 en niet met een contract van een jaar. Na sessie 4 heb je een wérkende automatisering op je eigen dossiers. Dan weet je het zeker, niet op basis van mijn slides."* |
@@ -30,7 +30,7 @@ Invite objections explicitly: *"Wat zou dit voor jou doen mislukken?"* Standard 
 | "Ik moet erover nadenken." | Legitimate — but find the real one: *"Goed. Waarover precies — het geld, de timing, of geloof je nog niet dat het werkt? Dan bespreken we dát nu even."* Set a named follow-up date before hanging up. |
 
 ## R — Reinforce & close (5')
-Summarize in their words: label → after-state → the plan (3 steps, MSG-1) → price + guarantee, stated calmly, once, then silence. *"Het traject is {{€X}} excl. btw, alles inbegrepen zoals gezegd, met de garantie zwart op wit. Als we vandaag beslissen, kan sessie 1 op {{DATUM}}. Doen we dit?"*
+Summarize in their words: label → after-state → the plan (3 steps, MSG-1) → price + guarantee, stated calmly, once, then silence. *"Het traject is €5.950 excl. btw, alles inbegrepen zoals gezegd, met de garantie zwart op wit. Als we vandaag beslissen, kan sessie 1 op {{DATUM}}. Doen we dit?"* (Founder slots, only while the first 3 last: €3.950 with the case-study terms named explicitly as the trade.)
 
 - **Yes** → confirm S1 date on the call; same-day one-page confirmation (outcome, 5 sessions, price, guarantee, case-study terms if founder slot) — never a 10-page proposal (POS-3).
 - **No/maybe** → follow-up date agreed on the call + send the relevant case/artifact same day. One reminder at the date, then release them gracefully — pressure kills trade-sector referrals.

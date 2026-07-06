@@ -45,6 +45,8 @@ Probe: works-council climate per country, sales population's tolerance for proce
 
 Sponsor, scope (group-wide vs one BU/country first — **recommend starting with one BU/country as wave 1**, see engagement plan), budget, timeline, confidentiality rules for AI processing.
 
+**Route in (confirmed 2026-07):** warm contact(s) in Olivia's network at Econocom. Approach per the corporate feedback-ask script (`04-marketing/assets/outreach-scripts.md` §2): ask for brutal feedback on the methodology, not for work. Names/roles: [FILL IN — who, which BU/country, how warm].
+
 ## 9. Verbatims ([INTAKE])
 
 ## 10. Open questions (pre-intake)

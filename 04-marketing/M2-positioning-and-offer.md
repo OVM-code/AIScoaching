@@ -37,15 +37,15 @@ One-liner (for bios, MSG-2): *"Ik help installatie- en servicebedrijven 10+ uur 
 | 90 dagen support & bijsturing | Weekly check, fixes, one extra improvement | €1.500 |
 | Resultaatmeting | Before/after numbers on one page | €500 |
 | **Stack value** | | **€10.000** |
-| **Price** | **[SET: €4.950–6.950 ex btw]** — kmo-portefeuille subsidy may reduce net cost further [VERIFY eligibility & your registration] | |
+| **Price** | **€5.950 ex btw** (decided 2026-07). Founder slots: €3.950 for the first 3 case-study clients, traded per OFFER-4 (case story, video testimonial, 2 intros), never framed as discount. kmo-portefeuille: not claimable yet, registration pending (see LAUNCH-CHECKLIST A3b) — no subsidy claims in prospect-facing copy until then | |
 
 **Category of one:** compare to the alternatives, not to other AI offers: *"Een extra bediende kost €50.000 per jaar, als je die al vindt. Dit traject kost er een fractie van, staat er binnen zes weken, en blijft daarna gewoon werken."*
 
 **Scarcity/urgency (only true ones):** max 2 Kickstarts per month (solo capacity — true); founder pricing for the first 3 case-study clients (expires when the 3 are filled — true).
 
-## 4. Guarantee (OFFER-3) — pick one, put it in writing
+## 4. Guarantee (OFFER-3) — CHOSEN: option 1, in writing (decided 2026-07)
 
-1. **Conditional outcome (recommended):** "Als de meting na 90 dagen geen 10 uur per week aan vrijgekomen capaciteit aantoont, werk ik gratis verder tot het er staat." Conditions: sessions attended, agreed data provided, pilot actually used (behaviors you need anyway).
+1. **Conditional outcome (chosen):** "Als de meting na 90 dagen geen 10 uur per week aan vrijgekomen capaciteit aantoont, werk ik gratis verder tot het er staat." Conditions: sessions attended, agreed data provided, pilot actually used (behaviors you need anyway).
 2. **Milestone refund:** "Geen werkende automatisering na sessie 4? Volledige terugbetaling." (Stronger close, riskier scoping — use once delivery is proven.)
 3. **Anti-guarantee** for the corporate track: no guarantees, diagnosis-first, references instead (Enns posture; corporates distrust guarantees).
 
@@ -57,7 +57,7 @@ One-liner (for bios, MSG-2): *"Ik help installatie- en servicebedrijven 10+ uur 
 | 1 | **AI-Scan** (volume lead magnet) + 20-min debrief | free | Diagnose, qualify, reveal the gap (LEADS-2) |
 | 1b | **AI Strategy Preview** (sniper lead magnet, per company URL — `assets/ai-strategy-preview.md`) + reaction call | free | Open named-target and corporate doors; reactions seed client-context.md |
 | 2 | *(optional filler)* AI-werksessie voor teams/federatie-events | €250–750 | Paid discovery at scale; feeds rung 3 |
-| 3 | **AI Kickstart** (the Grand Slam Offer) | €5–7k | The productized core |
+| 3 | **AI Kickstart** (the Grand Slam Offer) | €5.950 (founder slots €3.950) | The productized core |
 | 4 | Retainer "AI-onderhoudscontract" (mirrors their own maintenance-contract logic — they get it instantly) | €750–1.500/mo | Recurring revenue, compounding results |
 | 5 | Full 7-phase transformation (ICP-B) | custom, value-based (BIZ-2) | The corporate back-end |
 
