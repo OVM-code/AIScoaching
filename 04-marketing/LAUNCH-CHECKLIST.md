@@ -13,7 +13,7 @@ Working document. Each step gets checked off with its date and outcome; the repo
 ## B. Truth (before anything is published)
 
 - [x] B1. Real stories collected (2026-07-06): founders/admin-drain pattern, her real builds (notes→documentation workflow, book-to-course skill, BC agents, AI-native workshops, webinar), observed reactions (overwhelm/frustration/retirement denial), posting-groups story cleared for reuse, acquisition thesis recorded (M2 §0), cannot-claim list captured (no Kickstart delivered, no voice agents) → posts #1–3 rewritten on true material, lived-ground inventory added to M5 §3, invented scenes removed
-- [~] B2. NL voice calibration: **round 1 done** (2026-07-06: her energy/language self-description mined into M5 §1b/§5/§8; posts #1–3 rewritten as v2 in upbeat spoken-Flemish register). **Round 2 = Olivia hand-corrects the v2 posts** → patterns mined → then re-tune landing page, lead magnet and outreach scripts to the settled voice in one pass. ← NEXT
+- [x] B2. NL voice calibrated (2026-07-06): posts #1–3 v2 **approved without corrections** → stored as ground-truth samples in M5 §8; language rule added (EN default, NL only for Flemish/Belgian-owner-targeted pieces); landing page, lead magnet and outreach re-tuned in one pass (cold sequence now je-register; touch-2 example slot bound to truth rule). **Post #1 is ready to publish.**
 - [~] B3. Identity: **personal brand, own name** (Olivia Vanmalleghem), LinkedIn = linkedin.com/in/olivia-vanmalleghem (filled in assets). Still open: booking link (Cal.com setup, 10 min — spec below), site/domain deferred (LinkedIn featured section carries the scan link for now)
 
 **B3 booking-link spec (Olivia does this once, ~10 min):** create a free cal.com account with the gmail address → New event type: "AI-Scan debrief (gratis)", 20 min, videocall or phone, buffer 10 min after, limit 2/day, availability blocks you choose → questions on booking: bedrijfsnaam, sector, "heb je de AI-Scan al ingevuld?" → copy the link and paste it here; I replace every {{CALENDLY}} placeholder across the assets.
@@ -39,3 +39,4 @@ Working document. Each step gets checked off with its date and outcome; the repo
 | Date | Step | Outcome |
 |---|---|---|
 | 2026-07-06 | A1, A2, A3, A4 | Price €5.950 / conditional guarantee / subsidy stripped pending registration / Econocom = warm-contact route. Copy updated across M2, M4, landing page, call script, SME playbook, Econocom context. |
+| 2026-07-06 | B1, B2 | True material collected; voice calibrated in 2 rounds (energy + language rule: EN default, NL for Flemish-owner targeting); posts #1–3 approved; all NL assets re-tuned. Remaining before publish: booking link (B3). |

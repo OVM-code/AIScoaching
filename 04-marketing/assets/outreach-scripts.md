@@ -1,6 +1,6 @@
-# Outreach Scripts [NL-VOICE: awaiting calibration]
+# Outreach Scripts (re-tuned to approved voice, 2026-07-06)
 
-All follow LEADS-5 (A-C-A: Acknowledge → Compliment → Ask; give before any pitch), MSG-2 (one clear next step), and `M5-voice-and-tone.md` (no emoji, no em-dashes, no urgency theater; *u* in first cold contact, *je* once a conversation exists or the relation is warm). Personalize line 1 always. Track every send in the outreach sheet (M3).
+All follow LEADS-5 (A-C-A: Acknowledge → Compliment → Ask; give before any pitch), MSG-2 (one clear next step), and `M5-voice-and-tone.md` (upbeat spoken-Flemish register, natural English mixed in, default *je* — the formal *u* survives only in the corporate preview and a first formal corporate mail; no em-dashes, no urgency theater). Personalize line 1 always. Track every send in the outreach sheet (M3).
 
 ## 1. Warm outreach — direct contact (NL, WhatsApp/SMS/DM register)
 
@@ -16,16 +16,16 @@ All follow LEADS-5 (A-C-A: Acknowledge → Compliment → Ask; give before any p
 
 *Why this works (Enns/POS-3): experts asked for judgment become buyers or referrers without ever being pitched. Follow up once after 5 days with one concrete artifact attached (e.g., the RACI-A explainer). Give first.*
 
-## 3. Cold outreach — SME 3-touch e-mail sequence (NL, u-register)
+## 3. Cold outreach — SME 3-touch e-mail sequence (NL, je-register per M5)
 
 **Touch 1 (dag 0) — Onderwerp: vraagje over {{BEDRIJF}}**
-> Dag {{VOORNAAM}}, ik kwam {{BEDRIJF}} tegen via {{bron: reviews/website/vakbeurs}}, en {{Compliment: specifiek en echt, bv. "uw reviews over stiptheid vallen op, dat is zeldzaam in de sector"}}. Ik help installatie- en servicebedrijven van uw grootte gemiddeld tien uur per week aan administratie terug te winnen, met automatisering rond offertes, werkbonnen en facturatie-opvolging, en zonder dat iemand daarvoor een computermens moet worden. Mag ik u onze gratis AI-Scan bezorgen? Twaalf vragen, tien minuten, en u weet meteen waar bij u de uren lekken. Groeten, {{NAAM}}
+> Dag {{VOORNAAM}}, ik kwam {{BEDRIJF}} tegen via {{bron: reviews/website/vakbeurs}}, en {{Compliment: specifiek en echt, bv. "jullie reviews over stiptheid vallen echt op, zeldzaam in de sector"}}. Ik help installatie- en servicebedrijven zoals dat van jou gemiddeld tien uur per week aan admin terug te winnen: offertes, werkbonnen, facturatie-opvolging, met slimme automatisering en zonder dat iemand daarvoor een computermens moet worden. Mag ik je onze gratis AI-Scan doorsturen? Twaalf vragen, tien minuten, en je weet meteen waar bij jou de uren lekken. Groeten, Olivia
 
 **Touch 2 (dag 4) — waarde geven, niet duwen**
-> Dag {{VOORNAAM}}, ik stuur u zoals aangekondigd alvast één concreet voorbeeld mee. Bij een {{sector}}bedrijf bouwden we vorige maand dit: de techniekers spreken hun werkbon in als spraakmemo onderweg naar huis, en het systeem maakt daar automatisch een werkbon en een conceptfactuur van. Dat scheelt er ongeveer veertig minuten per technieker per dag, vooral avondwerk. Zoiets staat er op een namiddag. Als u wil weten wat er bij {{BEDRIJF}} als eerste uit zou springen: de scan vindt u hier. {{LINK}}
+> Dag {{VOORNAAM}}, zoals beloofd stuur ik alvast één concreet voorbeeld mee. {{REAL BUILD EXAMPLE — truth rule: only a build that actually exists. Until the first Kickstart case: use the notes-to-documentation workflow ("ik bouwde voor mezelf een workflow die handgeschreven notities omzet in kant-en-klare documentatie, dat scheelt me uren per week") or the founders-insight. NEVER the voice-note-werkbon example until it's really built for a client — then it becomes the strongest version of this mail.}} Zoiets staat er sneller dan je denkt. Wil je weten wat er bij {{BEDRIJF}} als eerste uit zou springen? De scan vind je hier: {{LINK}}
 
 **Touch 3 (dag 10) — de nette afsluiter**
-> Dag {{VOORNAAM}}, dit is mijn laatste berichtje hierover. Twee mogelijkheden: u doet de gratis scan wanneer het u past ({{LINK}}), of u laat me weten dat het niets voor {{BEDRIJF}} is, en dan houd ik ermee op. In beide gevallen wens ik u een goed seizoen.
+> Dag {{VOORNAAM}}, laatste berichtje hierover, beloofd. Twee opties: je doet de gratis scan wanneer het jou past ({{LINK}}), of je laat me weten dat het niets voor {{BEDRIJF}} is, en dan stop ik ermee. In beide gevallen: veel succes met het seizoen!
 
 *Volume per M3: 5/dag vanaf week 4. Bouw voor jezelf een agent die touch-1-personalisaties voorstelt vanuit website/reviews, en maak daar een bouwlog-post over (M4 pijler 1).*
 

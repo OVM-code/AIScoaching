@@ -49,7 +49,9 @@ Business-case numbers follow the same logic: client's own numbers = lived (their
 - **Never in sales assets:** landing page, outreach, lead magnets, previews and proposals stay on professional-lived and observed ground.
 - Anonymize everyone else, never sanitize herself. Never invent scene detail.
 
-## 5. Dutch adaptation (calibration round 1 processed 2026-07-06)
+## 5. Language & Dutch adaptation (calibrated 2026-07-06, posts approved)
+
+**Language selection rule (hers, verbatim intent):** English is her default writing language. **Dutch only when the piece explicitly targets Belgian/Flanders-based owners** — ICP-A sector posts, the lead magnet, the landing page, SME outreach. Everything else (general AI/work reflections, corporate/ICP-B pieces, content about building the practice) is written in English. One piece, one audience, one language; never mixed.
 
 How she actually uses language: **she writes almost always in English, and speaks Flemish with a good amount of English woven through it.** The NL copy must sound like her *speaking*, not like a translated document.
 
@@ -58,7 +60,7 @@ How she actually uses language: **she writes almost always in English, and speak
 - Chained reasoning still works (*omdat, maar, want, en*), but lighter: shorter chains, room for a spoken beat ("en dat vind ik zo zonde", "goed nieuws, toch?"), a question she'd really ask, an exclamation where she'd really smile — max one per post, it loses value in rows.
 - Light, natural emoji MAY appear in short-form if she'd genuinely type it there (test in calibration); never in documents, previews, or anything formal. Em-dashes stay banned everywhere.
 - **Drafting workflow:** she can draft or brief in English (her natural writing language); Claude converts to spoken-Flemish register per these rules. Never the reverse (formal NL first, then loosened).
-- **Calibration loop:** NL drafts stay marked [NL-VOICE: awaiting calibration] until she has corrected a few; her corrections get mined for patterns and added to §8, exactly like the book project does it. Round 1 (her energy/language description) is folded in above; round 2 = her hand-corrections of posts #1–3 v2.
+- **Calibration status:** rounds 1–2 complete. Round 1 = her energy/language self-description (folded in above and §1b). Round 2 (2026-07-06) = posts #1–3 v2 **approved without corrections**; they are the ground-truth NL samples in §8. New NL drafts are checked against those samples; the [NL-VOICE: awaiting calibration] marker is retired. Future corrections she makes still get mined into this file.
 
 ## 6. Forbidden — always, in every language
 
@@ -86,6 +88,23 @@ Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetoric
 *(Note how this is simultaneously perfect voice AND the F4 allocation logic of this system. The voice and the method are the same person; write like that.)*
 
 *Approved NL passages get added here as they're calibrated.*
+
+### Approved NL short-form samples (round 2, 2026-07-06 — approved as drafted; check every NL piece against these)
+
+**Origin / ask-post register:**
+> De voorbije maanden sprak ik met een pak oprichters over hun zaak. En eigenlijk willen ze allemaal hetzelfde: bouwen aan hun product, want dáár zit hun magie.
+>
+> Maar zodra er klanten komen, komt de admin erbij. Offertes, opvolging, facturen. Werk dat moet gebeuren om de zaak draaiende te houden, maar dat hun energie opvreet omdat het gewoon hun ding niet is.
+>
+> En dat vind ik zo zonde, want daar is vandaag zóveel aan te doen. […] Dus wil je weten waar de uren in jouw zaak lekken? De gratis AI-Scan staat in mijn profiel!
+
+**Observation register:**
+> Wat me opviel: niemand wil daar zomaar een extra iemand voor aannemen. Kan het goedkoper en automatisch? Graag zelfs, want elke euro die vrijkomt gaat liever terug de zaak in. […] Het werk dat je energie opvreet, is meestal net het werk dat een systeem kan overnemen. Goed nieuws, toch?
+
+**Reframe register (with her lived arc):**
+> Ik snap ze alle drie, want ik heb ze zelf gehad. Ik raakte overweldigd door het tempo en deed een tijdje gewoon niets. Maar niets doen bleek ook stress op te bouwen, want ergens weet je dat je er iets mee moet. […] Dus nee, je hoeft niet alles te kunnen. Klein beginnen is genoeg: één automatisering die écht werkt verandert meer dan tien plannen.
+
+*(Full versions live in M4 §drafted posts.)*
 
 ### Raw calibration data — round 1 (2026-07-06, her own words, unedited)
 

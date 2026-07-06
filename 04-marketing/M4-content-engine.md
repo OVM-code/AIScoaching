@@ -1,6 +1,8 @@
 # M4 — Content Engine
 
-3 posts/week, sustainable solo, aimed at ICP-A (NL) with one monthly authority piece for ICP-B (EN/FR). Implements LEADS-1, BIZ-5, MSG-1/2. **All output follows `M5-voice-and-tone.md`** — upload it alongside this file when generating.
+3 posts/week, sustainable solo. Implements LEADS-1, BIZ-5, MSG-1/2. **All output follows `M5-voice-and-tone.md`** — upload it alongside this file when generating.
+
+**Language follows targeting (M5 §5):** Dutch only when the post targets Belgian/Flanders-based owners (pillars 1–4 in their sector versions, the ask-posts, the lead-magnet funnel). Everything else in English: general AI/work reflections, ICP-B/corporate pieces, and most of pillar 5 (building the practice). One post, one audience, one language.
 
 ## Pillars (rotate; % of volume)
 
@@ -32,7 +34,7 @@ The bouwlog pillar usually wears shape 1 or 2; nuchterheid wears shape 3.
 
 *(Formatted as posted: stanzas separated by blank lines. #1 and #4 are the designated ask-posts of their week; the rest end open.)*
 
-*(v2 after calibration round 1: her in-person energy, spoken-Flemish register with natural English. She hand-corrects these → round 2.)*
+*(APPROVED 2026-07-06 without corrections — these are the ground-truth NL samples, mirrored in M5 §8. Ready to publish.)*
 
 **#1 — Origin (NL, week 1 — ask-post — TRUE MATERIAL, B1 answers 1/2/5)**
 > De voorbije maanden sprak ik met een pak oprichters over hun zaak. En eigenlijk willen ze allemaal hetzelfde: bouwen aan hun product, want dáár zit hun magie.
@@ -93,16 +95,18 @@ The monthly digest to the scan-list follows M5's **mid-length register** (300–
 
 ```
 CONTENT BATCH: Following M5-voice-and-tone.md strictly (short-form register,
-NL rules, forbidden list), and using M4's pillars, post shapes and the
-sector use-case library, draft next week's 3 posts in Dutch: one bouwlog
-based on {{WHAT I BUILT/DID THIS WEEK}}, one use-case post with the
-reasoning shown on {{USE CASE}}, one spiegel/nuchterheid post on
-{{PAIN/MYTH}}. Per post: one idea, stanzas of 3-6 lines with blank lines
-between, open with an observation, end with a reflection or a genuinely
-held question. At most ONE of the three may be an ask-post ({{say which,
-or none}}), with a single CTA stated as plain fact. Run M5 §7's QA
-(including the pre-publish filter) on each before returning; mark
-[NL-VOICE: awaiting calibration].
+language rule, forbidden list) and using M4's pillars, post shapes and the
+sector use-case library, draft next week's 3 posts: one bouwlog based on
+{{WHAT I BUILT/DID THIS WEEK}}, one use-case post with the reasoning shown
+on {{USE CASE}}, one spiegel/nuchterheid post on {{PAIN/MYTH}}. Language
+per M5 §5: Dutch ONLY for posts targeting Flemish/Belgian owners, English
+for everything else; tell me your language pick per post and why. Per
+post: one idea, stanzas of 3-6 lines with blank lines between, open with
+an observation, end with a reflection or a genuinely held question. At
+most ONE of the three may be an ask-post ({{say which, or none}}), with a
+single CTA stated as plain fact. Check NL posts against the approved
+samples in M5 §8; run M5 §7's QA (including the pre-publish filter) on
+each before returning.
 ```
 ```
 COMMENT RUN: Here are 5 posts from my feed [paste]. For each, draft a

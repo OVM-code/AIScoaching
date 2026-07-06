@@ -1,4 +1,4 @@
-# Landing Page Copy (NL) [NL-VOICE: awaiting calibration]
+# Landing Page Copy (NL — re-tuned to approved voice, 2026-07-06)
 
 One page, one goal: **AI-Scan opt-in** (secondary CTA: debrief booking for warm visitors). Structure = StoryBrand arc (MSG-1), one CTA repeated (MSG-2), every word per `M5-voice-and-tone.md` (mid-form register: scannable structure, her sentences inside; *u* is not needed here, the page speaks *je* as a peer). Build in Carrd/Framer/Typedream; sections in order.
 
@@ -15,9 +15,9 @@ One page, one goal: **AI-Scan opt-in** (secondary CTA: debrief booking for warm 
 
 **Kop:** Je zaak groeit, maar je avonden krimpen.
 
-Offertes die pas na dagen vertrekken omdat er overdag geen tijd voor is. Oproepen die je mist omdat je op een werf staat, en die naar de volgende in het lijstje bellen. Werkbonnen die 's avonds nog overgetypt moeten worden, facturen die daardoor te laat vertrekken, en betalingen waar iemand achteraan moet. En ondertussen raakt die vacature voor een extra kracht maar niet ingevuld.
+Offertes die pas na dagen vertrekken omdat er overdag geen tijd voor is. Oproepen die je mist omdat je op een werf staat, en die naar de volgende in het lijstje bellen. Werkbonnen die 's avonds nog overgetypt moeten worden, facturen die daardoor te laat vertrekken, en betalingen waar iemand achteraan moet. En ondertussen raakt die vacature maar niet ingevuld.
 
-Het probleem is niet dat je te weinig doet. Het is dat te veel van je beste uren naar werk gaan dat een systeem intussen beter kan, terwijl het werk dat echt om vakmanschap vraagt daardoor in de verdrukking komt.
+Het probleem is niet dat je te weinig doet. Het is dat te veel van je beste uren naar admin gaan die een systeem intussen beter kan, terwijl het werk waar je écht goed in bent daardoor in de verdrukking komt. En daar is vandaag zoveel aan te doen.
 
 ## De gids (empathie + autoriteit)
 

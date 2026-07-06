@@ -1,6 +1,6 @@
 # Lead Magnet — "De AI-Scan voor installatie- en servicebedrijven"
 
-Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → self-diagnosis in 10 minutes; the score reveals the bigger problem the Kickstart solves). Voice per `M5-voice-and-tone.md` [NL-VOICE: awaiting calibration]. Format: 8–10 page PDF (design in Canva/Gamma) + optional interactive version (Tally/Typeform with auto-score). Delivery: email after opt-in; last page CTA = free 20-min debrief.
+Implements LEADS-2 (narrow problem solved completely: *"waar begin ik?"* → self-diagnosis in 10 minutes; the score reveals the bigger problem the Kickstart solves). Voice per `M5-voice-and-tone.md` (re-tuned to approved voice, 2026-07-06). Format: 8–10 page PDF (design in Canva/Gamma) + optional interactive version (Tally/Typeform with auto-score). Delivery: email after opt-in; last page CTA = free 20-min debrief.
 
 **Production note:** the full text is below — paste per section into your design tool. Keep the scoring honest: a high score must genuinely mean "you're fine without me" (trust > leads).
 
@@ -14,7 +14,7 @@ De AI-Scan voor installatie- en servicebedrijven: 12 vragen, 10 minuten, jouw sc
 
 ## Pagina 1 — Waarom deze scan
 
-Je hoort overal dat je iets met AI moet, terwijl je dagen al vol zitten: offertes die te laat vertrekken, avonden vol administratie, en een vacature die maar niet ingevuld raakt.
+Je hoort overal dat je iets met AI moet, terwijl je dagen al vol zitten: offertes die te laat vertrekken, avonden vol admin, en een vacature die maar niet ingevuld raakt.
 
 Wat ik in de praktijk zie: de meeste winst zit niet in dure software of een data-afdeling, maar in vijf à tien taken die vandaag mensenuren opeten en dat morgen niet meer hoeven te doen. Deze scan toont je in tien minuten waar die zitten, met de cijfers erbij om het aan jezelf te bewijzen.
 
