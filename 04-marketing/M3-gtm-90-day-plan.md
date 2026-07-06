@@ -25,7 +25,7 @@ Objective: **an audience seed + 1–3 paying Kickstart clients (ICP-A) and 1 cor
 
 **Warm outreach (primary, LEADS-5):** 10/day through the 100-list with A-C-A scripts (`assets/outreach-scripts.md`). The ask is never "buy" — it's the free AI-Scan debrief or "who do you know that runs an installatiebedrijf?". Track referral chains — in the trades, the second-degree contact is the buyer.
 
-**Content (compounding):** 3×/week per M4 (build-log, use-case-with-numbers, myth-busting). 20 comments/week on posts where owners hang out (sector federations, ERP/planning-tool vendor pages, accountants). Comments on others' posts outperform own posts for the first 500 followers.
+**Content (compounding):** 3×/week per M4 (build-log, use-case-with-numbers, myth-busting). 20 comments/week on posts where owners hang out (sector federations, ERP/planning-tool vendor pages, accountants) — commenting runs in parallel with posting, mainly on non-posting days, and early on it's also the fastest reach you have.
 
 **Ecosystem (the trades are offline-first):**
 - Join/attend: Embuild (construction federation) local events, Bouwunie, Techlink (installation sector), Unizo/Voka network evenings, sector fairs (e.g., Install Day, Batibouw pro days) [VERIFY calendar]

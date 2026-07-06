@@ -1,6 +1,8 @@
 # M5 — Voice & Tone (business adaptation)
 
-Adapted from Olivia's master voice files (`voice-cheatsheet.md` / `book-voice.md` / `tone-of-voice.md` in the book project — those remain the source of truth for the voice itself; this file adapts it to THIS business). **Upload this file to every Claude Project that generates client- or public-facing text.** One voice everywhere: content, lead magnets, landing page, outreach, previews, client deliverables.
+Adapted from Olivia's master voice files (`voice-cheatsheet.md` / `book-voice.md` / `tone-of-voice.md` — those remain the source of truth for the voice itself; this file adapts it to THIS business). **Upload this file to every Claude Project that generates client- or public-facing text.** One voice everywhere: content, lead magnets, landing page, outreach, previews, client deliverables.
+
+**What transfers and what doesn't:** the voice attributes, mechanics, forbidden registers and filters transfer in full. The personal-brand *positioning* in `tone-of-voice.md` (students and young professionals 18–28, "helping people stay themselves in a world that's trying to think for them") does NOT — this business positions per M2 (SME owners and corporate leaders). Since July 2026 the master file itself recognizes a second audience (professional readers in AI/ERP/consulting, reached through practical-guide-derived posts); this business's content is the business-facing extension of exactly that register: domain vocabulary without apology, more lived-expertise confidence, business context assumed, and never performed confidence. **A post inherits its audience from the material it derives from; never blend audiences or registers within one post** (NL trade posts and EN corporate posts stay separate pieces, never hybrids). The two brands share one belief, and it's worth using as a bridge in content: convenience without reflection quietly hollows people out; used intentionally, AI should make people and businesses *more* themselves, not less. In this business that becomes: don't buy licenses and change nothing — redistribute the work so humans do the judgment, relationships and craft.
 
 ## 1. Core attributes (inherited, never change)
 
@@ -12,8 +14,9 @@ For this business that lands as: **the coach who has actually done the work, tel
 
 | Asset type | Register | Mechanics |
 |---|---|---|
-| LinkedIn posts, comments (M4) | Short-form | Compress. One idea per post, short sentences allowed, ≤120 words default. Compression is not staccato drama: no fragment sequences doing emotional work. |
+| LinkedIn posts, comments (M4) | Short-form | Compress; when in doubt, shorter and plainer. One idea per post; stanzas of 3–6 lines separated by line breaks, never a wall of text. **Open with an observation** (something noticed, not a question or a hook). **Default ending: a reflection or open thought, not a CTA** — CTA posts are deliberate and sparse (give/ask cadence in M4). Compression is not staccato drama. |
 | Conversion assets: landing page, lead magnets, outreach mails, preview docs | Mid-form | Scannable structure (headers, short paragraphs, the occasional list) but every sentence inside carries the voice. Hormozi provides the *skeleton* (offer stack, guarantee, single CTA, A-C-A); Olivia provides every word on the bones. No urgency theater, no "saying no feels stupid" energy on the page — the offer's strength is stated calmly and the numbers do the persuading. |
+| Newsletter / Substack-style pieces (monthly digest to the scan-list, blog posts) | Mid-length (tone-of-voice.md Substack register) | 300–900 words, one core idea, lead with the observation, no preamble. Chained reasoning allowed where it earns its place: room to show *why*, not just *what*, but it reads faster than a chapter. Ending: open reflection, or an honest pull toward the next step (the scan, a conversation) that signals there's genuinely more — if it would sound at home under "buy now", it's off-voice. Contrast rule: the piece is a fast, complete thought; the deeper engagement it points to is the same mind given room. |
 | Authority pieces (monthly EN/FR artifact), client deliverables, speaker notes, the eventual book-adjacent essays | Long-form | Full book-voice rules: chained reasoning with *because/but/and/as*, one idea per paragraph, movement pattern (personal → principle → others → forward), a short plain sentence only as the landing after a long chain. |
 | Spoken scripts (discovery call, debriefs, talks) | Spoken | Her natural register already; scripts are prompts, not lines to recite. Keep the diagnostic posture; drop anything that sounds like a closer's trick. |
 
@@ -56,6 +59,8 @@ Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetoric
 4. Does it end forward (a direction, a question genuinely held, a next step) rather than inside the problem?
 5. Would it sit comfortably next to the calibration sample below? If not, it's off-voice regardless of rules followed.
 6. Three paragraphs with the same chain shape in a row? Vary, and let one short sentence land.
+7. **Pre-publish filter (short-form, from tone-of-voice.md):** Is this actually true for her, or does it just sound good? Written from a full or depleted state (depleted writing sounds hedged — save the draft, publish rested)? Does it help the audience feel more clear or more capable, or is it only interesting to her?
+8. Never publish advice she hasn't lived, or takes on things she has no real experience with — route those through the observed or researched register, or don't post.
 
 ## 8. Calibration anchor (approved practical-guide sample, from the book project)
 
@@ -75,6 +80,11 @@ Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetoric
 VOICE: Follow M5-voice-and-tone.md strictly. Warm but not soft, grounded,
 reflective, honest about uncertainty. Chained reasoning (because/but/and;
 omdat/maar/want), one idea per paragraph, plain-conceptual vocabulary.
+Short-form: open with an observation, stanzas of 3-6 lines, end with a
+reflection or open thought (CTA only in designated ask-posts). Mid-length
+(newsletter/Substack): 300-900 words, one idea, reasoning shown, ending
+open or an honest pull, never pitch-sounding. A piece inherits its
+audience from its source material; never blend audiences in one piece.
 Authority register: lived = confident first person; observed = noticing,
 not diagnosing; researched = name the source lightly, then what I make of
 it. Never: em-dashes, emoji, hype, punchy fragment sequences, rhetorical

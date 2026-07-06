@@ -12,7 +12,15 @@
 
 **Formats:** text post (default) · photo of real work context + caption · 60-sec talking-head or screen-record of a build · carousel for use-case reasoning · a genuinely held question (great engagement, and in-voice only if she actually wants the answers).
 
-**Voice rules:** see M5 §6 for the forbidden list and §7 for the ship-check. Post-specific: one idea per post, ≤120 words default, short sentences allowed in short form but never fragment-drama, endings turn forward or ask a real question, every claim carries its number or its story, no emoji, no em-dashes, no hooks-by-formula.
+**Voice rules:** see M5 §6 for the forbidden list and §7 for the ship-check (incl. the pre-publish filter: true for me? full state? helps them feel clearer?). Post-specific: one idea per post, stanzas of 3–6 lines with line breaks (never a wall of text), open with an observation (not a question or a hook), every claim carries its number or its story, no emoji, no em-dashes.
+
+**The give/ask cadence:** the default post ends with a reflection or an open thought, not a CTA. At most **1 post in 4–5 is an ask-post** (case teaser, scan mention, capacity announcement), where the CTA is stated once, as plain fact. The funnel is carried by the profile (headline, featured link) and by conversations in the comments, not by CTAs bolted onto observations. Never post: advice not yet lived, takes without real experience behind them, milestone humble-brags, anything written depleted (save the draft, publish rested).
+
+**The three post shapes (from tone-of-voice.md — default to these):**
+1. **The Observation** — something noticed this week (specific, concrete) → what it made her think → open reflection.
+2. **The Honest Admission** — something she doesn't know / got wrong / is figuring out → what that looks like in practice → what she's doing about it or sitting with.
+3. **The Reframe** — a common belief → a short, honest challenge → what she notices or thinks instead.
+The bouwlog pillar usually wears shape 1 or 2; nuchterheid wears shape 3.
 
 ## 30 post ideas (mark ✍ = drafted below)
 
@@ -20,48 +28,77 @@
 
 ## 5 drafted posts [NL-VOICE: awaiting calibration]
 
-**#1 — Origin (NL, week 1)**
-> Mijn eerste kennismaking met digitalisering in de sector was een kartonnen doos vol werkbonnen. De zaakvoerder kende elke klant en elke ketel uit het hoofd, en net daarom zat hij elke avond twee uur aan de keukentafel, omdat al die kennis ergens in facturen en planning moest geraken.
-> Vandaag help ik installatie- en servicebedrijven die uren terug te winnen met AI en automatisering. Niet met rapporten, maar met oplossingen die blijven werken omdat het team ze mee bouwt en begrijpt.
-> Ik deel hier elke week wat ik bouw, met echte cijfers, ook wanneer het tegenvalt. En wie wil weten waar de uren in zijn eigen zaak lekken: de gratis AI-Scan staat in mijn profiel.
+*(Formatted as posted: stanzas separated by blank lines. #1 and #4 are the designated ask-posts of their week; the rest end open.)*
 
-**#2 — Missed-call reasoning (NL)**
-> Een installateur vertelde me dat hij op een werfdag makkelijk zes oproepen mist, omdat je op een dak nu eenmaal niet opneemt. Een deel daarvan zijn nieuwe klanten, en die bellen gewoon de volgende in hun lijstje.
-> Reken het na voor je eigen zaak: zes gemiste oproepen per dag, waarvan een derde nieuwe aanvragen, aan een gemiddelde werf van 1.800 euro. Zelfs als je er maar één op vijf van had binnengehaald, loopt dat op tot enkele duizenden euro's per maand.
-> De oplossing hoeft geen callcenter te zijn. Een automatisch bericht binnen de minuut, met de vraag of het dringend is en of er een foto kan meekomen, houdt die klant bij jou tot je pauze. Zoiets staat er op een namiddag.
+**#1 — Origin (NL, week 1 — ask-post)**
+> Mijn eerste kennismaking met digitalisering in de sector was een kartonnen doos vol werkbonnen.
+>
+> De zaakvoerder kende elke klant en elke ketel uit het hoofd. En net daarom zat hij elke avond twee uur aan de keukentafel, omdat al die kennis ergens in facturen en planning moest geraken.
+>
+> Vandaag help ik installatie- en servicebedrijven die uren terug te winnen met AI en automatisering. Niet met rapporten, maar met oplossingen die blijven werken omdat het team ze mee bouwt en begrijpt.
+>
+> Ik deel hier elke week wat ik bouw, met echte cijfers, ook wanneer het tegenvalt. En wie nu al wil weten waar de uren in zijn eigen zaak lekken: de gratis AI-Scan staat in mijn profiel.
+
+**#2 — Missed-call reasoning (NL — shape 1, The Observation)**
+> Een installateur vertelde me vorige week dat hij op een werfdag makkelijk zes oproepen mist, omdat je op een dak nu eenmaal niet opneemt.
+>
+> Een deel daarvan zijn nieuwe klanten, en die bellen gewoon de volgende in hun lijstje. Reken het na voor je eigen zaak: zes gemiste oproepen per dag, waarvan een derde nieuwe aanvragen, aan een gemiddelde werf van 1.800 euro. Zelfs als je er maar één op vijf van had binnengehaald, loopt dat op tot enkele duizenden euro's per maand.
+>
+> De oplossing hoeft geen callcenter te zijn. Een automatisch bericht binnen de minuut, met de vraag of het dringend is en of er een foto kan meekomen, houdt die klant bij jou tot je pauze.
+>
 > Hoeveel oproepen mis jij op een werfdag?
 
-**#3 — Replacement question (NL)**
-> "Gaat AI mijn mensen vervangen?" De vraag komt in bijna elk eerste gesprek, en het eerlijke antwoord is nee, maar het verandert wel wie wat doet.
-> Je beste technieker is goud waard op de werf, niet om 19 uur achter een klavier. Als hij zijn werkbon inspreekt onderweg naar huis en het systeem er de administratie van maakt, doet iedereen meer van het werk waar hij sterk in is. Je bureaumedewerker stopt met overtypen en krijgt eindelijk tijd om klanten echt op te volgen.
-> Bij de bedrijven waar dit lukt, is het werk bewust herverdeeld tussen mensen, automatisering en AI. Bij de bedrijven waar het mislukt, zijn er licenties gekocht en bleef verder alles hetzelfde. Vervang niemand, maar herverdeel het werk. Dat is de kern.
+**#3 — Replacement question (NL — shape 3, The Reframe)**
+> Er is één vraag die in bijna elk eerste gesprek terugkomt: gaat AI mijn mensen vervangen?
+>
+> Het eerlijke antwoord is nee, maar het verandert wel wie wat doet. Je beste technieker is goud waard op de werf, niet om 19 uur achter een klavier. Als hij zijn werkbon inspreekt onderweg naar huis en het systeem er de administratie van maakt, doet iedereen meer van het werk waar hij sterk in is.
+>
+> Bij de bedrijven waar dit lukt, is het werk bewust herverdeeld tussen mensen, automatisering en AI. Bij de bedrijven waar het mislukt, zijn er licenties gekocht en bleef verder alles hetzelfde.
+>
+> Waar ik telkens op uitkom: vervang niemand, maar herverdeel het werk.
 
-**#4 — Case teaser (NL, template — fill with real numbers at first case)**
-> Negentig dagen geleden vertrok een offerte bij [sector]bedrijf ([Z] medewerkers) gemiddeld na [X] dagen. Vandaag is dat [Y] uur.
+**#4 — Case teaser (NL, template — fill with real numbers at first case — ask-post)**
+> Negentig dagen geleden vertrok een offerte bij een [sector]bedrijf met [Z] medewerkers gemiddeld na [X] dagen. Vandaag is dat [Y] uur.
+>
 > We bouwden er in zes weken [automatisering 1] en [automatisering 2], samen goed voor [N] uur per week. Wat het echt deed werken was niet de technologie maar [inzicht over mensen/proces], en dat zie ik bij elk bedrijf opnieuw bevestigd.
+>
 > De zaakvoerder zei het zelf het best: "[quote]".
-> Volgende maand start ik met twee nieuwe bedrijven. De AI-Scan is de eerste stap, de link staat in mijn profiel.
+>
+> Volgende maand start ik met twee nieuwe bedrijven, en de AI-Scan is daarvoor de eerste stap. De link staat in mijn profiel.
 
-**#5 — ICP-B authority (EN, monthly)**
-> The most useful thing I've learned about AI transformations is that they fail at the organigram more often than at the model. The pilots work, the demo impresses, and six months later the saved hours have quietly disappeared, because every role, handoff and KPI still assumes the old way of working.
-> So in my method the unit of redesign is the task, not the job. We decompose the priority processes, allocate each task to a human, an automation or an agent, and recompose the roles around judgment and exceptions, and only then does anyone touch the org chart. Agents go on that chart too, with a named human owner and an autonomy level they have to earn.
+**#5 — ICP-B authority (EN, monthly — professional audience, derived from practical-guide material; never blended with the NL trade posts)**
+> The most useful thing I've learned about AI transformations is that they fail at the organigram more often than at the model.
+>
+> The pilots work, the demo impresses, and six months later the saved hours have quietly disappeared, because every role, handoff and KPI still assumes the old way of working.
+>
+> So in my method the unit of redesign is the task, not the job. We decompose the priority processes, allocate each task to a human, an automation or an agent, and recompose the roles around judgment and exceptions. Only then does anyone touch the org chart, and the agents go on it too, with a named human owner and an autonomy level they have to earn.
+>
 > One artifact does a surprising amount of work here: a classic RACI with an agent column added, and one hard rule, an agent can be responsible but never accountable.
-> I've written the full method down. If you're steering an AI transformation and want to shoot holes in it, I would genuinely welcome that conversation.
+>
+> I've written the full method down, and if you're steering an AI transformation and want to shoot holes in it, I would genuinely welcome that conversation.
 
 ## Repurposing flow
 
-Best post of the week → 60-sec video retell → carousel of the reasoning → newsletter item (monthly digest to the scan-list) → talk slide. One idea, five assets, zero new thinking.
+Best post of the week → 60-sec video retell → carousel of the reasoning → newsletter item → talk slide. One idea, five assets, zero new thinking.
+
+The monthly digest to the scan-list follows M5's **mid-length register** (300–900 words, one core idea, observation lead, reasoning shown, ending open or an honest pull toward the scan or a conversation — never pitch-sounding). The digest is the fast, complete thought; the debrief call is the same mind given room.
+
+**Commenting** runs in parallel with posting, mainly on non-posting days; it is ongoing presence-building, not a phase to complete. Genuine observations, a specific angle the post didn't cover, or a question actually held. Never "great post".
 
 ## Generation prompts (run in your own Claude Project with M1-M5 + the SME playbook uploaded)
 
 ```
 CONTENT BATCH: Following M5-voice-and-tone.md strictly (short-form register,
-NL rules, forbidden list), and using M4's pillars and the sector use-case
-library, draft next week's 3 posts in Dutch: one bouwlog based on {{WHAT I
-BUILT/DID THIS WEEK}}, one use-case post with the reasoning shown on
-{{USE CASE}}, one spiegel/nuchterheid post on {{PAIN/MYTH}}. One idea per
-post, ≤120 words, endings forward or a genuinely held question. Run M5 §7's
-QA on each before returning; mark [NL-VOICE: awaiting calibration].
+NL rules, forbidden list), and using M4's pillars, post shapes and the
+sector use-case library, draft next week's 3 posts in Dutch: one bouwlog
+based on {{WHAT I BUILT/DID THIS WEEK}}, one use-case post with the
+reasoning shown on {{USE CASE}}, one spiegel/nuchterheid post on
+{{PAIN/MYTH}}. Per post: one idea, stanzas of 3-6 lines with blank lines
+between, open with an observation, end with a reflection or a genuinely
+held question. At most ONE of the three may be an ask-post ({{say which,
+or none}}), with a single CTA stated as plain fact. Run M5 §7's QA
+(including the pre-publish filter) on each before returning; mark
+[NL-VOICE: awaiting calibration].
 ```
 ```
 COMMENT RUN: Here are 5 posts from my feed [paste]. For each, draft a
