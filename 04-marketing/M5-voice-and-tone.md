@@ -10,6 +10,16 @@ Warm but not soft · curious not performative · grounded not preachy · reflect
 
 For this business that lands as: **the coach who has actually done the work, tells you plainly what she knows and doesn't, and cares about your people's development as much as your hours.** In a market full of AI hype, this register *is* the differentiation (it also happens to be what a skeptical trades audience trusts).
 
+### 1b. Calibration correction (2026-07-06, Olivia direct — outranks the imported register on energy)
+
+The first NL drafts felt nothing like her. Her words: *"I bring light energy, enthusiasm, an energy that makes you feel like anything is possible, sometimes a bit naively. I'm upbeat, a bit less formal, very easygoing and welcoming."*
+
+So the energy dial for THIS business's public voice is **her in-person self, not the book's calm essay register**: upbeat, light, welcoming, possibility-oriented. The honesty core is untouched — no borrowed authority, no invented scenes, uncertainty stated plainly — but it's delivered with warmth that lifts, not weight that settles.
+
+**The distinction that makes this compatible with the forbidden list:** *performed* enthusiasm (hype words nobody feels, "I'm SO excited to announce", rocket energy) stays forbidden. *Genuine* enthusiasm — hers, about a build that worked or a possibility she really sees — IS the voice. Test: would she say it like that across a table? Then it can be written like that.
+
+Her self-named naivety is charm, not a bug: dreaming out loud and being honest about the dreaming ("misschien wat naïef, maar…") is very her. Allowed, sparingly.
+
 ## 2. Register map — which mechanics where
 
 | Asset type | Register | Mechanics |
@@ -39,19 +49,20 @@ Business-case numbers follow the same logic: client's own numbers = lived (their
 - **Never in sales assets:** landing page, outreach, lead magnets, previews and proposals stay on professional-lived and observed ground.
 - Anonymize everyone else, never sanitize herself. Never invent scene detail.
 
-## 5. Dutch adaptation (no approved NL samples yet — calibration in progress)
+## 5. Dutch adaptation (calibration round 1 processed 2026-07-06)
 
-The attributes translate; the vocabulary localizes:
+How she actually uses language: **she writes almost always in English, and speaks Flemish with a good amount of English woven through it.** The NL copy must sound like her *speaking*, not like a translated document.
 
-- Chained reasoning works naturally in NL with *omdat, maar, en, want, terwijl*. Same rule: reasoning inside the sentence, not chopped into fragments.
-- Plain-conceptual NL: *inzicht, vakmanschap, ontwikkeling, aandacht, werkdruk, capaciteit*. Concrete trade words are welcome (werf, werkbon, offerte, camionette); wordplay and folksy puns are decoration and stay out.
-- Formal/informal: **jij/je** for SME owners (peer-to-peer), **u** in first cold contact and in the preview document, switch to *je* once a conversation exists. Corporate FR/EN: professional register, still first person, still plain.
-- No emoji in her voice. Anywhere.
-- **Calibration loop:** NL drafts are marked [NL-VOICE: awaiting calibration] until Olivia has corrected a few; her corrections get mined for patterns and added to §8 of this file, exactly like the book project does it.
+- **Code-switching is the register.** Keep the English words she'd naturally use: admin, workflows, agents, planning, follow-up, scan, case, team, AI-native, tools. Do NOT purify them into Dutch equivalents (no "werkstromen", no "opvolgingsproces") — that's where the stiffness came from. Trade words stay Flemish: werf, werkbon, offerte, zaak.
+- **Default je, everywhere** — peer-to-peer, easygoing, welcoming. *U* survives only in the corporate preview document and a first formal corporate mail. (Round-1 correction: the u-register cold emails read too formal for who she is; warmth over protocol.)
+- Chained reasoning still works (*omdat, maar, want, en*), but lighter: shorter chains, room for a spoken beat ("en dat vind ik zo zonde", "goed nieuws, toch?"), a question she'd really ask, an exclamation where she'd really smile — max one per post, it loses value in rows.
+- Light, natural emoji MAY appear in short-form if she'd genuinely type it there (test in calibration); never in documents, previews, or anything formal. Em-dashes stay banned everywhere.
+- **Drafting workflow:** she can draft or brief in English (her natural writing language); Claude converts to spoken-Flemish register per these rules. Never the reverse (formal NL first, then loosened).
+- **Calibration loop:** NL drafts stay marked [NL-VOICE: awaiting calibration] until she has corrected a few; her corrections get mined for patterns and added to §8, exactly like the book project does it. Round 1 (her energy/language description) is folded in above; round 2 = her hand-corrections of posts #1–3 v2.
 
 ## 6. Forbidden — always, in every language
 
-Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetorical-question hooks and "Here's the thing" cadence · punchy fragment sequences ("Correct answer. Client happy.") · emotional vocabulary doing the reasoning's work (scared, terrifying, game-changing, revolutionair) · performed enthusiasm and hype ("🚀", "mind-blowing", "de toekomst is nu") · "it's not X, it's Y" as a habit · triadic listing as default rhythm · uniform paragraph lengths · borrowed authority · moralising after a story · ending inside the problem · listicle-brain content ("5 tools die je NU moet kennen") · urgency theater and manufactured scarcity (real capacity limits may be stated as plain fact) · emoji · "unlock your potential" energy · consultant-speak (leverage, enable, drive value, best-practice) — route every technical point through a person: what someone did, decided, misjudged or learned.
+Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetorical-question hooks and "Here's the thing" cadence · punchy fragment sequences ("Correct answer. Client happy.") · emotional vocabulary doing the reasoning's work (scared, terrifying, game-changing, revolutionair) · **performed** enthusiasm and hype ("🚀", "mind-blowing", "de toekomst is nu", "I'm SO excited to announce") — genuine enthusiasm per §1b is the voice, the fake kind is the crime · "it's not X, it's Y" as a habit · triadic listing as default rhythm · uniform paragraph lengths · borrowed authority · moralising after a story · ending inside the problem · listicle-brain content ("5 tools die je NU moet kennen") · urgency theater and manufactured scarcity (real capacity limits may be stated as plain fact) · decorative emoji rows (sparing natural emoji in short-form only, per §5) · "unlock your potential" energy · consultant-speak (leverage, enable, drive value, best-practice) — route every technical point through a person: what someone did, decided, misjudged or learned.
 
 ## 7. Voice QA — run before any asset ships
 
@@ -76,12 +87,22 @@ Em-dashes (restructure with commas, *omdat/because*, or a full stop) · rhetoric
 
 *Approved NL passages get added here as they're calibrated.*
 
+### Raw calibration data — round 1 (2026-07-06, her own words, unedited)
+
+> "they don't feel anything like me, i feel like i bring light energy, enthousiasm to the table an energy that makes you feel like anything is possible sometimes a bit naively, but i'm upbeat a bit less formal, very easy going and welcoming, i speak dutch with a good amount of english in it, writing i do almost always in english but i easily speak dutch when i talk to dutch speaking people and yet there's a lot of english in it as well"
+
+*(Note for future drafting: this raw correction outranks the imported book/tone registers wherever business-facing energy or NL register is in question, per §1b.)*
+
 ## 9. Prompt block (paste into any generation prompt, or rely on the uploaded file)
 
 ```
-VOICE: Follow M5-voice-and-tone.md strictly. Warm but not soft, grounded,
-reflective, honest about uncertainty. Chained reasoning (because/but/and;
-omdat/maar/want), one idea per paragraph, plain-conceptual vocabulary.
+VOICE: Follow M5-voice-and-tone.md strictly. Upbeat, light, welcoming,
+possibility-oriented (her in-person energy, per 1b): genuine enthusiasm
+yes, performed hype never. Warm, grounded, honest about uncertainty.
+Chained reasoning (because/but/and; omdat/maar/want) kept light, one idea
+per paragraph. NL = spoken Flemish with natural English mixed in (admin,
+workflows, agents, follow-up); default je, never stiff or translated-
+sounding; max one exclamation per piece.
 Short-form: open with an observation, stanzas of 3-6 lines, end with a
 reflection or open thought (CTA only in designated ask-posts). Mid-length
 (newsletter/Substack): 300-900 words, one idea, reasoning shown, ending

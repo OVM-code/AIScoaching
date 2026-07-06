@@ -32,32 +32,34 @@ The bouwlog pillar usually wears shape 1 or 2; nuchterheid wears shape 3.
 
 *(Formatted as posted: stanzas separated by blank lines. #1 and #4 are the designated ask-posts of their week; the rest end open.)*
 
+*(v2 after calibration round 1: her in-person energy, spoken-Flemish register with natural English. She hand-corrects these → round 2.)*
+
 **#1 — Origin (NL, week 1 — ask-post — TRUE MATERIAL, B1 answers 1/2/5)**
-> De voorbije maanden sprak ik verschillende oprichters over hun zaak. Ze weten precies hoe ze willen bijdragen aan de wereld, en ze willen vooral bouwen aan hun product, omdat daar hun waarde zit.
+> De voorbije maanden sprak ik met een pak oprichters over hun zaak. En eigenlijk willen ze allemaal hetzelfde: bouwen aan hun product, want dáár zit hun magie.
 >
-> Maar wie klanten wil, moet ook administratie en verkoop doen. En daar zag ik telkens hetzelfde: al hun tijd ging naar werk dat hun sterkte niet is en waar ze geen energie van krijgen, alleen maar om de zaak draaiende te houden.
+> Maar zodra er klanten komen, komt de admin erbij. Offertes, opvolging, facturen. Werk dat moet gebeuren om de zaak draaiende te houden, maar dat hun energie opvreet omdat het gewoon hun ding niet is.
 >
-> Zelf werk ik dagelijks met AI in ERP-consulting. Ik bouwde workflows die mijn handgeschreven notities omzetten in documentatie, werkte mee aan agents voor Business Central, en help ons team vertrouwd te worden met AI.
+> En dat vind ik zo zonde, want daar is vandaag zóveel aan te doen. Ik werk elke dag met AI in ERP-consulting: ik bouwde workflows die mijn handgeschreven notities omzetten in documentatie, werkte mee aan agents voor Business Central, en help ons team AI-native te worden.
 >
-> Die twee werelden breng ik nu samen: ik help service- en installatiebedrijven hun administratie te automatiseren, zodat de uren teruggaan naar het werk waar ze sterk in zijn. Ik bouw mijn eerste cases op, en wie wil weten waar de uren in zijn eigen zaak lekken: de gratis AI-Scan staat in mijn profiel.
+> Die twee werelden breng ik nu samen: ik help service- en installatiebedrijven hun admin te automatiseren, zodat de uren teruggaan naar het werk waar ze goed in zijn. Ik bouw volop mijn eerste cases op. Dus wil je weten waar de uren in jouw zaak lekken? De gratis AI-Scan staat in mijn profiel!
 
 **#2 — The admin drain (NL — shape 1, The Observation — TRUE MATERIAL, B1 answer 1)**
-> Elke oprichter die ik de voorbije maanden sprak, wil vooral één ding: bouwen aan zijn product, omdat daar zijn bijdrage zit.
+> Elke oprichter die ik sprak wil vooral één ding: bouwen aan zijn product. Logisch, want daar zit de waarde.
 >
-> Maar zodra er klanten komen, komt er ook administratie en verkoop bij. Dat werk neemt stilletjes hun tijd over, omdat er zoveel onbekend in zit en het hun sterkte niet is. Het houdt de zaak overeind en het put hen tegelijk uit.
+> Maar met klanten komt ook admin en sales. En dat werk neemt stilletjes al hun tijd over. Niet omdat ze het slecht doen, maar omdat er zoveel onbekend in zit en het gewoon hun sterkte niet is. Het houdt de zaak recht én het put hen uit.
 >
-> Wat me daarbij opviel: geen van hen wil daarvoor zomaar iemand extra aannemen. Als het goedkoper en automatisch kan, kiezen ze dat meteen, omdat elke euro die vrijkomt terug de zaak in kan.
+> Wat me opviel: niemand wil daar zomaar een extra iemand voor aannemen. Kan het goedkoper en automatisch? Graag zelfs, want elke euro die vrijkomt gaat liever terug de zaak in.
 >
-> Ik denk dat dit voor elke zaakvoerder geldt, van start-up tot installatiebedrijf. Het werk dat je energie vreet, is meestal ook het werk dat een systeem kan overnemen.
+> En ik denk dat dat voor elke zaakvoerder geldt, van start-up tot installatiebedrijf. Het werk dat je energie opvreet, is meestal net het werk dat een systeem kan overnemen. Goed nieuws, toch?
 
 **#3 — The three reactions (NL — shape 3, The Reframe — TRUE MATERIAL, B1 answer 3 + her lived freeze arc)**
-> Als ik met mensen over AI praat, zie ik telkens dezelfde drie reacties: overweldigd zijn en niet weten waar te beginnen, afhaken bij de eerste frustratie, of ontkennen dat het hun werk zal raken, zeker als het pensioen in zicht komt.
+> Als ik met mensen over AI praat, zie ik altijd dezelfde drie reacties: overweldigd ("waar begin ik zelfs?"), gefrustreerd afhaken, of ontkennen ("tegen dat het relevant wordt ben ik toch met pensioen").
 >
-> Ik herken ze alle drie, want ik ben er zelf door gegaan. Ik raakte overweldigd door het tempo en deed een tijd gewoon niets. Maar niets doen bleek zijn eigen kost te hebben, omdat de stress ondertussen bleef opbouwen.
+> Ik snap ze alle drie, want ik heb ze zelf gehad. Ik raakte overweldigd door het tempo en deed een tijdje gewoon niets. Maar niets doen bleek ook stress op te bouwen, want ergens weet je dat je er iets mee moet.
 >
-> Wat mij weer op gang bracht, was geen beter leerplan. Het was mezelf toestaan om opnieuw beginner te zijn, en fouten te maken terwijl ik leerde.
+> Wat mij weer op gang bracht? Mezelf toestaan om terug beginner te zijn. Fouten maken mocht weer, en plots ging het vooruit.
 >
-> Daarom geloof ik zo in klein beginnen: één automatisering die echt werkt, verandert meer dan tien plannen.
+> Dus nee, je hoeft niet alles te kunnen. Klein beginnen is genoeg: één automatisering die écht werkt verandert meer dan tien plannen.
 
 **#4 — Case teaser (NL, template — fill with real numbers at first case — ask-post)**
 > Negentig dagen geleden vertrok een offerte bij een [sector]bedrijf met [Z] medewerkers gemiddeld na [X] dagen. Vandaag is dat [Y] uur.
