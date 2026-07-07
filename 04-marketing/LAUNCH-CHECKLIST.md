@@ -26,6 +26,8 @@ Working document. Each step gets checked off with its date and outcome; the repo
 - [ ] C4. Outreach sheet created; first 100 warm contacts listed
 - [ ] C5. Post #1 published (after B1+B2)
 
+- [ ] C6. Field-notes capture on phone: upload `06-knowledge/capture.html` to the Netlify site as `/capture` (or save the file to your phone), add to home screen, test one capture → export → merge (prompts in `06-knowledge/README.md`)
+
 ## D. Pipeline (from M3 Phase B/C)
 
 - [ ] D1. First 10 warm A-C-A messages sent (personalized openers drafted from the real names/roles)

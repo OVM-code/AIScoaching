@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Field Notes — capture</title>
+<style>
+  :root{--bg:#FBF8F3;--card:#fff;--ink:#22272E;--muted:#5C6672;--accent:#D9480F;--accent-dark:#B23A0A;--line:#E8E2D8;--green:#2B8A3E}
+  @media(prefers-color-scheme:dark){:root{--bg:#1B1F24;--card:#252B32;--ink:#ECEEF0;--muted:#9AA4AE;--line:#3A424B}}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.5;padding:16px;max-width:560px;margin:0 auto}
+  h1{font-size:1.25rem;margin:6px 0 2px}
+  .sub{color:var(--muted);font-size:.85rem;margin-bottom:14px}
+  .types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+  .types button{padding:14px 8px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-size:.95rem;font-weight:650}
+  .types button.active{border-color:var(--accent);color:var(--accent)}
+  label{display:block;font-size:.85rem;font-weight:650;margin:12px 0 4px;color:var(--muted)}
+  input,select,textarea{width:100%;padding:13px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:1rem;font-family:inherit}
+  textarea{min-height:84px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;margin-top:16px}
+  .btn-save{background:var(--accent);color:#fff}
+  .btn-save:active{background:var(--accent-dark)}
+  .bar{display:flex;gap:8px;margin-top:12px}
+  .bar button{flex:1;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-weight:650;font-size:.9rem}
+  .queue{margin-top:14px;padding:12px;border-radius:10px;background:var(--card);border:1.5px solid var(--line);font-size:.9rem;color:var(--muted)}
+  .ok{color:var(--green);font-weight:700}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<h1>Field Notes</h1>
+<p class="sub">Vang het nu, verwerk het later. Alles blijft lokaal op je telefoon tot je exporteert.</p>
+
+<div class="types" id="types"></div>
+<form id="form" autocomplete="off"></form>
+<button class="btn btn-save" id="save">Bewaar in wachtrij</button>
+
+<div class="queue"><span id="qcount">0</span> notities in wachtrij · <span id="status"></span></div>
+<div class="bar">
+  <button id="export">Exporteer alles</button>
+  <button id="copyone" class="hidden">Kopieer laatste</button>
+  <button id="clear">Leeg wachtrij</button>
+</div>
+<textarea id="out" class="hidden" style="margin-top:12px;min-height:160px" readonly></textarea>
+
+<script>
+const TYPES = {
+  benchmark: {label:"📊 Benchmark", fields:[
+    ["metric","input","Metriek (bv. uren offerte-opmaak per week)"],
+    ["value","input","Waarde (bv. 9u, 4 dagen, €1.800)"],
+    ["confidence","select","Betrouwbaarheid",["measured (gemeten)","told-by-owner (verteld)","estimated (mijn schatting)"]],
+    ["context","textarea","Context (wie doet het, hoe, waarom zo)"]
+  ]},
+  objection: {label:"🛑 Bezwaar", fields:[
+    ["objection","textarea","Het bezwaar, zo letterlijk mogelijk"],
+    ["situation","select","Situatie",["debrief","discovery call","event/netwerk","outreach-reactie","andere"]],
+    ["response","textarea","Wat ik antwoordde"],
+    ["landed","select","Kwam het aan?",["ja","nee","onduidelijk"]]
+  ]},
+  pattern: {label:"💡 Patroon / inzicht", fields:[
+    ["insight","textarea","Wat gebeurde er / wat viel op"],
+    ["works","select","Werkt of faalt?",["werkt","faalt","nog onduidelijk"]],
+    ["stage","select","Fase",["outreach","scan","debrief","discovery call","pilot/bouw","levering","content","andere"]]
+  ]},
+  lead: {label:"👤 Lead-update", fields:[
+    ["who","input","Naam + bedrijf"],
+    ["status","select","Status",["Nieuw","Scan ontvangen","Debrief gepland","Discovery call","Offer","Klant","Geparkeerd"]],
+    ["next","input","Volgende actie"],
+    ["nextdate","date","Datum volgende actie"],
+    ["note","textarea","Notitie"]
+  ]},
+  note: {label:"📝 Snelle notitie", fields:[
+    ["note","textarea","Wat je niet wil vergeten"]
+  ]}
+};
+const COMMON = [
+  ["client","input","Klantcode of prospect (bv. C003, PROS-Jansen, n.v.t.)"],
+  ["sector","select","Sector",["HVAC","sanitair","elektro","renovatie","cleaning","tuin","andere","n.v.t."]],
+  ["size","input","Grootte in FTE (optioneel)"]
+];
+let current = "benchmark";
+const $ = id => document.getElementById(id);
+
+function renderTypes(){
+  $("types").innerHTML = "";
+  for(const [k,t] of Object.entries(TYPES)){
+    const b = document.createElement("button");
+    b.type="button"; b.textContent=t.label;
+    b.className = k===current ? "active":"";
+    b.onclick = ()=>{current=k; renderTypes(); renderForm();};
+    $("types").appendChild(b);
+  }
+}
+function field([name,kind,label,opts]){
+  const l = `<label for="f_${name}">${label}</label>`;
+  if(kind==="select"){
+    return l+`<select id="f_${name}"><option value=""></option>`+
+      opts.map(o=>`<option>${o}</option>`).join("")+`</select>`;
+  }
+  if(kind==="textarea") return l+`<textarea id="f_${name}"></textarea>`;
+  if(kind==="date") return l+`<input type="date" id="f_${name}">`;
+  return l+`<input type="text" id="f_${name}">`;
+}
+function renderForm(){
+  const skipCommon = (current==="lead"||current==="note");
+  const fs = (skipCommon? (current==="lead"?[]:[]) : COMMON).concat(TYPES[current].fields);
+  $("form").innerHTML = fs.map(field).join("");
+}
+function block(){
+  const d = new Date();
+  const stamp = d.toISOString().slice(0,16).replace("T"," ");
+  let lines = [`@CAPTURE v1 ${current} ${stamp}`];
+  document.querySelectorAll("#form input,#form select,#form textarea").forEach(el=>{
+    const v = el.value.trim();
+    if(v) lines.push(`${el.id.slice(2)}: ${v}`);
+  });
+  lines.push("@END");
+  return lines.join("\n");
+}
+function queue(){ return JSON.parse(localStorage.getItem("fieldnotes")||"[]"); }
+function setQueue(q){ localStorage.setItem("fieldnotes", JSON.stringify(q)); $("qcount").textContent=q.length; }
+
+$("save").onclick = ()=>{
+  const b = block();
+  if(b.split("\n").length<=2){ $("status").textContent="niets ingevuld"; return; }
+  const q = queue(); q.push(b); setQueue(q);
+  $("status").innerHTML = '<span class="ok">bewaard ✓</span>';
+  $("copyone").classList.remove("hidden");
+  renderForm();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+function exportText(){ return queue().join("\n\n"); }
+$("export").onclick = async ()=>{
+  const t = exportText();
+  if(!t){ $("status").textContent="wachtrij is leeg"; return; }
+  $("out").value = t; $("out").classList.remove("hidden");
+  if(navigator.share){ try{ await navigator.share({text:t}); return; }catch(e){} }
+  try{ await navigator.clipboard.writeText(t); $("status").innerHTML='<span class="ok">gekopieerd ✓ plak in Claude</span>'; }
+  catch(e){ $("status").textContent="selecteer en kopieer hieronder"; }
+};
+$("copyone").onclick = async ()=>{
+  const q = queue(); if(!q.length) return;
+  try{ await navigator.clipboard.writeText(q[q.length-1]); $("status").innerHTML='<span class="ok">laatste gekopieerd ✓</span>'; }catch(e){}
+};
+$("clear").onclick = ()=>{
+  if(confirm("Wachtrij leegmaken? Doe dit pas nadat je geëxporteerd en verwerkt hebt.")){
+    setQueue([]); $("out").classList.add("hidden"); $("status").textContent="leeg";
+  }
+};
+renderTypes(); renderForm(); setQueue(queue());
+</script>
+</body>
+</html>
