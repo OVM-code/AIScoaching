@@ -1,0 +1,47 @@
+{
+  "id": "logistics",
+  "domain": 7,
+  "title": { "nl": "Voorraad & logistiek", "en": "Inventory & logistics" },
+  "subtitle": { "nl": "Van goederenontvangst tot verzonden order en correcte voorraad", "en": "From goods receipt to shipped order and accurate stock" },
+  "lanes": [
+    { "id": "magazijn", "label": { "nl": "Magazijn", "en": "Warehouse" } },
+    { "id": "planning", "label": { "nl": "Planning / transport", "en": "Planning / transport" } },
+    { "id": "administratie", "label": { "nl": "Administratie", "en": "Back office" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Levering leverancier arriveert", "en": "Supplier delivery arrives" }, "lane": "magazijn" },
+    { "id": "ontvangst", "type": "task", "label": { "nl": "Goederen ontvangen en controleren", "en": "Receive & check goods" }, "lane": "magazijn", "process": "LOG.010" },
+    { "id": "gw-afwijking", "type": "gateway", "label": { "nl": "Levering conform?", "en": "Delivery conforming?" }, "lane": "magazijn" },
+    { "id": "retour-lev", "type": "task", "label": { "nl": "Retour naar leverancier verwerken", "en": "Process return to supplier" }, "lane": "magazijn", "process": "LOG.070" },
+    { "id": "registreren", "type": "task", "label": { "nl": "Voorraad registreren en wegzetten", "en": "Register stock & put away" }, "lane": "magazijn", "process": "LOG.020" },
+    { "id": "traceren", "type": "task", "label": { "nl": "Lot- en serienummers vastleggen", "en": "Record lot & serial numbers" }, "lane": "magazijn", "process": "LOG.080" },
+    { "id": "picken", "type": "task", "label": { "nl": "Order picken en klaarzetten", "en": "Pick & stage order" }, "lane": "magazijn", "process": "LOG.030" },
+    { "id": "gw-transport", "type": "gateway", "label": { "nl": "Eigen levering of transporteur?", "en": "Own delivery or carrier?" }, "lane": "planning" },
+    { "id": "wagen", "type": "task", "label": { "nl": "Wagenvoorraad aanvullen en laden", "en": "Replenish & load van stock" }, "lane": "planning", "process": "LOG.050" },
+    { "id": "verzenden", "type": "task", "label": { "nl": "Transport boeken en verzenden", "en": "Book transport & ship" }, "lane": "planning", "process": "LOG.040" },
+    { "id": "gw-retour", "type": "gateway", "label": { "nl": "Klantretour gemeld?", "en": "Customer return reported?" }, "lane": "administratie" },
+    { "id": "retour-klant", "type": "task", "label": { "nl": "Klantretour verwerken", "en": "Process customer return" }, "lane": "magazijn", "process": "LOG.070" },
+    { "id": "tellen", "type": "task", "label": { "nl": "Cyclustelling uitvoeren", "en": "Perform cycle count" }, "lane": "magazijn", "process": "LOG.020" },
+    { "id": "aanvullen", "type": "task", "label": { "nl": "Bestelpunten controleren en aanvullen", "en": "Check reorder points & replenish" }, "lane": "administratie", "process": "LOG.060" },
+    { "id": "end", "type": "end", "label": { "nl": "Voorraad correct, order geleverd", "en": "Stock accurate, order delivered" }, "lane": "administratie" }
+  ],
+  "flows": [
+    { "from": "start", "to": "ontvangst" },
+    { "from": "ontvangst", "to": "gw-afwijking" },
+    { "from": "gw-afwijking", "to": "retour-lev", "label": { "nl": "nee", "en": "no" } },
+    { "from": "retour-lev", "to": "registreren", "label": { "nl": "deellevering", "en": "partial delivery" } },
+    { "from": "gw-afwijking", "to": "registreren", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "registreren", "to": "traceren" },
+    { "from": "traceren", "to": "picken" },
+    { "from": "picken", "to": "gw-transport" },
+    { "from": "gw-transport", "to": "wagen", "label": { "nl": "eigen levering", "en": "own delivery" } },
+    { "from": "wagen", "to": "gw-retour" },
+    { "from": "gw-transport", "to": "verzenden", "label": { "nl": "transporteur", "en": "carrier" } },
+    { "from": "verzenden", "to": "gw-retour" },
+    { "from": "gw-retour", "to": "retour-klant", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "retour-klant", "to": "tellen" },
+    { "from": "gw-retour", "to": "tellen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "tellen", "to": "aanvullen" },
+    { "from": "aanvullen", "to": "end" }
+  ]
+}

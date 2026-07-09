@@ -1,0 +1,45 @@
+{
+  "id": "customer-service",
+  "domain": 10,
+  "title": { "nl": "Klantendienst", "en": "Customer service" },
+  "subtitle": { "nl": "Van klantcontact tot opgeloste vraag", "en": "From customer contact to resolved question" },
+  "lanes": [
+    { "id": "klantendienst", "label": { "nl": "Klantendienst / onthaal", "en": "Customer service / front office" } },
+    { "id": "tweedelijn", "label": { "nl": "Tweede lijn / experts", "en": "Second line / experts" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Klantcontact (mail / telefoon / WhatsApp)", "en": "Customer contact (mail / phone / WhatsApp)" }, "lane": "klantendienst" },
+    { "id": "triage", "type": "task", "label": { "nl": "Bericht triëren en toewijzen", "en": "Triage & assign message" }, "lane": "klantendienst", "process": "CS.010" },
+    { "id": "gw-type", "type": "gateway", "label": { "nl": "Type vraag?", "en": "Question type?" }, "lane": "klantendienst" },
+    { "id": "status", "type": "task", "label": { "nl": "Status opzoeken en antwoorden", "en": "Look up status & reply" }, "lane": "klantendienst", "process": "CS.020" },
+    { "id": "faq", "type": "task", "label": { "nl": "Productvraag beantwoorden", "en": "Answer product question" }, "lane": "klantendienst", "process": "CS.040" },
+    { "id": "afspraak", "type": "task", "label": { "nl": "Afspraak plannen of verzetten", "en": "Schedule or move appointment" }, "lane": "klantendienst", "process": "CS.050" },
+    { "id": "klacht", "type": "task", "label": { "nl": "Klacht registreren", "en": "Register complaint" }, "lane": "klantendienst", "process": "CS.030" },
+    { "id": "gw-zelf", "type": "gateway", "label": { "nl": "Zelf op te lossen?", "en": "Solvable in first line?" }, "lane": "klantendienst" },
+    { "id": "escaleren", "type": "task", "label": { "nl": "Escaleren naar expert of afdeling", "en": "Escalate to expert or department" }, "lane": "klantendienst", "process": "CS.070" },
+    { "id": "expert", "type": "task", "label": { "nl": "Expert onderzoekt en antwoordt", "en": "Expert investigates & answers" }, "lane": "tweedelijn", "process": "CS.070" },
+    { "id": "oplossen", "type": "task", "label": { "nl": "Oplossing terugkoppelen aan klant", "en": "Feed back resolution to customer" }, "lane": "klantendienst", "process": "CS.030" },
+    { "id": "gegevens", "type": "task", "label": { "nl": "Klantgegevens bijwerken", "en": "Update customer data" }, "lane": "klantendienst", "process": "CS.060" },
+    { "id": "tevredenheid", "type": "task", "label": { "nl": "Tevredenheid opvolgen", "en": "Follow up satisfaction" }, "lane": "klantendienst", "process": "CS.080" },
+    { "id": "end", "type": "end", "label": { "nl": "Vraag afgehandeld", "en": "Question resolved" }, "lane": "klantendienst" }
+  ],
+  "flows": [
+    { "from": "start", "to": "triage" },
+    { "from": "triage", "to": "gw-type" },
+    { "from": "gw-type", "to": "status", "label": { "nl": "statusvraag", "en": "status question" } },
+    { "from": "gw-type", "to": "faq", "label": { "nl": "productvraag", "en": "product question" } },
+    { "from": "gw-type", "to": "afspraak", "label": { "nl": "afspraak", "en": "appointment" } },
+    { "from": "gw-type", "to": "klacht", "label": { "nl": "klacht", "en": "complaint" } },
+    { "from": "klacht", "to": "gw-zelf" },
+    { "from": "gw-zelf", "to": "oplossen", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "gw-zelf", "to": "escaleren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "escaleren", "to": "expert" },
+    { "from": "expert", "to": "oplossen" },
+    { "from": "status", "to": "gegevens" },
+    { "from": "faq", "to": "gegevens" },
+    { "from": "afspraak", "to": "gegevens" },
+    { "from": "oplossen", "to": "gegevens" },
+    { "from": "gegevens", "to": "tevredenheid" },
+    { "from": "tevredenheid", "to": "end" }
+  ]
+}

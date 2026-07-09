@@ -1,0 +1,44 @@
+{
+  "id": "marketing",
+  "domain": 3,
+  "title": { "nl": "Marketing", "en": "Marketing" },
+  "subtitle": { "nl": "Maandelijkse marketingcyclus van plan tot rapport", "en": "Monthly marketing cycle from plan to report" },
+  "lanes": [
+    { "id": "marketing", "label": { "nl": "Marketing (vaak een pet)", "en": "Marketing (often a hat)" } },
+    { "id": "zaakvoerder", "label": { "nl": "Zaakvoerder", "en": "Owner / manager" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Nieuwe maand / campagnemoment", "en": "New month / campaign moment" }, "lane": "marketing" },
+    { "id": "plannen", "type": "task", "label": { "nl": "Kalender en acties plannen", "en": "Plan calendar & actions" }, "lane": "marketing", "process": "MKT.010" },
+    { "id": "content", "type": "task", "label": { "nl": "Content maken (posts, cases)", "en": "Create content (posts, cases)" }, "lane": "marketing", "process": "MKT.020" },
+    { "id": "gw-akkoord", "type": "gateway", "label": { "nl": "Zaakvoerder akkoord met content?", "en": "Owner approves content?" }, "lane": "zaakvoerder" },
+    { "id": "aanpassen", "type": "task", "label": { "nl": "Content aanpassen", "en": "Revise content" }, "lane": "marketing", "process": "MKT.020" },
+    { "id": "gwp-split", "type": "gateway-parallel", "label": { "nl": "Kanalen parallel", "en": "Channels in parallel" }, "lane": "marketing" },
+    { "id": "social", "type": "task", "label": { "nl": "Sociale media publiceren en opvolgen", "en": "Publish & monitor social media" }, "lane": "marketing", "process": "MKT.030" },
+    { "id": "nieuwsbrief", "type": "task", "label": { "nl": "Nieuwsbrief versturen", "en": "Send newsletter" }, "lane": "marketing", "process": "MKT.040" },
+    { "id": "website", "type": "task", "label": { "nl": "Website en SEO bijwerken", "en": "Update website & SEO" }, "lane": "marketing", "process": "MKT.050" },
+    { "id": "gwp-join", "type": "gateway-parallel", "label": { "nl": "Kanalen klaar", "en": "Channels done" }, "lane": "marketing" },
+    { "id": "reviews", "type": "task", "label": { "nl": "Reviews vragen en beantwoorden", "en": "Request & answer reviews" }, "lane": "marketing", "process": "MKT.060" },
+    { "id": "rapport", "type": "task", "label": { "nl": "Resultaten rapporteren", "en": "Report results" }, "lane": "marketing", "process": "MKT.070" },
+    { "id": "bespreken", "type": "task", "label": { "nl": "Resultaten bespreken en bijsturen", "en": "Discuss results & adjust" }, "lane": "zaakvoerder", "process": "MKT.070" },
+    { "id": "end", "type": "end", "label": { "nl": "Cyclus afgerond", "en": "Cycle closed" }, "lane": "marketing" }
+  ],
+  "flows": [
+    { "from": "start", "to": "plannen" },
+    { "from": "plannen", "to": "content" },
+    { "from": "content", "to": "gw-akkoord" },
+    { "from": "gw-akkoord", "to": "aanpassen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "aanpassen", "to": "gw-akkoord" },
+    { "from": "gw-akkoord", "to": "gwp-split", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "gwp-split", "to": "social" },
+    { "from": "gwp-split", "to": "nieuwsbrief" },
+    { "from": "gwp-split", "to": "website" },
+    { "from": "social", "to": "gwp-join" },
+    { "from": "nieuwsbrief", "to": "gwp-join" },
+    { "from": "website", "to": "gwp-join" },
+    { "from": "gwp-join", "to": "reviews" },
+    { "from": "reviews", "to": "rapport" },
+    { "from": "rapport", "to": "bespreken" },
+    { "from": "bespreken", "to": "end" }
+  ]
+}

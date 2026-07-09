@@ -1,0 +1,46 @@
+{
+  "id": "finance",
+  "domain": 8,
+  "title": { "nl": "Financiën & administratie", "en": "Finance & administration" },
+  "subtitle": { "nl": "Van geleverde prestatie tot afgesloten maand", "en": "From delivered work to closed month" },
+  "lanes": [
+    { "id": "boekhouding", "label": { "nl": "Boekhouding / administratie", "en": "Bookkeeping / back office" } },
+    { "id": "zaakvoerder", "label": { "nl": "Zaakvoerder", "en": "Owner / manager" } },
+    { "id": "accountant", "label": { "nl": "Externe boekhouder", "en": "External accountant" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Prestatie geleverd / maandcyclus loopt", "en": "Work delivered / monthly cycle running" }, "lane": "boekhouding" },
+    { "id": "factureren", "type": "task", "label": { "nl": "Verkoopfactuur opmaken en versturen", "en": "Create & send sales invoice" }, "lane": "boekhouding", "process": "FIN.010" },
+    { "id": "gw-betaald", "type": "gateway", "label": { "nl": "Betaald binnen termijn?", "en": "Paid within terms?" }, "lane": "boekhouding" },
+    { "id": "aanmanen", "type": "task", "label": { "nl": "Aanmaning versturen en opvolgen", "en": "Send & follow up reminder" }, "lane": "boekhouding", "process": "FIN.040" },
+    { "id": "aankoopfacturen", "type": "task", "label": { "nl": "Aankoopfacturen verwerken", "en": "Process purchase invoices" }, "lane": "boekhouding", "process": "FIN.020" },
+    { "id": "onkosten", "type": "task", "label": { "nl": "Onkosten en kaartuitgaven verwerken", "en": "Process expenses & card spend" }, "lane": "boekhouding", "process": "FIN.050" },
+    { "id": "betalen", "type": "task", "label": { "nl": "Betalingsrun voorbereiden", "en": "Prepare payment run" }, "lane": "boekhouding", "process": "FIN.030" },
+    { "id": "goedkeuren", "type": "task", "label": { "nl": "Betalingen goedkeuren (vier ogen)", "en": "Approve payments (four eyes)" }, "lane": "zaakvoerder", "process": "FIN.030" },
+    { "id": "afletteren", "type": "task", "label": { "nl": "Bank afstemmen", "en": "Reconcile bank" }, "lane": "boekhouding", "process": "FIN.030" },
+    { "id": "afsluiten", "type": "task", "label": { "nl": "Maand afsluiten", "en": "Close the month" }, "lane": "boekhouding", "process": "FIN.070" },
+    { "id": "gw-btw", "type": "gateway", "label": { "nl": "Btw-periode?", "en": "VAT period?" }, "lane": "accountant" },
+    { "id": "btw", "type": "task", "label": { "nl": "Btw-aangifte indienen", "en": "File VAT return" }, "lane": "accountant", "process": "FIN.060" },
+    { "id": "nacalculeren", "type": "task", "label": { "nl": "Nacalculatie en marges opvolgen", "en": "Job costing & margin review" }, "lane": "boekhouding", "process": "FIN.080" },
+    { "id": "cashflow", "type": "task", "label": { "nl": "Cashflowprognose bijwerken", "en": "Update cash-flow forecast" }, "lane": "zaakvoerder", "process": "FIN.090" },
+    { "id": "end", "type": "end", "label": { "nl": "Maand afgesloten", "en": "Month closed" }, "lane": "zaakvoerder" }
+  ],
+  "flows": [
+    { "from": "start", "to": "factureren" },
+    { "from": "factureren", "to": "gw-betaald" },
+    { "from": "gw-betaald", "to": "aanmanen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "aanmanen", "to": "gw-betaald", "label": { "nl": "herinnering", "en": "reminder" } },
+    { "from": "gw-betaald", "to": "aankoopfacturen", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "aankoopfacturen", "to": "onkosten" },
+    { "from": "onkosten", "to": "betalen" },
+    { "from": "betalen", "to": "goedkeuren" },
+    { "from": "goedkeuren", "to": "afletteren" },
+    { "from": "afletteren", "to": "afsluiten" },
+    { "from": "afsluiten", "to": "gw-btw" },
+    { "from": "gw-btw", "to": "btw", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "btw", "to": "nacalculeren" },
+    { "from": "gw-btw", "to": "nacalculeren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "nacalculeren", "to": "cashflow" },
+    { "from": "cashflow", "to": "end" }
+  ]
+}

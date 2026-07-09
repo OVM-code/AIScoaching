@@ -1,0 +1,48 @@
+{
+  "id": "hr",
+  "domain": 9,
+  "title": { "nl": "HR & personeel", "en": "HR & people" },
+  "subtitle": { "nl": "Van vacature tot correcte loonverwerking", "en": "From vacancy to correct payroll" },
+  "lanes": [
+    { "id": "hr", "label": { "nl": "HR / officemanager", "en": "HR / office manager" } },
+    { "id": "leidinggevende", "label": { "nl": "Leidinggevende / zaakvoerder", "en": "Manager / owner" } },
+    { "id": "secretariaat", "label": { "nl": "Sociaal secretariaat", "en": "Payroll provider" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Personeelsbehoefte vastgesteld", "en": "Staffing need identified" }, "lane": "leidinggevende" },
+    { "id": "vacature", "type": "task", "label": { "nl": "Vacature opstellen en publiceren", "en": "Draft & publish vacancy" }, "lane": "hr", "process": "HR.010" },
+    { "id": "screenen", "type": "task", "label": { "nl": "Kandidaten screenen en uitnodigen", "en": "Screen & invite candidates" }, "lane": "hr", "process": "HR.020" },
+    { "id": "interview", "type": "task", "label": { "nl": "Interviews voeren en beslissen", "en": "Interview & decide" }, "lane": "leidinggevende", "process": "HR.020" },
+    { "id": "gw-gevonden", "type": "gateway", "label": { "nl": "Kandidaat gevonden?", "en": "Candidate found?" }, "lane": "leidinggevende" },
+    { "id": "contract", "type": "task", "label": { "nl": "Contract en Dimona regelen", "en": "Arrange contract & Dimona" }, "lane": "secretariaat", "process": "HR.030" },
+    { "id": "onboarden", "type": "task", "label": { "nl": "Onboarding uitvoeren (badge, login, plan)", "en": "Run onboarding (badge, login, plan)" }, "lane": "hr", "process": "HR.030" },
+    { "id": "opleiding", "type": "task", "label": { "nl": "Opleidingen en attesten registreren", "en": "Register training & certificates" }, "lane": "hr", "process": "HR.060" },
+    { "id": "tijd", "type": "task", "label": { "nl": "Tijd en afwezigheden registreren (maandelijks)", "en": "Register time & absences (monthly)" }, "lane": "hr", "process": "HR.040" },
+    { "id": "gw-correct", "type": "gateway", "label": { "nl": "Registraties volledig en correct?", "en": "Registrations complete & correct?" }, "lane": "hr" },
+    { "id": "corrigeren", "type": "task", "label": { "nl": "Correcties opvragen bij medewerkers", "en": "Chase corrections with staff" }, "lane": "hr", "process": "HR.040" },
+    { "id": "loonvoorbereiding", "type": "task", "label": { "nl": "Loonvariabelen doorgeven", "en": "Submit payroll variables" }, "lane": "hr", "process": "HR.050" },
+    { "id": "verlonen", "type": "task", "label": { "nl": "Lonen verwerken", "en": "Process payroll" }, "lane": "secretariaat", "process": "HR.050" },
+    { "id": "dossier", "type": "task", "label": { "nl": "Personeelsdossiers bijwerken", "en": "Update personnel files" }, "lane": "hr", "process": "HR.070" },
+    { "id": "evaluatie", "type": "task", "label": { "nl": "Evaluatiegesprekken plannen en voeren", "en": "Plan & hold performance reviews" }, "lane": "leidinggevende", "process": "HR.080" },
+    { "id": "end", "type": "end", "label": { "nl": "HR-cyclus afgerond", "en": "HR cycle closed" }, "lane": "hr" }
+  ],
+  "flows": [
+    { "from": "start", "to": "vacature" },
+    { "from": "vacature", "to": "screenen" },
+    { "from": "screenen", "to": "interview" },
+    { "from": "interview", "to": "gw-gevonden" },
+    { "from": "gw-gevonden", "to": "vacature", "label": { "nl": "nee, opnieuw", "en": "no, retry" } },
+    { "from": "gw-gevonden", "to": "contract", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "contract", "to": "onboarden" },
+    { "from": "onboarden", "to": "opleiding" },
+    { "from": "opleiding", "to": "tijd" },
+    { "from": "tijd", "to": "gw-correct" },
+    { "from": "gw-correct", "to": "corrigeren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "corrigeren", "to": "gw-correct" },
+    { "from": "gw-correct", "to": "loonvoorbereiding", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "loonvoorbereiding", "to": "verlonen" },
+    { "from": "verlonen", "to": "dossier" },
+    { "from": "dossier", "to": "evaluatie" },
+    { "from": "evaluatie", "to": "end" }
+  ]
+}

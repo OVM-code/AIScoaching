@@ -1,0 +1,47 @@
+{
+  "id": "operations",
+  "domain": 4,
+  "title": { "nl": "Operaties: planning & productie", "en": "Operations: planning & production" },
+  "subtitle": { "nl": "Van bevestigde order tot geleverd werk", "en": "From confirmed order to delivered work" },
+  "lanes": [
+    { "id": "werkvoorbereiding", "label": { "nl": "Werkvoorbereiding", "en": "Work preparation" } },
+    { "id": "planning", "label": { "nl": "Planning", "en": "Planning" } },
+    { "id": "uitvoering", "label": { "nl": "Uitvoering / werkvloer", "en": "Execution / shop floor" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Order bevestigd door verkoop", "en": "Order confirmed by sales" }, "lane": "werkvoorbereiding" },
+    { "id": "werkorder", "type": "task", "label": { "nl": "Werkorder aanmaken en voorbereiden", "en": "Create & prepare work order" }, "lane": "werkvoorbereiding", "process": "OPS.010" },
+    { "id": "materiaal", "type": "task", "label": { "nl": "Materiaalbeschikbaarheid controleren", "en": "Check material availability" }, "lane": "werkvoorbereiding", "process": "OPS.050" },
+    { "id": "gw-materiaal", "type": "gateway", "label": { "nl": "Materiaal beschikbaar?", "en": "Material available?" }, "lane": "werkvoorbereiding" },
+    { "id": "bestellen", "type": "subprocess", "label": { "nl": "Materiaal aankopen", "en": "Purchase material" }, "lane": "werkvoorbereiding", "process": "PUR.010", "goto": "purchasing" },
+    { "id": "capaciteit", "type": "task", "label": { "nl": "Capaciteit en resources inplannen", "en": "Plan capacity & resources" }, "lane": "planning", "process": "OPS.020" },
+    { "id": "plannen", "type": "task", "label": { "nl": "Dag- en weekplanning opmaken", "en": "Build day & week schedule" }, "lane": "planning", "process": "OPS.030" },
+    { "id": "gw-onderaannemer", "type": "gateway", "label": { "nl": "Onderaannemer nodig?", "en": "Subcontractor needed?" }, "lane": "planning" },
+    { "id": "onderaannemer", "type": "task", "label": { "nl": "Onderaannemer boeken en briefen", "en": "Book & brief subcontractor" }, "lane": "planning", "process": "OPS.080" },
+    { "id": "uitvoeren", "type": "task", "label": { "nl": "Werk uitvoeren en registreren", "en": "Execute work & register" }, "lane": "uitvoering", "process": "OPS.040" },
+    { "id": "kwaliteit", "type": "task", "label": { "nl": "Kwaliteitscontrole uitvoeren", "en": "Perform quality control" }, "lane": "uitvoering", "process": "OPS.070" },
+    { "id": "gw-conform", "type": "gateway", "label": { "nl": "Conform?", "en": "Conforming?" }, "lane": "uitvoering" },
+    { "id": "herwerk", "type": "task", "label": { "nl": "Herwerk of wijziging verwerken", "en": "Process rework or change" }, "lane": "uitvoering", "process": "OPS.060" },
+    { "id": "rapporteren", "type": "task", "label": { "nl": "Voortgang rapporteren", "en": "Report progress" }, "lane": "planning", "process": "OPS.090" },
+    { "id": "end", "type": "end", "label": { "nl": "Klaar voor levering en facturatie", "en": "Ready for delivery & invoicing" }, "lane": "uitvoering" }
+  ],
+  "flows": [
+    { "from": "start", "to": "werkorder" },
+    { "from": "werkorder", "to": "materiaal" },
+    { "from": "materiaal", "to": "gw-materiaal" },
+    { "from": "gw-materiaal", "to": "bestellen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "bestellen", "to": "capaciteit" },
+    { "from": "gw-materiaal", "to": "capaciteit", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "capaciteit", "to": "plannen" },
+    { "from": "plannen", "to": "gw-onderaannemer" },
+    { "from": "gw-onderaannemer", "to": "onderaannemer", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "onderaannemer", "to": "uitvoeren" },
+    { "from": "gw-onderaannemer", "to": "uitvoeren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "uitvoeren", "to": "kwaliteit" },
+    { "from": "kwaliteit", "to": "gw-conform" },
+    { "from": "gw-conform", "to": "herwerk", "label": { "nl": "nee", "en": "no" } },
+    { "from": "herwerk", "to": "uitvoeren", "label": { "nl": "opnieuw", "en": "redo" } },
+    { "from": "gw-conform", "to": "rapporteren", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "rapporteren", "to": "end" }
+  ]
+}

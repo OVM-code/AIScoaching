@@ -1,0 +1,48 @@
+{
+  "id": "it-data",
+  "domain": 11,
+  "title": { "nl": "IT & data", "en": "IT & data" },
+  "subtitle": { "nl": "Van IT-vraag tot beheerde systemen en data", "en": "From IT request to managed systems and data" },
+  "lanes": [
+    { "id": "medewerkers", "label": { "nl": "Medewerkers", "en": "Staff" } },
+    { "id": "it", "label": { "nl": "IT (intern of partner)", "en": "IT (internal or partner)" } },
+    { "id": "zaakvoerder", "label": { "nl": "Zaakvoerder", "en": "Owner / manager" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "IT-vraag of incident gemeld", "en": "IT request or incident reported" }, "lane": "medewerkers" },
+    { "id": "registreren", "type": "task", "label": { "nl": "Melding registreren", "en": "Register ticket" }, "lane": "it", "process": "IT.020" },
+    { "id": "gw-type", "type": "gateway", "label": { "nl": "Toegangsvraag of incident?", "en": "Access request or incident?" }, "lane": "it" },
+    { "id": "toegang", "type": "task", "label": { "nl": "Toegang aanmaken of aanpassen", "en": "Create or change access" }, "lane": "it", "process": "IT.010" },
+    { "id": "oplossen", "type": "task", "label": { "nl": "Incident oplossen", "en": "Resolve incident" }, "lane": "it", "process": "IT.020" },
+    { "id": "gw-structureel", "type": "gateway", "label": { "nl": "Structurele oorzaak?", "en": "Structural cause?" }, "lane": "it" },
+    { "id": "integratie", "type": "task", "label": { "nl": "Integratie of datasync herstellen", "en": "Fix integration or data sync" }, "lane": "it", "process": "IT.040" },
+    { "id": "stamdata", "type": "task", "label": { "nl": "Stamdata opschonen", "en": "Clean up master data" }, "lane": "it", "process": "IT.030" },
+    { "id": "gwp-split", "type": "gateway-parallel", "label": { "nl": "Periodiek beheer parallel", "en": "Periodic maintenance in parallel" }, "lane": "it" },
+    { "id": "backup", "type": "task", "label": { "nl": "Back-ups controleren en testen", "en": "Verify & test backups" }, "lane": "it", "process": "IT.050" },
+    { "id": "security", "type": "task", "label": { "nl": "Beveiliging en phishing-oefening", "en": "Security & phishing drill" }, "lane": "it", "process": "IT.060" },
+    { "id": "rapporten", "type": "task", "label": { "nl": "Rapporten en BI onderhouden", "en": "Maintain reports & BI" }, "lane": "it", "process": "IT.070" },
+    { "id": "gwp-join", "type": "gateway-parallel", "label": { "nl": "Beheer klaar", "en": "Maintenance done" }, "lane": "it" },
+    { "id": "licenties", "type": "task", "label": { "nl": "Licenties en contracten nakijken", "en": "Review licenses & contracts" }, "lane": "zaakvoerder", "process": "IT.080" },
+    { "id": "end", "type": "end", "label": { "nl": "Systemen en data op orde", "en": "Systems and data in order" }, "lane": "it" }
+  ],
+  "flows": [
+    { "from": "start", "to": "registreren" },
+    { "from": "registreren", "to": "gw-type" },
+    { "from": "gw-type", "to": "toegang", "label": { "nl": "toegang", "en": "access" } },
+    { "from": "toegang", "to": "gwp-split" },
+    { "from": "gw-type", "to": "oplossen", "label": { "nl": "incident", "en": "incident" } },
+    { "from": "oplossen", "to": "gw-structureel" },
+    { "from": "gw-structureel", "to": "integratie", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "integratie", "to": "stamdata" },
+    { "from": "stamdata", "to": "gwp-split" },
+    { "from": "gw-structureel", "to": "gwp-split", "label": { "nl": "nee", "en": "no" } },
+    { "from": "gwp-split", "to": "backup" },
+    { "from": "gwp-split", "to": "security" },
+    { "from": "gwp-split", "to": "rapporten" },
+    { "from": "backup", "to": "gwp-join" },
+    { "from": "security", "to": "gwp-join" },
+    { "from": "rapporten", "to": "gwp-join" },
+    { "from": "gwp-join", "to": "licenties" },
+    { "from": "licenties", "to": "end" }
+  ]
+}

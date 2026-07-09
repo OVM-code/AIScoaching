@@ -1,0 +1,1250 @@
+{
+  "version": "1.0",
+  "source": "Roadmap Engine department model",
+  "departments": [
+    {
+      "number": 1,
+      "id": "management",
+      "prefix": "MGT",
+      "title": {
+        "nl": "Management & rapportering",
+        "en": "Management & reporting"
+      },
+      "file": "01-management.md"
+    },
+    {
+      "number": 2,
+      "id": "sales",
+      "prefix": "SAL",
+      "title": {
+        "nl": "Verkoop & offertes",
+        "en": "Sales & quoting"
+      },
+      "file": "02-sales.md"
+    },
+    {
+      "number": 3,
+      "id": "marketing",
+      "prefix": "MKT",
+      "title": {
+        "nl": "Marketing",
+        "en": "Marketing"
+      },
+      "file": "03-marketing.md"
+    },
+    {
+      "number": 4,
+      "id": "operations",
+      "prefix": "OPS",
+      "title": {
+        "nl": "Operaties: planning & productie",
+        "en": "Operations: planning & production"
+      },
+      "file": "04-operations.md"
+    },
+    {
+      "number": 5,
+      "id": "field-service",
+      "prefix": "SVC",
+      "title": {
+        "nl": "Buitendienst & uitvoering",
+        "en": "Field service & execution"
+      },
+      "file": "05-field-service.md"
+    },
+    {
+      "number": 6,
+      "id": "purchasing",
+      "prefix": "PUR",
+      "title": {
+        "nl": "Aankoop",
+        "en": "Purchasing"
+      },
+      "file": "06-purchasing.md"
+    },
+    {
+      "number": 7,
+      "id": "logistics",
+      "prefix": "LOG",
+      "title": {
+        "nl": "Voorraad & logistiek",
+        "en": "Inventory & logistics"
+      },
+      "file": "07-logistics.md"
+    },
+    {
+      "number": 8,
+      "id": "finance",
+      "prefix": "FIN",
+      "title": {
+        "nl": "Financiën & administratie",
+        "en": "Finance & administration"
+      },
+      "file": "08-finance.md"
+    },
+    {
+      "number": 9,
+      "id": "hr",
+      "prefix": "HR",
+      "title": {
+        "nl": "HR & personeel",
+        "en": "HR & people"
+      },
+      "file": "09-hr.md"
+    },
+    {
+      "number": 10,
+      "id": "customer-service",
+      "prefix": "CS",
+      "title": {
+        "nl": "Klantendienst",
+        "en": "Customer service"
+      },
+      "file": "10-customer-service.md"
+    },
+    {
+      "number": 11,
+      "id": "it-data",
+      "prefix": "IT",
+      "title": {
+        "nl": "IT & data",
+        "en": "IT & data"
+      },
+      "file": "11-it-data.md"
+    }
+  ],
+  "processes": [
+    {
+      "code": "MGT.010",
+      "title": {
+        "nl": "Periodieke KPI-rapportering",
+        "en": "Periodic KPI reporting"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "retype",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MGT.020",
+      "title": {
+        "nl": "Vergadervoorbereiding en verslag",
+        "en": "Meeting preparation & minutes"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "retype",
+        "wait"
+      ]
+    },
+    {
+      "code": "MGT.030",
+      "title": {
+        "nl": "Cash- en margeopvolging",
+        "en": "Cash & margin monitoring"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "no-visibility",
+        "wait"
+      ]
+    },
+    {
+      "code": "MGT.040",
+      "title": {
+        "nl": "Budgettering en forecast",
+        "en": "Budgeting & forecasting"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "MGT.050",
+      "title": {
+        "nl": "Opvolging projecten en initiatieven",
+        "en": "Project & initiative tracking"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MGT.060",
+      "title": {
+        "nl": "Rapportering aan raad en aandeelhouders",
+        "en": "Board & shareholder reporting"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "retype",
+        "wait"
+      ]
+    },
+    {
+      "code": "MGT.070",
+      "title": {
+        "nl": "Beheer van beleid en procedures",
+        "en": "Policy & procedure maintenance"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "error"
+      ]
+    },
+    {
+      "code": "MGT.080",
+      "title": {
+        "nl": "Ad-hocanalyses voor beslissingen",
+        "en": "Ad-hoc decision analysis"
+      },
+      "department": 1,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "wait"
+      ]
+    },
+    {
+      "code": "SAL.010",
+      "title": {
+        "nl": "Leadontvangst en kwalificatie",
+        "en": "Lead intake & qualification"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "wait",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SAL.020",
+      "title": {
+        "nl": "Plaatsbezoek en behoefteanalyse",
+        "en": "Site visit & needs analysis"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "retype",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "SAL.030",
+      "title": {
+        "nl": "Offerte opstellen",
+        "en": "Draft quote"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "retype",
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "SAL.040",
+      "title": {
+        "nl": "Prijszetting en offertegoedkeuring",
+        "en": "Quote pricing & approval"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "SAL.050",
+      "title": {
+        "nl": "Offerteopvolging",
+        "en": "Quote follow-up"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SAL.060",
+      "title": {
+        "nl": "Orderbevestiging en overdracht naar uitvoering",
+        "en": "Order confirmation & handover to operations"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "SAL.070",
+      "title": {
+        "nl": "Contract- en prijsherzieningen",
+        "en": "Contract & price renewals"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SAL.080",
+      "title": {
+        "nl": "CRM-gegevensbeheer",
+        "en": "CRM data upkeep"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "retype",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SAL.090",
+      "title": {
+        "nl": "Pijplijnreview en verkoopforecast",
+        "en": "Pipeline review & sales forecast"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SAL.100",
+      "title": {
+        "nl": "Aanbestedingen en RFP's beantwoorden",
+        "en": "Tender & RFP response"
+      },
+      "department": 2,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "wait",
+        "retype"
+      ]
+    },
+    {
+      "code": "MKT.010",
+      "title": {
+        "nl": "Marketingplanning en kalender",
+        "en": "Marketing planning & calendar"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MKT.020",
+      "title": {
+        "nl": "Content maken (posts, blogs, cases)",
+        "en": "Content creation (posts, blogs, cases)"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "wait"
+      ]
+    },
+    {
+      "code": "MKT.030",
+      "title": {
+        "nl": "Sociale media beheren",
+        "en": "Social media management"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MKT.040",
+      "title": {
+        "nl": "E-mailcampagnes en nieuwsbrieven",
+        "en": "Email campaigns & newsletters"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "retype",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "MKT.050",
+      "title": {
+        "nl": "Website en SEO onderhouden",
+        "en": "Website & SEO upkeep"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "wait"
+      ]
+    },
+    {
+      "code": "MKT.060",
+      "title": {
+        "nl": "Reviews en reputatiebeheer",
+        "en": "Review & reputation management"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MKT.070",
+      "title": {
+        "nl": "Campagnerapportering",
+        "en": "Campaign performance reporting"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "retype",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "MKT.080",
+      "title": {
+        "nl": "Beurzen en events organiseren",
+        "en": "Events & trade shows"
+      },
+      "department": 3,
+      "leak_patterns": [
+        "chase",
+        "wait"
+      ]
+    },
+    {
+      "code": "OPS.010",
+      "title": {
+        "nl": "Werkorderintake en werkvoorbereiding",
+        "en": "Work order intake & preparation"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "OPS.020",
+      "title": {
+        "nl": "Capaciteits- en resourceplanning",
+        "en": "Capacity & resource planning"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "OPS.030",
+      "title": {
+        "nl": "Dag- en weekplanning",
+        "en": "Day & week scheduling"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "error",
+        "wait"
+      ]
+    },
+    {
+      "code": "OPS.040",
+      "title": {
+        "nl": "Uitvoering en productieregistratie",
+        "en": "Execution & production registration"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "retype",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "OPS.050",
+      "title": {
+        "nl": "Materiaalbeschikbaarheid controleren",
+        "en": "Material availability check"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "wait",
+        "error"
+      ]
+    },
+    {
+      "code": "OPS.060",
+      "title": {
+        "nl": "Wijzigingen en herwerk beheren",
+        "en": "Change & rework management"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "error",
+        "chase"
+      ]
+    },
+    {
+      "code": "OPS.070",
+      "title": {
+        "nl": "Kwaliteitscontrole",
+        "en": "Quality control"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "error",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "OPS.080",
+      "title": {
+        "nl": "Onderaannemers coördineren",
+        "en": "Subcontractor coordination"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "chase",
+        "wait"
+      ]
+    },
+    {
+      "code": "OPS.090",
+      "title": {
+        "nl": "Voortgangsrapportering",
+        "en": "Progress reporting"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "retype",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "OPS.100",
+      "title": {
+        "nl": "Machine- en materieelonderhoud plannen",
+        "en": "Equipment maintenance planning"
+      },
+      "department": 4,
+      "leak_patterns": [
+        "no-visibility",
+        "wait"
+      ]
+    },
+    {
+      "code": "SVC.010",
+      "title": {
+        "nl": "Intake en triage van servicemeldingen",
+        "en": "Service request intake & triage"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "wait",
+        "error"
+      ]
+    },
+    {
+      "code": "SVC.020",
+      "title": {
+        "nl": "Dispatching en routeplanning",
+        "en": "Dispatch & route planning"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "error"
+      ]
+    },
+    {
+      "code": "SVC.030",
+      "title": {
+        "nl": "Werkvoorbereiding voor interventies",
+        "en": "Job preparation pack"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "chase",
+        "wait"
+      ]
+    },
+    {
+      "code": "SVC.040",
+      "title": {
+        "nl": "Uitvoering en diagnose ter plaatse",
+        "en": "On-site execution & diagnosis"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "SVC.050",
+      "title": {
+        "nl": "Werkbon en materiaalregistratie",
+        "en": "Job report & materials registration"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "retype",
+        "wait",
+        "error"
+      ]
+    },
+    {
+      "code": "SVC.060",
+      "title": {
+        "nl": "Vervolgwerk en tweede bezoeken",
+        "en": "Follow-up work & repeat visits"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "SVC.070",
+      "title": {
+        "nl": "Onderhoudscontracten en periodieke bezoeken",
+        "en": "Maintenance contracts & periodic visits"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "no-visibility",
+        "chase"
+      ]
+    },
+    {
+      "code": "SVC.080",
+      "title": {
+        "nl": "Garantie en claims afhandelen",
+        "en": "Warranty & claims handling"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "error",
+        "wait"
+      ]
+    },
+    {
+      "code": "SVC.090",
+      "title": {
+        "nl": "Tijdsregistratie techniekers",
+        "en": "Technician time registration"
+      },
+      "department": 5,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "PUR.010",
+      "title": {
+        "nl": "Aankoopbehoefte bepalen",
+        "en": "Identify purchase need"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "wait",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "PUR.020",
+      "title": {
+        "nl": "Leveranciersselectie en prijsaanvraag",
+        "en": "Supplier selection & RFQ"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "PUR.030",
+      "title": {
+        "nl": "Prijsvergelijking en onderhandeling",
+        "en": "Price comparison & negotiation"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "retype"
+      ]
+    },
+    {
+      "code": "PUR.040",
+      "title": {
+        "nl": "Bestelbon aanmaken",
+        "en": "Create purchase order"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "PUR.050",
+      "title": {
+        "nl": "Orderbevestiging en levertermijnen opvolgen",
+        "en": "Order confirmation & delivery chase"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "PUR.060",
+      "title": {
+        "nl": "Ontvangst- en factuurcontrole (three-way match)",
+        "en": "Receipt & invoice matching (three-way match)"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "error",
+        "retype"
+      ]
+    },
+    {
+      "code": "PUR.070",
+      "title": {
+        "nl": "Leveranciersbeheer en -evaluatie",
+        "en": "Supplier data & performance management"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "no-visibility",
+        "retype"
+      ]
+    },
+    {
+      "code": "PUR.080",
+      "title": {
+        "nl": "Leveranciersprijslijsten verwerken",
+        "en": "Process supplier price lists"
+      },
+      "department": 6,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "LOG.010",
+      "title": {
+        "nl": "Goederenontvangst en opslag",
+        "en": "Goods receiving & putaway"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "error",
+        "retype"
+      ]
+    },
+    {
+      "code": "LOG.020",
+      "title": {
+        "nl": "Voorraadregistratie en tellingen",
+        "en": "Inventory registration & counts"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "error",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "LOG.030",
+      "title": {
+        "nl": "Picken en klaarzetten",
+        "en": "Picking & staging"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "error",
+        "wait"
+      ]
+    },
+    {
+      "code": "LOG.040",
+      "title": {
+        "nl": "Verzending en transport boeken",
+        "en": "Shipping & transport booking"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "retype",
+        "chase"
+      ]
+    },
+    {
+      "code": "LOG.050",
+      "title": {
+        "nl": "Wagen- en werfvoorraad beheren",
+        "en": "Van & site stock management"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "no-visibility",
+        "error"
+      ]
+    },
+    {
+      "code": "LOG.060",
+      "title": {
+        "nl": "Aanvullen en bestelpunten beheren",
+        "en": "Replenishment & reorder points"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "no-visibility",
+        "wait"
+      ]
+    },
+    {
+      "code": "LOG.070",
+      "title": {
+        "nl": "Retouren verwerken",
+        "en": "Returns processing"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "error",
+        "chase"
+      ]
+    },
+    {
+      "code": "LOG.080",
+      "title": {
+        "nl": "Traceerbaarheid en lot-/serienummers",
+        "en": "Traceability & lot-serial registration"
+      },
+      "department": 7,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "FIN.010",
+      "title": {
+        "nl": "Verkoopfacturatie",
+        "en": "Sales invoicing"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "wait",
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "FIN.020",
+      "title": {
+        "nl": "Aankoopfacturen verwerken",
+        "en": "Purchase invoice processing"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "FIN.030",
+      "title": {
+        "nl": "Betalingen en bankafstemming",
+        "en": "Payments & bank reconciliation"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "error",
+        "retype"
+      ]
+    },
+    {
+      "code": "FIN.040",
+      "title": {
+        "nl": "Debiteurenopvolging en aanmaningen",
+        "en": "Receivables follow-up & dunning"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "FIN.050",
+      "title": {
+        "nl": "Onkosten en kaarttransacties verwerken",
+        "en": "Expense & card transaction processing"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "retype",
+        "chase"
+      ]
+    },
+    {
+      "code": "FIN.060",
+      "title": {
+        "nl": "Btw-aangifte en wettelijke verplichtingen",
+        "en": "VAT & statutory filings"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "error",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "FIN.070",
+      "title": {
+        "nl": "Maandafsluiting",
+        "en": "Month-end close"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "wait",
+        "error"
+      ]
+    },
+    {
+      "code": "FIN.080",
+      "title": {
+        "nl": "Kostenopvolging en nacalculatie",
+        "en": "Cost tracking & job costing"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "no-visibility",
+        "retype"
+      ]
+    },
+    {
+      "code": "FIN.090",
+      "title": {
+        "nl": "Cashflowprognose",
+        "en": "Cash-flow forecasting"
+      },
+      "department": 8,
+      "leak_patterns": [
+        "no-visibility",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "HR.010",
+      "title": {
+        "nl": "Werving en vacatures",
+        "en": "Recruitment & job postings"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "HR.020",
+      "title": {
+        "nl": "Kandidaten screenen en interviewen",
+        "en": "Candidate screening & interviews"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "HR.030",
+      "title": {
+        "nl": "Onboarding nieuwe medewerkers",
+        "en": "Employee onboarding"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "chase",
+        "error"
+      ]
+    },
+    {
+      "code": "HR.040",
+      "title": {
+        "nl": "Tijds- en afwezigheidsregistratie",
+        "en": "Time & absence registration"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "retype",
+        "error",
+        "chase"
+      ]
+    },
+    {
+      "code": "HR.050",
+      "title": {
+        "nl": "Loonvoorbereiding voor het sociaal secretariaat",
+        "en": "Payroll preparation for the payroll provider"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "HR.060",
+      "title": {
+        "nl": "Opleidingen en attesten opvolgen",
+        "en": "Training & certification tracking"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "no-visibility",
+        "chase"
+      ]
+    },
+    {
+      "code": "HR.070",
+      "title": {
+        "nl": "Personeelsadministratie en dossiers",
+        "en": "HR admin & personnel files"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "retype",
+        "wait"
+      ]
+    },
+    {
+      "code": "HR.080",
+      "title": {
+        "nl": "Evaluatie- en feedbackcyclus",
+        "en": "Performance & feedback cycle"
+      },
+      "department": 9,
+      "leak_patterns": [
+        "chase",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "CS.010",
+      "title": {
+        "nl": "Inbox- en oproeptriage",
+        "en": "Inbox & call triage"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "CS.020",
+      "title": {
+        "nl": "Statusvragen beantwoorden",
+        "en": "Answer status questions"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "no-visibility",
+        "wait"
+      ]
+    },
+    {
+      "code": "CS.030",
+      "title": {
+        "nl": "Klachten registreren en oplossen",
+        "en": "Complaint intake & resolution"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "error",
+        "chase",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "CS.040",
+      "title": {
+        "nl": "Veelgestelde vragen en productinfo beantwoorden",
+        "en": "FAQ & product information"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "retype"
+      ]
+    },
+    {
+      "code": "CS.050",
+      "title": {
+        "nl": "Afspraken plannen en wijzigen",
+        "en": "Appointment scheduling & changes"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "wait",
+        "chase"
+      ]
+    },
+    {
+      "code": "CS.060",
+      "title": {
+        "nl": "Klantgegevens aanpassen",
+        "en": "Customer master data changes"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "retype",
+        "error"
+      ]
+    },
+    {
+      "code": "CS.070",
+      "title": {
+        "nl": "Escalatie naar experts en andere afdelingen",
+        "en": "Escalation to experts & other departments"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "CS.080",
+      "title": {
+        "nl": "Klanttevredenheid opvolgen",
+        "en": "Customer satisfaction follow-up"
+      },
+      "department": 10,
+      "leak_patterns": [
+        "no-visibility",
+        "chase"
+      ]
+    },
+    {
+      "code": "IT.010",
+      "title": {
+        "nl": "Gebruikers- en toegangsbeheer",
+        "en": "User & access management"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "wait",
+        "error"
+      ]
+    },
+    {
+      "code": "IT.020",
+      "title": {
+        "nl": "Helpdesk en incidentafhandeling",
+        "en": "Helpdesk & incident handling"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "wait",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "IT.030",
+      "title": {
+        "nl": "Stamdatakwaliteit bewaken",
+        "en": "Master data quality management"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "error",
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "IT.040",
+      "title": {
+        "nl": "Integraties en datasynchronisatie",
+        "en": "Integrations & data synchronisation"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "retype",
+        "error",
+        "skill-bottleneck"
+      ]
+    },
+    {
+      "code": "IT.050",
+      "title": {
+        "nl": "Back-up en bedrijfscontinuïteit",
+        "en": "Backup & business continuity"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "no-visibility"
+      ]
+    },
+    {
+      "code": "IT.060",
+      "title": {
+        "nl": "Beveiliging en phishing-bewustzijn",
+        "en": "Security & phishing awareness"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "error"
+      ]
+    },
+    {
+      "code": "IT.070",
+      "title": {
+        "nl": "Rapportering en BI onderhouden",
+        "en": "Reporting & BI maintenance"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "skill-bottleneck",
+        "wait"
+      ]
+    },
+    {
+      "code": "IT.080",
+      "title": {
+        "nl": "Leveranciers- en licentiebeheer",
+        "en": "IT vendor & license management"
+      },
+      "department": 11,
+      "leak_patterns": [
+        "no-visibility",
+        "chase"
+      ]
+    }
+  ]
+}

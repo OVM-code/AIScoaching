@@ -1,0 +1,44 @@
+{
+  "id": "purchasing",
+  "domain": 6,
+  "title": { "nl": "Aankoop", "en": "Purchasing" },
+  "subtitle": { "nl": "Van aankoopbehoefte tot gecontroleerde factuur", "en": "From purchase need to verified invoice" },
+  "lanes": [
+    { "id": "aankoop", "label": { "nl": "Aankoop", "en": "Purchasing" } },
+    { "id": "magazijn", "label": { "nl": "Magazijn", "en": "Warehouse" } },
+    { "id": "boekhouding", "label": { "nl": "Boekhouding", "en": "Accounting" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Aankoopbehoefte (voorraad of order)", "en": "Purchase need (stock or order)" }, "lane": "aankoop" },
+    { "id": "behoefte", "type": "task", "label": { "nl": "Behoefte bepalen en bundelen", "en": "Define & bundle need" }, "lane": "aankoop", "process": "PUR.010" },
+    { "id": "gw-offerte", "type": "gateway", "label": { "nl": "Nieuwe leverancier of groot bedrag?", "en": "New supplier or large amount?" }, "lane": "aankoop" },
+    { "id": "rfq", "type": "task", "label": { "nl": "Prijsaanvragen versturen", "en": "Send RFQs" }, "lane": "aankoop", "process": "PUR.020" },
+    { "id": "vergelijken", "type": "task", "label": { "nl": "Offertes vergelijken en onderhandelen", "en": "Compare offers & negotiate" }, "lane": "aankoop", "process": "PUR.030" },
+    { "id": "bestelbon", "type": "task", "label": { "nl": "Bestelbon aanmaken en versturen", "en": "Create & send purchase order" }, "lane": "aankoop", "process": "PUR.040" },
+    { "id": "opvolgen", "type": "task", "label": { "nl": "Bevestiging en levertermijn opvolgen", "en": "Chase confirmation & delivery date" }, "lane": "aankoop", "process": "PUR.050" },
+    { "id": "ontvangst", "type": "task", "label": { "nl": "Goederen ontvangen en controleren", "en": "Receive & check goods" }, "lane": "magazijn", "process": "LOG.010" },
+    { "id": "match", "type": "task", "label": { "nl": "Ontvangst, bestelbon en factuur matchen", "en": "Match receipt, PO & invoice" }, "lane": "boekhouding", "process": "PUR.060" },
+    { "id": "gw-match", "type": "gateway", "label": { "nl": "Alles klopt?", "en": "Everything matches?" }, "lane": "boekhouding" },
+    { "id": "afwijking", "type": "task", "label": { "nl": "Afwijking uitklaren met leverancier", "en": "Resolve deviation with supplier" }, "lane": "aankoop", "process": "PUR.050" },
+    { "id": "boeken", "type": "task", "label": { "nl": "Aankoopfactuur boeken", "en": "Post purchase invoice" }, "lane": "boekhouding", "process": "FIN.020" },
+    { "id": "evalueren", "type": "task", "label": { "nl": "Leveranciersprestaties bijhouden", "en": "Track supplier performance" }, "lane": "aankoop", "process": "PUR.070" },
+    { "id": "end", "type": "end", "label": { "nl": "Klaar voor betalingsrun", "en": "Ready for payment run" }, "lane": "boekhouding" }
+  ],
+  "flows": [
+    { "from": "start", "to": "behoefte" },
+    { "from": "behoefte", "to": "gw-offerte" },
+    { "from": "gw-offerte", "to": "rfq", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "rfq", "to": "vergelijken" },
+    { "from": "vergelijken", "to": "bestelbon" },
+    { "from": "gw-offerte", "to": "bestelbon", "label": { "nl": "nee, vaste leverancier", "en": "no, regular supplier" } },
+    { "from": "bestelbon", "to": "opvolgen" },
+    { "from": "opvolgen", "to": "ontvangst" },
+    { "from": "ontvangst", "to": "match" },
+    { "from": "match", "to": "gw-match" },
+    { "from": "gw-match", "to": "afwijking", "label": { "nl": "nee", "en": "no" } },
+    { "from": "afwijking", "to": "match", "label": { "nl": "creditnota / correctie", "en": "credit note / correction" } },
+    { "from": "gw-match", "to": "boeken", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "boeken", "to": "evalueren" },
+    { "from": "evalueren", "to": "end" }
+  ]
+}

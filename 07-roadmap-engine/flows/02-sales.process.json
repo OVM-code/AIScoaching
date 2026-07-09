@@ -1,0 +1,45 @@
+{
+  "id": "sales",
+  "domain": 2,
+  "title": { "nl": "Verkoop & offertes", "en": "Sales & quoting" },
+  "subtitle": { "nl": "Van aanvraag tot bevestigde order", "en": "From inquiry to confirmed order" },
+  "lanes": [
+    { "id": "binnendienst", "label": { "nl": "Binnendienst", "en": "Inside sales" } },
+    { "id": "verkoper", "label": { "nl": "Verkoper / buitendienst", "en": "Sales rep / field" } },
+    { "id": "zaakvoerder", "label": { "nl": "Zaakvoerder", "en": "Owner / manager" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Aanvraag komt binnen (mail / telefoon / site)", "en": "Inquiry arrives (mail / phone / website)" }, "lane": "binnendienst" },
+    { "id": "registreren", "type": "task", "label": { "nl": "Lead registreren en kwalificeren", "en": "Register & qualify lead" }, "lane": "binnendienst", "process": "SAL.010" },
+    { "id": "gw-bezoek", "type": "gateway", "label": { "nl": "Plaatsbezoek nodig?", "en": "Site visit needed?" }, "lane": "binnendienst" },
+    { "id": "bezoek", "type": "task", "label": { "nl": "Plaatsbezoek en behoefteanalyse", "en": "Site visit & needs analysis" }, "lane": "verkoper", "process": "SAL.020" },
+    { "id": "offerte", "type": "task", "label": { "nl": "Offerte opstellen", "en": "Draft quote" }, "lane": "binnendienst", "process": "SAL.030" },
+    { "id": "gw-drempel", "type": "gateway", "label": { "nl": "Boven goedkeuringsdrempel?", "en": "Above approval threshold?" }, "lane": "binnendienst" },
+    { "id": "goedkeuren", "type": "task", "label": { "nl": "Prijszetting nakijken en goedkeuren", "en": "Review pricing & approve" }, "lane": "zaakvoerder", "process": "SAL.040" },
+    { "id": "versturen", "type": "task", "label": { "nl": "Offerte versturen", "en": "Send quote" }, "lane": "binnendienst", "process": "SAL.030" },
+    { "id": "opvolgen", "type": "task", "label": { "nl": "Offerte opvolgen", "en": "Follow up on quote" }, "lane": "binnendienst", "process": "SAL.050" },
+    { "id": "gw-akkoord", "type": "gateway", "label": { "nl": "Klant akkoord?", "en": "Customer accepts?" }, "lane": "binnendienst" },
+    { "id": "end-verloren", "type": "end", "label": { "nl": "Offerte verloren", "en": "Quote lost" }, "lane": "binnendienst" },
+    { "id": "bevestigen", "type": "task", "label": { "nl": "Order bevestigen en overdragen aan uitvoering", "en": "Confirm order & hand over to operations" }, "lane": "binnendienst", "process": "SAL.060" },
+    { "id": "crm", "type": "task", "label": { "nl": "CRM en pijplijn bijwerken", "en": "Update CRM & pipeline" }, "lane": "binnendienst", "process": "SAL.080" },
+    { "id": "end", "type": "end", "label": { "nl": "Order naar operaties", "en": "Order to operations" }, "lane": "binnendienst" }
+  ],
+  "flows": [
+    { "from": "start", "to": "registreren" },
+    { "from": "registreren", "to": "gw-bezoek" },
+    { "from": "gw-bezoek", "to": "bezoek", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "bezoek", "to": "offerte" },
+    { "from": "gw-bezoek", "to": "offerte", "label": { "nl": "nee", "en": "no" } },
+    { "from": "offerte", "to": "gw-drempel" },
+    { "from": "gw-drempel", "to": "goedkeuren", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "goedkeuren", "to": "versturen" },
+    { "from": "gw-drempel", "to": "versturen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "versturen", "to": "opvolgen" },
+    { "from": "opvolgen", "to": "gw-akkoord" },
+    { "from": "gw-akkoord", "to": "end-verloren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "gw-akkoord", "to": "opvolgen", "label": { "nl": "nog geen antwoord", "en": "no answer yet" } },
+    { "from": "gw-akkoord", "to": "bevestigen", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "bevestigen", "to": "crm" },
+    { "from": "crm", "to": "end" }
+  ]
+}

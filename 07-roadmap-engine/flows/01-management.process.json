@@ -1,0 +1,44 @@
+{
+  "id": "management",
+  "domain": 1,
+  "title": { "nl": "Management & rapportering", "en": "Management & reporting" },
+  "subtitle": { "nl": "Van periode-einde tot opgevolgde beslissingen", "en": "From period end to followed-up decisions" },
+  "lanes": [
+    { "id": "administratie", "label": { "nl": "Administratie / controlling", "en": "Office / controlling" } },
+    { "id": "management", "label": { "nl": "Zaakvoerder / management", "en": "Owner / management" } },
+    { "id": "afdelingen", "label": { "nl": "Afdelingsverantwoordelijken", "en": "Department leads" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Rapporteringsperiode eindigt", "en": "Reporting period ends" }, "lane": "administratie" },
+    { "id": "verzamelen", "type": "task", "label": { "nl": "Cijfers verzamelen uit systemen", "en": "Collect figures from systems" }, "lane": "administratie", "process": "MGT.010" },
+    { "id": "gw-volledig", "type": "gateway", "label": { "nl": "Data volledig?", "en": "Data complete?" }, "lane": "administratie" },
+    { "id": "aanleveren", "type": "task", "label": { "nl": "Ontbrekende cijfers aanleveren", "en": "Supply missing figures" }, "lane": "afdelingen", "process": "MGT.010" },
+    { "id": "consolideren", "type": "task", "label": { "nl": "Rapport consolideren", "en": "Consolidate report" }, "lane": "administratie", "process": "MGT.010" },
+    { "id": "analyseren", "type": "task", "label": { "nl": "Cash en marge analyseren", "en": "Analyse cash & margin" }, "lane": "management", "process": "MGT.030" },
+    { "id": "forecast", "type": "task", "label": { "nl": "Forecast bijwerken", "en": "Update forecast" }, "lane": "administratie", "process": "MGT.040" },
+    { "id": "voorbereiden", "type": "task", "label": { "nl": "Managementvergadering voorbereiden", "en": "Prepare management meeting" }, "lane": "management", "process": "MGT.020" },
+    { "id": "vergaderen", "type": "task", "label": { "nl": "Vergadering houden en beslissen", "en": "Hold meeting & decide" }, "lane": "management", "process": "MGT.020" },
+    { "id": "verslag", "type": "task", "label": { "nl": "Verslag en acties verspreiden", "en": "Distribute minutes & actions" }, "lane": "administratie", "process": "MGT.020" },
+    { "id": "acties", "type": "task", "label": { "nl": "Acties en initiatieven opvolgen", "en": "Track actions & initiatives" }, "lane": "afdelingen", "process": "MGT.050" },
+    { "id": "gw-board", "type": "gateway", "label": { "nl": "Kwartaal / boardmoment?", "en": "Quarter / board moment?" }, "lane": "management" },
+    { "id": "board", "type": "task", "label": { "nl": "Boardrapport opstellen", "en": "Prepare board report" }, "lane": "management", "process": "MGT.060" },
+    { "id": "end", "type": "end", "label": { "nl": "Cyclus afgerond", "en": "Cycle closed" }, "lane": "management" }
+  ],
+  "flows": [
+    { "from": "start", "to": "verzamelen" },
+    { "from": "verzamelen", "to": "gw-volledig" },
+    { "from": "gw-volledig", "to": "aanleveren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "aanleveren", "to": "verzamelen" },
+    { "from": "gw-volledig", "to": "consolideren", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "consolideren", "to": "analyseren" },
+    { "from": "analyseren", "to": "forecast" },
+    { "from": "forecast", "to": "voorbereiden" },
+    { "from": "voorbereiden", "to": "vergaderen" },
+    { "from": "vergaderen", "to": "verslag" },
+    { "from": "verslag", "to": "acties" },
+    { "from": "acties", "to": "gw-board" },
+    { "from": "gw-board", "to": "board", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "board", "to": "end" },
+    { "from": "gw-board", "to": "end", "label": { "nl": "nee", "en": "no" } }
+  ]
+}

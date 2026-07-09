@@ -1,0 +1,49 @@
+{
+  "id": "field-service",
+  "domain": 5,
+  "title": { "nl": "Buitendienst & uitvoering", "en": "Field service & execution" },
+  "subtitle": { "nl": "Van servicemelding tot factureerbare werkbon", "en": "From service request to billable job report" },
+  "lanes": [
+    { "id": "servicedesk", "label": { "nl": "Servicedesk / onthaal", "en": "Service desk / front office" } },
+    { "id": "planner", "label": { "nl": "Planner / dispatcher", "en": "Planner / dispatcher" } },
+    { "id": "technieker", "label": { "nl": "Technieker", "en": "Technician" } },
+    { "id": "administratie", "label": { "nl": "Administratie", "en": "Back office" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Servicemelding (telefoon / mail / WhatsApp)", "en": "Service request (phone / mail / WhatsApp)" }, "lane": "servicedesk" },
+    { "id": "triage", "type": "task", "label": { "nl": "Melding registreren en triëren", "en": "Register & triage request" }, "lane": "servicedesk", "process": "SVC.010" },
+    { "id": "gw-contract", "type": "gateway", "label": { "nl": "Onder onderhoudscontract?", "en": "Under maintenance contract?" }, "lane": "servicedesk" },
+    { "id": "contract", "type": "task", "label": { "nl": "Contractvoorwaarden en historiek checken", "en": "Check contract terms & history" }, "lane": "servicedesk", "process": "SVC.070" },
+    { "id": "plannen", "type": "task", "label": { "nl": "Interventie inplannen en route bepalen", "en": "Schedule intervention & plan route" }, "lane": "planner", "process": "SVC.020" },
+    { "id": "voorbereiden", "type": "task", "label": { "nl": "Werkvoorbereiding: historiek, materiaal, toegang", "en": "Job prep: history, materials, access" }, "lane": "planner", "process": "SVC.030" },
+    { "id": "uitvoeren", "type": "task", "label": { "nl": "Interventie uitvoeren en diagnose stellen", "en": "Execute intervention & diagnose" }, "lane": "technieker", "process": "SVC.040" },
+    { "id": "gw-opgelost", "type": "gateway", "label": { "nl": "Opgelost in één bezoek?", "en": "Fixed in one visit?" }, "lane": "technieker" },
+    { "id": "vervolg", "type": "task", "label": { "nl": "Vervolgwerk registreren (onderdeel, tweede bezoek)", "en": "Register follow-up work (part, second visit)" }, "lane": "technieker", "process": "SVC.060" },
+    { "id": "werkbon", "type": "task", "label": { "nl": "Werkbon en materiaal registreren", "en": "Register job report & materials" }, "lane": "technieker", "process": "SVC.050" },
+    { "id": "tijd", "type": "task", "label": { "nl": "Uren registreren", "en": "Register hours" }, "lane": "technieker", "process": "SVC.090" },
+    { "id": "gw-garantie", "type": "gateway", "label": { "nl": "Garantiegeval?", "en": "Warranty case?" }, "lane": "administratie" },
+    { "id": "garantie", "type": "task", "label": { "nl": "Garantieclaim samenstellen", "en": "Assemble warranty claim" }, "lane": "administratie", "process": "SVC.080" },
+    { "id": "controleren", "type": "task", "label": { "nl": "Werkbon controleren voor facturatie", "en": "Check job report for invoicing" }, "lane": "administratie", "process": "SVC.050" },
+    { "id": "end", "type": "end", "label": { "nl": "Naar facturatie", "en": "To invoicing" }, "lane": "administratie" }
+  ],
+  "flows": [
+    { "from": "start", "to": "triage" },
+    { "from": "triage", "to": "gw-contract" },
+    { "from": "gw-contract", "to": "contract", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "contract", "to": "plannen" },
+    { "from": "gw-contract", "to": "plannen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "plannen", "to": "voorbereiden" },
+    { "from": "voorbereiden", "to": "uitvoeren" },
+    { "from": "uitvoeren", "to": "gw-opgelost" },
+    { "from": "gw-opgelost", "to": "vervolg", "label": { "nl": "nee", "en": "no" } },
+    { "from": "vervolg", "to": "plannen", "label": { "nl": "tweede bezoek", "en": "second visit" } },
+    { "from": "gw-opgelost", "to": "werkbon", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "vervolg", "to": "werkbon" },
+    { "from": "werkbon", "to": "tijd" },
+    { "from": "tijd", "to": "gw-garantie" },
+    { "from": "gw-garantie", "to": "garantie", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "garantie", "to": "controleren" },
+    { "from": "gw-garantie", "to": "controleren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "controleren", "to": "end" }
+  ]
+}
