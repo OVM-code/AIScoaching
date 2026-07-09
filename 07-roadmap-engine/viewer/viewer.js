@@ -35,7 +35,13 @@
                "skill-bottleneck": "kennis-bottleneck", "no-visibility": "geen zicht" },
       fields: { werkwijze: "Huidige werkwijze", wie: "Wie", systemen: "Systemen", volume: "Volume & tijd" },
       severityHdr: "severity", typeHdr: "type", volumeLbl: "Volume", valueLbl: "Waardehypothese",
-      register: "register"
+      register: "register",
+      exportBtn: "PDF exporteren", exportTitle: "Exporteer als PDF",
+      exportHint: "Kies wat het document bevat. Het afdrukvenster opent — kies daar ‘Opslaan als PDF’.",
+      exportDepts: "Afdelingen", exportParts: "Onderdelen",
+      exportAllNone: "alles / niets", exportGo: "Maak PDF", exportCancel: "Annuleer",
+      toc: "Inhoud", coverClient: "Klant", coverSector: "Sector",
+      coverVersion: "Versie", coverDate: "Datum", coverCatalog: "Procescatalogus"
     },
     en: {
       intro: "Introduction", processes: "Processes", pains: "Pain points",
@@ -54,7 +60,13 @@
                "skill-bottleneck": "skill bottleneck", "no-visibility": "no visibility" },
       fields: { werkwijze: "Current way of working", wie: "Who", systemen: "Systems", volume: "Volume & time" },
       severityHdr: "severity", typeHdr: "type", volumeLbl: "Volume", valueLbl: "Value hypothesis",
-      register: "register"
+      register: "register",
+      exportBtn: "Export PDF", exportTitle: "Export as PDF",
+      exportHint: "Choose what the document contains. The print dialog opens — pick ‘Save as PDF’ there.",
+      exportDepts: "Departments", exportParts: "Sections",
+      exportAllNone: "all / none", exportGo: "Create PDF", exportCancel: "Cancel",
+      toc: "Contents", coverClient: "Client", coverSector: "Sector",
+      coverVersion: "Version", coverDate: "Date", coverCatalog: "Process catalog"
     }
   };
   var lang = D.client.language || "nl";
@@ -331,9 +343,11 @@
       '<div class="mode-toggle" id="modetoggle">' +
       '<button data-mode="pijn"' + (mode === "pijn" ? ' class="on"' : "") + ">" + esc(L.modePijn) + "</button>" +
       '<button data-mode="kansen"' + (mode === "kansen" ? ' class="on"' : "") + ">" + esc(L.modeKansen) + "</button></div>" +
+      '<button class="export" id="exportbtn" type="button">⤓ ' + esc(L.exportBtn) + "</button>" +
       "</header>" +
       '<section class="content"><div class="inner" id="view"></div></section>' +
-      '<div class="panel-wrap" id="panelwrap"><div class="veil"></div><div class="panel" id="panel"></div></div>';
+      '<div class="panel-wrap" id="panelwrap"><div class="veil"></div><div class="panel" id="panel"></div></div>' +
+      '<div class="exp-wrap" id="expwrap"><div class="veil"></div><div class="exp" id="expdlg"></div></div>';
 
     var q = document.getElementById("q");
     q.addEventListener("input", onSearch);
@@ -348,6 +362,8 @@
       b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); });
     });
     document.querySelector("#panelwrap .veil").addEventListener("click", closePanel);
+    document.getElementById("exportbtn").addEventListener("click", openExport);
+    document.querySelector("#expwrap .veil").addEventListener("click", closeExport);
   }
 
   function setMode(m) {
@@ -358,6 +374,204 @@
       b.classList.toggle("on", b.getAttribute("data-mode") === mode);
     });
     route(); // re-render current view (legend + card accents follow the mode)
+  }
+
+  /* ---------------- PDF export (print-CSS) ---------------- */
+  function openExport() {
+    var dlg = document.getElementById("expdlg");
+    var parts = [
+      ["intro", L.intro, !!D.client.intro_html],
+      ["processen", L.processes, !!D.coverage.length],
+      ["pains", L.pains, !!D.pains.length]
+    ];
+    dlg.innerHTML =
+      "<h2>" + esc(L.exportTitle) + '</h2><p class="hint">' + esc(L.exportHint) + "</p>" +
+      "<h3>" + esc(L.exportDepts) + ' — <button type="button" class="all" id="exptoggle">' + esc(L.exportAllNone) + "</button></h3>" +
+      '<div class="depts">' + D.departments.map(function (d) {
+        return '<label><input type="checkbox" class="expdept" value="' + d.number + '" checked>' +
+          '<span class="n">' + d.number + "</span><span>" + esc(d.title) + "</span></label>";
+      }).join("") + "</div>" +
+      "<h3>" + esc(L.exportParts) + "</h3>" +
+      parts.map(function (p) {
+        return '<label><input type="checkbox" class="exppart" value="' + p[0] + '"' + (p[2] ? " checked" : " disabled") + ">" +
+          "<span>" + esc(p[1]) + "</span></label>";
+      }).join("") +
+      '<div class="row"><span class="sp"></span>' +
+      '<button type="button" class="cancel" id="expcancel">' + esc(L.exportCancel) + "</button>" +
+      '<button type="button" class="go" id="expgo">' + esc(L.exportGo) + "</button></div>";
+    dlg.querySelector("#expcancel").addEventListener("click", closeExport);
+    dlg.querySelector("#exptoggle").addEventListener("click", function () {
+      var boxes = dlg.querySelectorAll(".expdept");
+      var any = Array.prototype.some.call(boxes, function (b) { return b.checked; });
+      boxes.forEach(function (b) { b.checked = !any; });
+    });
+    dlg.querySelector("#expgo").addEventListener("click", function () {
+      var depts = [];
+      dlg.querySelectorAll(".expdept:checked").forEach(function (b) { depts.push(+b.value); });
+      var opts = {};
+      dlg.querySelectorAll(".exppart:checked").forEach(function (b) { opts[b.value] = true; });
+      if (!depts.length && !Object.keys(opts).length) return;
+      closeExport();
+      buildPrintDoc(depts, opts);
+      document.body.classList.add("printing");
+      // let the print DOM paint before the dialog opens
+      setTimeout(function () { window.print(); }, 60);
+    });
+    document.getElementById("expwrap").classList.add("open");
+  }
+
+  function closeExport() {
+    document.getElementById("expwrap").classList.remove("open");
+  }
+
+  window.addEventListener("afterprint", function () {
+    document.body.classList.remove("printing");
+    document.getElementById("printdoc").innerHTML = "";
+  });
+
+  // Print legend: always the severity (Pijn) palette — the printed diagrams
+  // are colored by severity regardless of the on-screen mode.
+  function printLegend() {
+    function item(color, bg, label, dashed) {
+      return '<span><i style="border-color:var(' + color + ');background:var(' + bg + ')' +
+        (dashed ? ";border-style:dashed" : "") + '"></i>' + esc(label) + "</span>";
+    }
+    return '<div class="pv-legend">' +
+      item("--sev-none", "--sev-none-bg", L.sev.none) +
+      item("--sev-minor", "--sev-minor-bg", L.sev.minor) +
+      item("--sev-major", "--sev-major-bg", L.sev.major) +
+      item("--sev-critical", "--sev-critical-bg", L.sev.critical) +
+      item("--sev-undoc", "--sev-undoc-bg", L.sev.undoc, true) + "</div>";
+  }
+
+  function printPain(uid) {
+    var p = painByUid[uid];
+    if (!p) return "";
+    return '<div class="pv-pain sev-' + esc(p.severity || "major") + '">' +
+      '<h4><code>' + esc(p.id) + "</code> " + esc(p.title) + "</h4>" +
+      (p.quote ? "<blockquote>“" + esc(p.quote) + "”</blockquote>" : "") +
+      (p.source ? '<div class="src">' + esc(p.source) + "</div>" : "") +
+      '<div class="chips">' +
+      (p.type ? '<span class="chip plain">' + esc(L.ptype[p.type] || p.type) + "</span> " : "") +
+      (p.severity ? sevChip(p.severity) + " " : "") +
+      (p.volume ? '<span class="chip plain">' + esc(L.volumeLbl) + ": " + esc(p.volume) + "</span>" : "") +
+      "</div></div>";
+  }
+
+  function printProc(code) {
+    var s = proc(code);
+    if (!s) return "";
+    var chips = sevChip(sevOf(code)) + (s.automability ? " " + autoChip(s.automability) : "");
+    var fields = "";
+    ["werkwijze", "wie", "systemen", "volume"].forEach(function (k) {
+      if (s.fields && s.fields[k]) {
+        fields += "<dt>" + esc(L.fields[k]) + "</dt><dd>" + esc(s.fields[k]) + "</dd>";
+      }
+    });
+    return '<div class="pv-proc"><div class="codes"><code>' + esc(code) + "</code></div>" +
+      "<h3>" + esc(s.title) + '</h3><div class="chips">' + chips + "</div>" +
+      (fields ? '<dl class="pv-fields">' + fields + "</dl>" : "") +
+      (s.html ? '<div class="md">' + s.html + "</div>" : "") +
+      ((s.pains || []).length
+        ? '<div class="pv-painshdr">' + esc(L.linkedPains) + "</div>" + s.pains.map(printPain).join("") : "") +
+      "</div>";
+  }
+
+  function buildPrintDoc(deptNums, opts) {
+    var sel = {};
+    deptNums.forEach(function (n) { sel[n] = true; });
+    var depts = D.departments.filter(function (d) { return sel[d.number]; });
+    var h = "";
+
+    // cover — vendor-neutral: accent-tinted artwork, no third-party assets
+    h += '<div class="pv-cover"><div class="mark"></div>' +
+      '<div class="title"><h1>' + esc(D.client.title || "AS-IS review") + "</h1>" +
+      '<p class="sub">' + esc(D.client.name) + (D.client.sector ? " · " + esc(D.client.sector) : "") + "</p></div>" +
+      '<div class="meta">' +
+      "<div><b>" + esc(L.coverClient) + ":</b> " + esc(D.client.name) + "</div>" +
+      (D.client.sector ? "<div><b>" + esc(L.coverSector) + ":</b> " + esc(D.client.sector) + "</div>" : "") +
+      (D.meta && D.meta.version ? "<div><b>" + esc(L.coverVersion) + ":</b> " + esc(D.meta.version) + "</div>" : "") +
+      "<div><b>" + esc(L.coverDate) + ":</b> " + esc((D.meta && D.meta.generated) || "") + "</div>" +
+      (D.meta && D.meta.catalog ? "<div><b>" + esc(L.coverCatalog) + ":</b> " + esc(D.meta.catalog) + "</div>" : "") +
+      "</div>" +
+      '<div class="art"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div></div>';
+
+    // everything after the cover lives in a table whose <thead> the browser
+    // repeats at the top of every printed page — the running header
+    h += '<table class="pv-doc"><thead><tr><td><div class="pv-run"><span>' +
+      esc(D.client.title || "AS-IS review") + " — " + esc(D.client.name) +
+      (D.meta && D.meta.version ? " · v" + esc(D.meta.version) : "") +
+      '</span><span class="r">' + esc((D.meta && D.meta.generated) || "") +
+      '</span></div></td></tr></thead><tbody><tr><td>';
+
+    // table of contents
+    var toc = [];
+    if (opts.intro) toc.push(["", L.intro]);
+    depts.forEach(function (d) { toc.push([d.number + ".", d.title]); });
+    if (opts.processen) toc.push(["", L.processes]);
+    if (opts.pains) toc.push(["", L.pains]);
+    h += '<div class="pv-toc"><h2>' + esc(L.toc) + "</h2><ol>" + toc.map(function (t) {
+      return '<li><span class="n">' + esc(t[0]) + "</span><span>" + esc(t[1]) + "</span></li>";
+    }).join("") + "</ol></div>";
+
+    if (opts.intro && D.client.intro_html) {
+      h += '<div class="pv-section"><h1>' + esc(L.intro) + '</h1><div class="md">' + D.client.intro_html + "</div></div>";
+    }
+
+    // departments: intro + flow + full AS-IS process documentation
+    depts.forEach(function (d) {
+      h += '<div class="pv-section"><h1><span class="n">' + d.number + ".</span> " + esc(d.title) + "</h1>";
+      if (d.intro_html) h += '<div class="pv-intro md">' + d.intro_html + "</div>";
+      if (d.process) {
+        h += '<div class="pv-diagram">' + renderDiagram(d.process, null) + printLegend() + "</div>";
+      }
+      h += d.processes.map(printProc).join("");
+      h += "</div>";
+    });
+
+    // coverage matrix (rows limited to the selected departments)
+    if (opts.processen) {
+      var rows = D.coverage.filter(function (c) { return sel[c.department]; });
+      h += '<div class="pv-section"><h1>' + esc(L.processes) + '</h1><table class="pv-table"><thead><tr>' +
+        L.scopeCols.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+        rows.map(function (c) {
+          var s = proc(c.code);
+          var d = deptByNum[c.department];
+          return "<tr><td><code>" + esc(c.code) + "</code></td><td>" + esc(c.title) + "</td>" +
+            "<td>" + (d ? d.number + ". " + esc(d.title) : esc(c.department)) + "</td>" +
+            "<td>" + (c.scope ? esc(L.inScope) : esc(L.outScope)) + "</td>" +
+            "<td>" + (c.scope ? sevChip(s ? sevOf(c.code) : "undoc") : "—") + "</td>" +
+            "<td>" + esc(c.note || "") + "</td></tr>";
+        }).join("") + "</tbody></table></div>";
+    }
+
+    // pains register (entries in the selected departments, plus entries
+    // without a department — nothing silently dropped)
+    if (opts.pains) {
+      h += '<div class="pv-section"><h1>' + esc(L.pains) + "</h1>" +
+        D.pains.filter(function (p) { return !p.department || sel[p.department]; }).map(function (p) {
+          var d = deptByNum[p.department];
+          return '<div class="pv-proc"><div class="codes"><code>' + esc(p.id) + "</code>" +
+            (d ? " · " + d.number + ". " + esc(d.title) : "") + "</div>" +
+            "<h3>" + esc(p.title) + "</h3>" +
+            (p.quote ? "<blockquote>“" + esc(p.quote) + "”</blockquote>" : "") +
+            (p.source ? '<div class="src">' + esc(p.source) + "</div>" : "") +
+            (p.html ? '<div class="md">' + p.html + "</div>" : "") +
+            '<div class="chips">' +
+            (p.type ? '<span class="chip plain">' + esc(L.ptype[p.type] || p.type) + "</span> " : "") +
+            (p.severity ? sevChip(p.severity) + " " : "") +
+            (p.volume ? '<span class="chip plain">' + esc(L.volumeLbl) + ": " + esc(p.volume) + "</span> " : "") +
+            (p.value ? '<span class="chip plain">' + esc(L.valueLbl) + ": " + esc(p.value) + "</span>" : "") +
+            "</div>" +
+            (p.processes && p.processes.length ? '<div class="codes">' + p.processes.map(function (c) {
+              return "<code>" + esc(c) + "</code>";
+            }).join(" ") + "</div>" : "") +
+            "</div>";
+        }).join("") + "</div>";
+    }
+
+    h += "</td></tr></tbody></table>";
+    document.getElementById("printdoc").innerHTML = h;
   }
 
   function onSearch(ev) {

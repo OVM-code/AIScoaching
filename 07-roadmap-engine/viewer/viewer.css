@@ -102,6 +102,14 @@ body {
 }
 .mode-toggle button.on { background: rgba(255, 255, 255, .22); opacity: 1; }
 
+/* header PDF export button */
+.hdr .export {
+  border: 1px solid rgba(255,255,255,.35); background: transparent; color: var(--accent-ink);
+  border-radius: 20px; padding: 5px 14px; font: inherit; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; flex: none; white-space: nowrap;
+}
+.hdr .export:hover { background: rgba(255, 255, 255, .12); }
+
 /* header search + dropdown hits */
 .hdr .search { position: relative; flex: none; }
 .hdr .search input {
@@ -323,8 +331,191 @@ table.reg tr.dim td { color: var(--ink-soft); background: var(--bg); }
 
 .empty { color: var(--ink-soft); font-style: italic; padding: 30px 0; text-align: center; }
 
+/* ---------- PDF export dialog ---------- */
+.exp-wrap { position: fixed; inset: 0; z-index: 60; display: none; }
+.exp-wrap.open { display: block; }
+.exp-wrap .veil { position: absolute; inset: 0; background: rgba(16, 32, 46, .32); }
+@media (prefers-color-scheme: dark) { .exp-wrap .veil { background: rgba(0, 0, 0, .55); } }
+.exp {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(560px, 94vw); max-height: 86vh; overflow-y: auto;
+  background: var(--card); color: var(--ink); border-radius: 14px; border-top: 4px solid var(--accent);
+  box-shadow: 0 18px 60px rgba(16, 32, 46, .3); padding: 22px 26px;
+}
+@media (prefers-color-scheme: dark) { .exp { border-top-color: var(--sev-none); } }
+.exp h2 { margin: 0 0 4px; font-size: 18px; }
+.exp .hint { color: var(--ink-soft); font-size: 12.5px; margin: 0 0 14px; }
+.exp h3 { font-size: 13px; margin: 14px 0 6px; color: var(--ink-soft); font-weight: 600; letter-spacing: .3px; text-transform: uppercase; }
+.exp .all { font-size: 12.5px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; text-transform: none; letter-spacing: 0; }
+@media (prefers-color-scheme: dark) { .exp .all { color: var(--sev-none); } }
+.exp label { display: flex; align-items: baseline; gap: 8px; padding: 4px 2px; font-size: 13.5px; cursor: pointer; }
+.exp label .n { color: var(--ink-soft); font-size: 11.5px; min-width: 16px; font-weight: 600; }
+.exp .depts { columns: 2; }
+.exp .depts label { break-inside: avoid; }
+.exp .row { display: flex; gap: 10px; margin-top: 18px; align-items: center; }
+.exp .row .sp { flex: 1; }
+.exp .row button.go {
+  background: var(--accent); color: var(--accent-ink); border: none; border-radius: 20px;
+  padding: 8px 20px; font: 600 13.5px/1 inherit; font-family: inherit; cursor: pointer;
+}
+.exp .row button.go:hover { filter: brightness(1.15); }
+.exp .row button.cancel {
+  background: none; border: 1px solid var(--line); border-radius: 20px;
+  padding: 8px 16px; font-size: 13.5px; font-family: inherit; cursor: pointer; color: var(--ink-soft);
+}
+
+/* ---------- print document (built on export, rendered only by @media print) ---------- */
+#printdoc { display: none; }
+
 @media print {
-  .hdr nav, .hdr .search, .mode-toggle, .diagram-head .zoom { display: none !important; }
-  .content { overflow: visible; }
-  .panel-wrap { display: none; }
+  @page { size: A4; margin: 16mm 14mm 20mm; }
+  /* print always uses the light palette, whatever the OS color scheme —
+   * later in the sheet than the dark-mode block, so it wins on paper.
+   * --accent is NOT re-pinned: the configured client accent stays. */
+  :root {
+    --accent-soft: #e8eef6; --accent-ink: #ffffff;
+    --ink: #14202e; --ink-soft: #4b5a6b; --line: #d7dee7; --bg: #f4f6f9; --card: #ffffff;
+    --sev-none: #2563eb;      --sev-none-bg: #eff6ff;
+    --sev-minor: #d97706;     --sev-minor-bg: #fffbeb;
+    --sev-major: #ea580c;     --sev-major-bg: #fff7ed;
+    --sev-critical: #dc2626;  --sev-critical-bg: #fef2f2;
+    --sev-undoc: #8195a9;     --sev-undoc-bg: #f8fafc;
+    --auto-human: #64748b;      --auto-human-bg: #f1f5f9;
+    --auto-automation: #0d9488; --auto-automation-bg: #f0fdfa;
+    --auto-agent: #7c3aed;      --auto-agent-bg: #f5f3ff;
+    --auto-hybrid: #4f46e5;     --auto-hybrid-bg: #eef2ff;
+    --auto-neutral: #8195a9;    --auto-neutral-bg: #f8fafc;
+    --lane-0: #fbfcfe; --lane-1: #f3f6fa; --flow-ink: #6b7c8f;
+    --evt-start: #15803d; --evt-start-bg: #f0fdf4;
+    --evt-end: #b91c1c;   --evt-end-bg: #fef2f2;
+    --gw-bg: #fefce8;
+  }
+  html, body { height: auto; background: #fff; }
+  body { color: var(--ink); }
+  /* export flow: interactive app never prints; the composed document does */
+  body.printing #app, body.printing .exp-wrap, body.printing .panel-wrap { display: none !important; }
+  body.printing #printdoc { display: block; }
+  /* direct browser-print of the app (plain Ctrl+P, no export flow): degrade gracefully */
+  body:not(.printing) .hdr nav, body:not(.printing) .hdr .search,
+  body:not(.printing) .mode-toggle, body:not(.printing) .hdr .export,
+  body:not(.printing) .diagram-head .zoom { display: none !important; }
+  body:not(.printing) #app { height: auto; }
+  body:not(.printing) .content { overflow: visible; }
+  body:not(.printing) .panel-wrap, body:not(.printing) .exp-wrap { display: none; }
+
+  #printdoc {
+    font-size: 11.5pt; color: var(--ink);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* running header on every page after the cover: the <thead> of .pv-doc is
+   * repeated by the browser at the top of each printed page */
+  /* fixed layout: the single column can never grow past the page width,
+   * whatever the min-content width of chips/tables inside */
+  table.pv-doc { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  table.pv-doc > * > tr > td { padding: 0; border: none; }
+  .pv-run {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 8pt; color: var(--ink-soft);
+    border-bottom: .5pt solid var(--accent); padding: 0 0 2mm; margin-bottom: 7mm;
+  }
+  .pv-run .r { margin-left: auto; }
+
+  /* ---- cover page (vendor-neutral: accent bar + layered accent sweep) ---- */
+  .pv-cover { page-break-after: always; position: relative; height: 250mm; }
+  .pv-cover .mark { width: 42mm; height: 3mm; margin: 4mm 0 0; background: var(--accent); border-radius: 1.5mm; }
+  .pv-cover .title { position: absolute; top: 112mm; left: 0; right: 24mm; }
+  .pv-cover .title h1 { font-size: 30pt; line-height: 1.15; margin: 0 0 4mm; font-weight: 700; }
+  .pv-cover .title .sub { font-size: 13pt; color: var(--ink-soft); margin: 0; }
+  .pv-cover .meta { position: absolute; top: 168mm; left: 0; font-size: 10.5pt; color: var(--ink-soft); }
+  .pv-cover .meta div { margin: 1mm 0; }
+  .pv-cover .meta b { color: var(--ink); font-weight: 600; }
+  .pv-cover .art { position: absolute; right: -14mm; bottom: -20mm; width: 130mm; height: 80mm; overflow: hidden; }
+  .pv-cover .art i { position: absolute; display: block; background: var(--accent); }
+  .pv-cover .art .a1 { opacity: .18; width: 130mm; height: 62mm; bottom: -4mm; right: -6mm; transform: rotate(-16deg); border-radius: 42mm 0 0 0; }
+  .pv-cover .art .a2 { opacity: .45; width: 126mm; height: 54mm; bottom: -14mm; right: -10mm; transform: rotate(-10deg); border-radius: 38mm 0 0 0; }
+  .pv-cover .art .a3 { opacity: 1;   width: 138mm; height: 48mm; bottom: -18mm; right: -8mm; transform: rotate(-5deg); border-radius: 34mm 0 0 0; }
+
+  /* ---- table of contents ---- */
+  .pv-toc { page-break-after: always; }
+  .pv-toc h2 { font-size: 16pt; margin: 0 0 8mm; }
+  .pv-toc ol { list-style: none; padding: 0; margin: 0; font-size: 11.5pt; }
+  .pv-toc li { display: flex; gap: 4mm; padding: 2mm 0; border-bottom: .5pt solid var(--line); }
+  .pv-toc li .n { color: var(--accent); font-weight: 700; min-width: 8mm; }
+
+  /* ---- sections ---- */
+  .pv-section { page-break-before: always; }
+  .pv-section > h1 {
+    font-size: 17pt; margin: 0 0 5mm; padding-bottom: 2.5mm;
+    border-bottom: 1.2pt solid var(--accent);
+  }
+  .pv-section > h1 .n { color: var(--accent); margin-right: 3mm; }
+  .pv-intro { margin-bottom: 5mm; }
+  .pv-diagram { page-break-inside: avoid; margin: 4mm 0 6mm; }
+  .pv-diagram svg { width: 100%; height: auto; }
+  .pv-legend { display: flex; gap: 5mm; flex-wrap: wrap; font-size: 8pt; color: var(--ink-soft); margin: 2mm 0 0; }
+  .pv-legend span { display: inline-flex; align-items: center; gap: 1.5mm; }
+  .pv-legend i { width: 3.2mm; height: 3.2mm; border-radius: 1mm; display: inline-block; border: .6mm solid; }
+
+  /* printed diagrams always use the severity (Pijn) palette — #printdoc sits
+   * outside #app, so the on-screen .mode-* scoping never applies here */
+  #printdoc .bpmn .sev-none .shape { stroke: var(--sev-none); fill: var(--sev-none-bg); }
+  #printdoc .bpmn .sev-minor .shape { stroke: var(--sev-minor); fill: var(--sev-minor-bg); }
+  #printdoc .bpmn .sev-major .shape { stroke: var(--sev-major); fill: var(--sev-major-bg); }
+  #printdoc .bpmn .sev-critical .shape { stroke: var(--sev-critical); fill: var(--sev-critical-bg); }
+
+  /* ---- process blocks / pains ---- */
+  .pv-proc { page-break-inside: avoid; margin: 0 0 6mm; padding: 0 0 4mm; border-bottom: .5pt solid var(--line); }
+  .pv-proc .codes { font-size: 9pt; margin-bottom: 1mm; color: var(--ink-soft); }
+  .pv-proc .codes code { font-weight: 700; color: var(--accent); font-family: ui-monospace, Consolas, monospace; }
+  .pv-proc h3 { font-size: 12.5pt; margin: 0 0 2mm; }
+  .pv-proc .chips { margin: 0 0 2mm; }
+  .pv-proc blockquote { margin: 2mm 0; padding: 1mm 4mm; border-left: 1mm solid var(--accent); background: var(--accent-soft); font-style: italic; font-size: 10pt; }
+  .pv-proc .src { color: var(--ink-soft); font-size: 8.5pt; margin: 1mm 0 2mm; }
+  .pv-fields { margin: 0 0 3mm; font-size: 10pt; }
+  .pv-fields dt { font-weight: 600; color: var(--ink-soft); font-size: 8pt; letter-spacing: .4px; text-transform: uppercase; margin-top: 2mm; }
+  .pv-fields dd { margin: .5mm 0 0; }
+  .pv-painshdr { font-weight: 600; color: var(--ink-soft); font-size: 8.5pt; letter-spacing: .4px; text-transform: uppercase; margin: 3mm 0 1mm; }
+  .pv-pain { page-break-inside: avoid; border: .5pt solid var(--line); border-left: 1mm solid var(--sev-major); border-radius: 2mm; padding: 2mm 3.5mm; margin: 2mm 0; }
+  .pv-pain.sev-minor { border-left-color: var(--sev-minor); }
+  .pv-pain.sev-major { border-left-color: var(--sev-major); }
+  .pv-pain.sev-critical { border-left-color: var(--sev-critical); }
+  .pv-pain h4 { margin: 0 0 1mm; font-size: 10.5pt; }
+  .pv-pain h4 code { color: var(--accent); font-family: ui-monospace, Consolas, monospace; }
+  .pv-pain blockquote { margin: 1.5mm 0; padding: 1mm 3mm; border-left: .8mm solid var(--line); color: var(--ink-soft); font-style: italic; font-size: 9.5pt; background: none; }
+  .pv-pain .src { color: var(--ink-soft); font-size: 8pt; margin: 1mm 0; }
+
+  /* chips: print-safe — the distinction never relies on color alone: every
+   * severity/automability chip carries its own text label, keeps its 1px
+   * border, and backgrounds are forced with print-color-adjust above */
+  .chip { border-radius: 20px; padding: .5mm 2.5mm; font-size: 8pt; }
+  /* long Volume/Waardehypothese chips must wrap on paper, never widen the page */
+  #printdoc .chip { border-width: .35mm; white-space: normal; }
+  #printdoc .chip.sev-undoc { border-style: dashed; }
+  #printdoc .src { word-break: break-word; }
+
+  table.pv-table, #printdoc .md table { border-collapse: collapse; width: 100%; font-size: 9.5pt; }
+  /* coverage matrix: fixed column grid so it can never exceed the page width */
+  table.pv-table { table-layout: fixed; }
+  .pv-table th:nth-child(1) { width: 12%; }
+  .pv-table th:nth-child(2) { width: 24%; }
+  .pv-table th:nth-child(3) { width: 17%; }
+  .pv-table th:nth-child(4) { width: 10%; }
+  .pv-table th:nth-child(5) { width: 14%; }
+  .pv-table td { word-break: break-word; }
+  .pv-table th, .pv-table td, #printdoc .md th, #printdoc .md td {
+    border: .5pt solid var(--line); padding: 1.5mm 2.5mm; text-align: left; vertical-align: top;
+  }
+  .pv-table th, #printdoc .md th { background: var(--accent-soft); color: var(--ink); }
+  .pv-table tr, #printdoc .md tr { page-break-inside: avoid; }
+  .pv-table code { font-weight: 700; color: var(--accent); font-family: ui-monospace, Consolas, monospace; font-size: 8.5pt; }
+
+  #printdoc .md h1 { font-size: 13pt; } #printdoc .md h2 { font-size: 12pt; }
+  #printdoc .md h3 { font-size: 11pt; } #printdoc .md h4 { font-size: 10.5pt; }
+  #printdoc .md blockquote {
+    margin: 2mm 0; padding: 1.5mm 4mm; border-left: 1mm solid var(--accent);
+    background: var(--accent-soft); border-radius: 0 2mm 2mm 0;
+  }
+  #printdoc .md code { background: #f0f4f5; border-radius: 1mm; padding: 0 1mm; font-size: 9.5pt; }
+  #printdoc a { color: var(--accent); text-decoration: none; }
 }
