@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>__ROADMAP_TITLE__</title>
+<style>
+/*__ROADMAP_CSS__*/
+</style>
+
+<div class="wrap">
+<nav class="rail" aria-label="Sections">
+  <p class="brand" data-i18n="brand"></p>
+  <a href="#overzicht" data-i18n="navOverview"></a>
+  <a href="#aannames" data-i18n="navAssumptions"></a>
+  <a href="#kaart" data-i18n="navMap"></a>
+  <a href="#register" data-i18n="navRegister"></a>
+  <a href="#roadmap" data-i18n="navRoadmap"></a>
+  <a href="#keep" id="nav-keep" data-i18n="navKeep"></a>
+  <a href="#methode" data-i18n="navMethod"></a>
+  <button id="theme-toggle" type="button" aria-pressed="false"></button>
+</nav>
+<main>
+
+<header class="hero" id="overzicht">
+  <p class="eyebrow" data-i18n="eyebrow"></p>
+  <h1 id="hero-title"></h1>
+  <p class="lede" id="hero-lede"></p>
+  <p class="stamp" id="hero-stamp"></p>
+  <div class="stats">
+    <div class="stat"><div class="v" id="st-total">—</div><div class="l" data-i18n="stTotal"></div><div class="n" data-i18n="stTotalNote"></div></div>
+    <div class="stat" id="st-hours-tile"><div class="v" id="st-hours">—</div><div class="l" data-i18n="stHours"></div><div class="n" data-i18n="stHoursNote"></div></div>
+    <div class="stat"><div class="v" id="st-wave1">—</div><div class="l" data-i18n="stWave1"></div><div class="n" data-i18n="stWave1Note"></div></div>
+    <div class="stat"><div class="v" id="st-payback">—</div><div class="l" data-i18n="stPayback"></div><div class="n" data-i18n="stPaybackNote"></div></div>
+  </div>
+</header>
+
+<section id="aannames">
+  <p class="kicker" data-i18n="kAssump"></p>
+  <h2 data-i18n="hAssump"></h2>
+  <p class="sub" data-i18n="subAssump"></p>
+  <div class="card">
+    <div class="assump" id="assump-grid"></div>
+    <div class="assump-foot">
+      <span class="note-inline" data-i18n="assumpFootNote"></span>
+      <button class="ghost" id="assump-reset" type="button" data-i18n="btnReset"></button>
+    </div>
+  </div>
+</section>
+
+<section id="kaart">
+  <p class="kicker" data-i18n="kMap"></p>
+  <h2 data-i18n="hMap"></h2>
+  <p class="sub" data-i18n="subMap"></p>
+  <div class="viz">
+    <div class="legend" id="viz-legend"></div>
+    <div id="scatter"></div>
+  </div>
+</section>
+
+<section id="register">
+  <p class="kicker" data-i18n="kRegister"></p>
+  <h2 data-i18n="hRegister"></h2>
+  <p class="sub" data-i18n="subRegister"></p>
+  <div class="filters" id="reg-filters"></div>
+  <div id="reg-list"></div>
+</section>
+
+<section id="roadmap">
+  <p class="kicker" data-i18n="kRoadmap"></p>
+  <h2 data-i18n="hRoadmap"></h2>
+  <p class="sub" data-i18n="subRoadmap"></p>
+  <div class="waves" id="waves"></div>
+</section>
+
+<section id="keep">
+  <p class="kicker" data-i18n="kKeep"></p>
+  <h2 data-i18n="hKeep"></h2>
+  <p class="sub" data-i18n="subKeep"></p>
+  <div class="card keep-body" id="keep-body"></div>
+</section>
+
+<section id="methode">
+  <p class="kicker" data-i18n="kMethod"></p>
+  <h2 data-i18n="hMethod"></h2>
+  <p class="sub" id="method-weights"></p>
+  <p class="note" id="method-note"></p>
+</section>
+
+</main>
+</div>
+
+<div id="confirm-bar" role="region">
+  <div class="cb-in">
+    <span class="cb-stat" id="cb-count"></span>
+    <span class="cb-stat" id="cb-value"></span>
+    <span class="cb-stat" id="cb-cost"></span>
+    <button class="cb-btn" id="cb-btn" type="button"></button>
+  </div>
+</div>
+
+<dialog id="confirm-dialog">
+  <h3 data-i18n="dTitle"></h3>
+  <p class="d-sub" data-i18n="dSub"></p>
+  <div id="d-body"></div>
+  <div class="d-total" id="d-total"></div>
+  <p class="d-note" data-i18n="dNote"></p>
+  <div class="d-actions">
+    <a class="dl" id="d-download" download data-i18n="dDownload"></a>
+    <button type="button" id="d-print" data-i18n="dPrint"></button>
+    <button type="button" id="d-close" data-i18n="dClose"></button>
+  </div>
+</dialog>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+var DATA = /*__ROADMAP_DATA__*/ null;
+/*__ROADMAP_JS__*/
+</script>
+</body>
+</html>
