@@ -245,7 +245,12 @@
         "retype",
         "wait",
         "skill-bottleneck"
-      ]
+      ],
+      "evidence": [
+        "_demo-installtech departments/02-sales/content/02-sales.md 2026-06 (demo)",
+        "_demo-installtech analysis/opportunities.md#OPP-2 2026-06 (demo)"
+      ],
+      "last_validated": "2026-06"
     },
     {
       "code": "SAL.040",
@@ -605,7 +610,12 @@
         "retype",
         "wait",
         "error"
-      ]
+      ],
+      "evidence": [
+        "_demo-installtech departments/05-field-service/content/05-field-service.md 2026-06 (demo)",
+        "_demo-installtech analysis/opportunities.md#OPP-1 2026-06 (demo)"
+      ],
+      "last_validated": "2026-06"
     },
     {
       "code": "SVC.060",
@@ -858,7 +868,11 @@
         "wait",
         "retype",
         "error"
-      ]
+      ],
+      "evidence": [
+        "_demo-installtech departments/08-finance/content/08-finance.md 2026-06 (demo)"
+      ],
+      "last_validated": "2026-06"
     },
     {
       "code": "FIN.020",

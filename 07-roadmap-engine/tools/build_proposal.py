@@ -37,6 +37,36 @@ from pathlib import Path
 ENGINE_DIR = Path(__file__).resolve().parent.parent   # 07-roadmap-engine/
 TEMPLATE_DIR = ENGINE_DIR / "proposal"
 DEFAULT_BASELINES = ENGINE_DIR / "baselines" / "effort-baselines.json"
+BRANDING_DIR = ENGINE_DIR / "branding"
+
+BRAND_URL_RE = re.compile(r"""url\(\s*(['"]?)([^)'"]+)\1\s*\)""")
+
+
+def branding_css(client_dir):
+    """Optional white-label design tokens, prepended to the built CSS so the
+    HTML stays fully self-contained (contract: 07-roadmap-engine/branding/README.md).
+    Engine tokens first, then the per-client override (client wins by cascade);
+    url() references to png/svg files in the branding folder are inlined as
+    data-URIs. No branding files -> returns "" (build output byte-identical).
+    Note: the per-client accentColor still wins for the accent — the proposal
+    page applies it at runtime from the data payload."""
+    import base64
+    parts = []
+    for folder in (BRANDING_DIR, client_dir / "branding"):
+        tokens = folder / "tokens.css"
+        if not tokens.is_file():
+            continue
+
+        def inline(m):
+            f = folder / m.group(2).strip()
+            if f.suffix.lower() in (".png", ".svg") and f.is_file():
+                mime = "image/png" if f.suffix.lower() == ".png" else "image/svg+xml"
+                b64 = base64.b64encode(f.read_bytes()).decode("ascii")
+                return f'url("data:{mime};base64,{b64}")'
+            return m.group(0)
+
+        parts.append(BRAND_URL_RE.sub(inline, tokens.read_text(encoding="utf-8")).rstrip() + "\n")
+    return "\n".join(parts)
 
 # Fallback matching the spec example in 07-roadmap-engine/README.md — used
 # until baselines/effort-baselines.json ships (another workstream owns it).
@@ -637,7 +667,7 @@ def main(argv):
 
     # ---- render
     template = (TEMPLATE_DIR / "template.html").read_text(encoding="utf-8")
-    css = (TEMPLATE_DIR / "proposal.css").read_text(encoding="utf-8")
+    css = branding_css(client_dir) + (TEMPLATE_DIR / "proposal.css").read_text(encoding="utf-8")
     js = (TEMPLATE_DIR / "proposal.js").read_text(encoding="utf-8")
     built = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     data_js = build_data_payload(config, slug, assumptions, opps, keep_html, built)

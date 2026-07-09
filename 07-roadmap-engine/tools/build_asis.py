@@ -37,6 +37,34 @@ ENGINE = Path(__file__).resolve().parent.parent  # 07-roadmap-engine/
 CATALOG_PATH = ENGINE / "catalog" / "departments.json"
 STD_FLOWS = ENGINE / "flows"
 VIEWER = ENGINE / "viewer"
+BRANDING = ENGINE / "branding"
+
+BRAND_URL_RE = re.compile(r"""url\(\s*(['"]?)([^)'"]+)\1\s*\)""")
+
+
+def branding_css(client_dir: Path) -> str:
+    """Optional white-label design tokens, prepended to the built CSS so the
+    HTML stays fully self-contained (contract: 07-roadmap-engine/branding/README.md).
+    Engine tokens first, then the per-client override (client wins by cascade);
+    url() references to png/svg files in the branding folder are inlined as
+    data-URIs. No branding files -> returns "" (build output byte-identical)."""
+    import base64
+    parts = []
+    for folder in (BRANDING, client_dir / "branding"):
+        tokens = folder / "tokens.css"
+        if not tokens.is_file():
+            continue
+
+        def inline(m: re.Match) -> str:
+            f = folder / m.group(2).strip()
+            if f.suffix.lower() in (".png", ".svg") and f.is_file():
+                mime = "image/png" if f.suffix.lower() == ".png" else "image/svg+xml"
+                b64 = base64.b64encode(f.read_bytes()).decode("ascii")
+                return f'url("data:{mime};base64,{b64}")'
+            return m.group(0)
+
+        parts.append(BRAND_URL_RE.sub(inline, tokens.read_text(encoding="utf-8")).rstrip() + "\n")
+    return "\n".join(parts)
 
 CODE_RE = re.compile(r"\b[A-Z][A-Z0-9]{1,4}\.\d{3}\b")
 PAIN_RE = re.compile(r"\bPAIN-\d+\b")
@@ -573,7 +601,7 @@ def main() -> int:
 
     # ---- assemble ----------------------------------------------------------------------
     tpl = (VIEWER / "template.html").read_text(encoding="utf-8")
-    css = (VIEWER / "viewer.css").read_text(encoding="utf-8")
+    css = branding_css(client_dir) + (VIEWER / "viewer.css").read_text(encoding="utf-8")
     js = (VIEWER / "viewer.js").read_text(encoding="utf-8")
     if cfg.get("accentColor"):
         css += f'\n:root {{ --accent: {cfg["accentColor"]}; }}\n'
