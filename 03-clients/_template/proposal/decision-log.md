@@ -1,5 +1,21 @@
 # Decision log — roadmap confirmation workshop
 
+## Gate
+
+| | |
+|---|---|
+| Status | gepland <!-- gepland / in review / bevestigd (= draft / in review / approved) --> |
+| Goedgekeurd door | — |
+| Datum | — |
+
+**Directieven**
+
+<!-- Consultant/client change instructions for this gate. Open item:
+- [ ] instruction
+Applied item (tick off with the date it was applied):
+- [x] instruction (toegepast YYYY-MM-DD)
+Status 'bevestigd' with an open '- [ ]' directive is a checker error. -->
+
 Record of the F3 workshop where the client challenged scores, adjusted the
 assumption sliders, selected initiatives and exported the confirmation JSON
 from `output/ROADMAP-<slug>.html`. After this log is filled: update every OPP

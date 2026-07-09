@@ -1,8 +1,15 @@
-| Client | Afdeling | Status | Laatst gereviewd |
-|---|---|---|---|
-| InstallTech BV | Verkoop & offertes | approved | 2026-06-20 |
+| Client | Afdeling | Status | Laatst gereviewd | Goedgekeurd door | Datum |
+|---|---|---|---|---|---|
+| InstallTech BV | Verkoop & offertes | approved | 2026-06-20 | zaakvoerder + consultant (walkthrough) | 2026-06-20 |
 
 De verkoop draait op een gedeelde mailbox, een Excel-sjabloon en de ervaring van de zaakvoerder en twee verkopers. Het kernproces — van aanvraag tot getekende offerte — is stabiel maar traag: het hertypen en de doorlooptijd van vier à vijf werkdagen zijn de grootste lekken. AS-IS gevalideerd met zaakvoerder en binnendienst tijdens de walkthrough van 2026-06-20.
+
+## Gate
+
+**Directieven**
+
+- [x] doorlooptijd offerte (4–5 werkdagen) toegevoegd aan SAL.030 (toegepast 2026-06-20)
+- [x] WhatsApp als leadkanaal van de techniekers opgenomen bij SAL.010 (toegepast 2026-06-18)
 
 ## SAL.010 — Leadontvangst en kwalificatie
 - **Huidige werkwijze:** Aanvragen komen binnen via de gedeelde mailbox verkoop@, telefonisch (genoteerd op post-its) en via klanten die een technieker op de werf aanspreken; dat laatste kanaal geraakt soms pas een week later bij de binnendienst. Er bestaat geen leadlijst, dus verloren aanvragen blijven onzichtbaar.

@@ -45,7 +45,10 @@ Optionally "briefing" to run only the pre-workshop step 0a.
 
 - **Never mark `Status: approved`** in any content file — only the human
   consultant does that, after the client walkthrough. This skill's output is
-  always at most `consultant-review`.
+  always at most `consultant-review`. Review remarks are recorded as
+  directives in the file's `## Gate` section and every one must be applied
+  and ticked off (`- [x] … (toegepast YYYY-MM-DD)`) before approval —
+  `approved` with an open directive is a checker error.
 - Never invent facts to fill a gap; a stop-and-ask is the correct output for
   thin material.
 - `check_engagement.py` runs after every authoring step, not just at the

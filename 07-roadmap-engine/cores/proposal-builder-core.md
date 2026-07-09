@@ -78,7 +78,11 @@ confirmation export and decisions need recording.
    confirmed/deferred/discarded, changed scores and the client's arguments,
    slider values at confirmation, capacity-dividend decisions); update each
    OPP's `Status` to `confirmed | deferred | discarded`; set the engagement's
-   `stage` to `confirmed` in `03-clients/engagements.csv`. Run
+   `stage` to `confirmed` in `03-clients/engagements.csv`. Only set the
+   decision log's `## Gate` status to `bevestigd` on the client's recorded
+   confirmation, and only once every `- [ ]` directive in that Gate block is
+   applied and ticked off — `bevestigd` with an open directive is a checker
+   error. Run
    `python3 07-roadmap-engine/tools/check_engagement.py 03-clients/<slug>`
    until zero errors and warnings.
 

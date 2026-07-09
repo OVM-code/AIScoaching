@@ -21,9 +21,10 @@ only the post-workshop recording step.
 
 1. **Gate-check approvals.** Read every in-scope department's content-file
    header in `03-clients/<slug>/departments/*/content/`. Stop condition:
-   **any department not `Status: approved` → refuse**, listing the
-   unapproved departments and what's pending (consultant review, client
-   walkthrough). No partial diagnosis around the gap.
+   **any department not `Status: approved`, or approved with an open `- [ ]`
+   directive in its `## Gate` section → refuse**, listing the unapproved
+   departments and what's pending (consultant review, client walkthrough,
+   unresolved directives). No partial diagnosis around the gap.
 2. **Diagnosis (step 5).** Invoke `opportunity-diagnostician`. Stop
    conditions:
    - **No viable opportunities** — the register is all discards or

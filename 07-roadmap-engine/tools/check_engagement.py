@@ -13,6 +13,10 @@ Mirrors the Gates section of 07-roadmap-engine/README.md (the binding spec):
   departments/NN-*/         content status header table + enums, PAIN references
                             resolve to pains.md blocks, pain enums + process
                             codes, flow *.process.json referential integrity
+  gate blocks               '## Gate' directives on the gate carriers (content
+                            files + proposal/decision-log.md): status approved/
+                            bevestigd with an open '- [ ]' directive is an
+                            error; every run prints a one-line gate overview
   analysis/opportunities.md OPP enums, scores 1-5, verdict = computed quadrant
                             (high >= 3.5), references resolve, Waardeformule
                             tokens all in assumptions.json, Wave 1-3 needs a
@@ -49,6 +53,8 @@ PAIN_TYPES = {"retype", "chase", "wait", "error", "skill-bottleneck",
               "no-visibility"}
 PAIN_SEVERITIES = {"minor", "major", "critical"}
 CONTENT_STATUSES = {"draft", "consultant-review", "client-review", "approved"}
+# decision-log gate statuses, mapping 1:1 to draft | in review | approved
+CONFIRMATION_STATUSES = {"gepland", "in review", "bevestigd"}
 BLOCK_SEVERITIES = {"none", "minor", "major", "critical"}
 AUTOMABILITIES = {"human", "automation", "agent", "hybrid"}
 OPP_STATUSES = {"proposed", "confirmed", "deferred", "discarded"}
@@ -65,11 +71,16 @@ PAIN_RE = re.compile(r"\bPAIN-\d+\b")
 ID_RE = re.compile(r"^[a-z_][a-z0-9_]*$")
 COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
 DEPT_DIR_RE = re.compile(r"^(\d{2})-")
+GATE_SECTION_RE = re.compile(r"^##\s+Gate\b(.*?)(?=^##\s|\Z)", re.M | re.S)
+OPEN_DIRECTIVE_RE = re.compile(r"^\s*-\s*\[ \]", re.M)
+GATE_STATUS_ROW_RE = re.compile(r"^\|\s*Status\s*\|\s*([A-Za-z \-]+?)\s*\|",
+                                re.M | re.I)
 SEPARATOR_ROW_RE = re.compile(r"^\|[\s\-:|]+\|$")
 FORMULA_TOKEN_RE = re.compile(r"\d+(?:\.\d+)?|[a-z_][a-z0-9_]*|[+\-*/()]|\S")
 
 ERRORS: list[str] = []
 WARNS: list[str] = []
+GATES: list[tuple[str, str | None, int]] = []  # (label, status, open dirs)
 
 
 def err(m: str) -> None:
@@ -130,6 +141,13 @@ def header_status(text: str) -> tuple[str | None, str | None]:
                 return row.get("status"), row.get("laatst gereviewd")
             return None, None
     return None, None
+
+
+def open_directives(text: str) -> int:
+    """Unchecked '- [ ]' directives inside the '## Gate' section (0 when the
+    file has no Gate section — legacy files stay valid)."""
+    m = GATE_SECTION_RE.search(text)
+    return len(OPEN_DIRECTIVE_RE.findall(m.group(1))) if m else 0
 
 
 def parse_scores(text: str) -> dict[str, float]:
@@ -359,6 +377,12 @@ def check_content(dept_dir: Path, number: int, cat: dict | None,
             approved = False
         if reviewed and not DATE_RE.match(reviewed):
             warn(f"{rel}: 'Laatst gereviewd' '{reviewed}' is not YYYY-MM-DD")
+        open_d = open_directives(text)
+        if status == "approved" and open_d:
+            err(f"{rel}: Status approved but {open_d} open directive(s) in "
+                f"the '## Gate' section — apply/tick them off (or withdraw) "
+                f"before approval")
+        GATES.append((f.stem, status, open_d))
         seen: set[str] = set()
         blocks = split_blocks(text, r"[A-Z]{2,5}\.\d{3}")
         if not blocks:
@@ -740,6 +764,51 @@ def check_opportunities(client: Path, cat: dict | None, config: dict | None,
 
 # ------------------------------------------------------------------- gates
 
+def check_decision_log_gate(client: Path) -> None:
+    """Roadmap-confirmation gate on proposal/decision-log.md: a '## Gate'
+    block with | Status | gepland/in review/bevestigd | (mapping 1:1 to
+    draft/in review/approved), Goedgekeurd door, Datum, and directives.
+    'bevestigd' with an open directive is a contradiction."""
+    path = client / "proposal" / "decision-log.md"
+    if not path.exists():
+        return
+    text = read_md(path)
+    m = GATE_SECTION_RE.search(text)
+    if not m:
+        warn("proposal/decision-log.md: no '## Gate' block — counts as "
+             "gepland (draft)")
+        GATES.append(("decision-log", None, 0))
+        return
+    section = m.group(1)
+    sm = GATE_STATUS_ROW_RE.search(section)
+    status = sm.group(1).strip().lower() if sm else None
+    if status is None:
+        err("proposal/decision-log.md '## Gate': no '| Status | ... |' row")
+    elif status not in CONFIRMATION_STATUSES:
+        err(f"proposal/decision-log.md '## Gate': Status '{status}' not in "
+            f"gepland|in review|bevestigd (= draft|in review|approved)")
+        status = None
+    open_d = len(OPEN_DIRECTIVE_RE.findall(section))
+    if status == "bevestigd" and open_d:
+        err(f"proposal/decision-log.md: Status bevestigd but {open_d} open "
+            f"directive(s) in the '## Gate' section — apply/tick them off "
+            f"(or withdraw) before confirming")
+    GATES.append(("decision-log", status, open_d))
+
+
+def gate_overview() -> None:
+    """One line per run: every gate's status + its open directive count —
+    the consultant's to-do list."""
+    if not GATES:
+        return
+    line = " · ".join(f"{name}={status or '—'}"
+                      + (f" ({od} open)" if od else "")
+                      for name, status, od in GATES)
+    total = sum(od for _, _, od in GATES)
+    ok(f"gates: {line}"
+       + (f" — {total} open directive(s)" if total else ""))
+
+
 def check_gates(client: Path, stage: str | None, unapproved: list[str],
                 opp_statuses: list[str], has_opps: bool) -> None:
     stage_idx = STAGE_IDX.get(stage) if stage else None
@@ -790,7 +859,9 @@ def main() -> int:
         (client / "analysis" / "opportunities.md").exists()
         and split_blocks(read_md(client / "analysis" / "opportunities.md"),
                          r"OPP-\d+"))
+    check_decision_log_gate(client)
     check_gates(client, stage, unapproved, opp_statuses, has_opps)
+    gate_overview()
 
     print(f"result: {len(ERRORS)} error(s), {len(WARNS)} warning(s)")
     if ERRORS:

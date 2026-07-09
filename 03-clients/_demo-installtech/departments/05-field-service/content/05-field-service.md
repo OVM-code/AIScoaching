@@ -1,8 +1,15 @@
-| Client | Afdeling | Status | Laatst gereviewd |
-|---|---|---|---|
-| InstallTech BV | Buitendienst & uitvoering | approved | 2026-06-24 |
+| Client | Afdeling | Status | Laatst gereviewd | Goedgekeurd door | Datum |
+|---|---|---|---|---|---|
+| InstallTech BV | Buitendienst & uitvoering | approved | 2026-06-24 | zaakvoerder + planner (walkthrough) | 2026-06-24 |
 
 Achttien techniekers, één ervaren planner en een papieren werkbonnenstroom. De uitvoering zelf is vakwerk en loopt goed; de waardevernietiging zit in alles errond: de papieren registratie, de ontbrekende installatiehistoriek en de contractopvolging in een verouderde Excel. AS-IS gevalideerd met planner, technieker en zaakvoerder tijdens de walkthrough van 2026-06-24.
+
+## Gate
+
+**Directieven**
+
+- [x] avondwerk werkbonnen (±15 min/bon) expliciet gekwantificeerd in SVC.050 (toegepast 2026-06-24)
+- [x] gemiste onderhoudsbeurten (±10/jaar) toegevoegd aan SVC.070 (toegepast 2026-06-23)
 
 ## SVC.010 — Intake en triage van servicemeldingen
 - **Huidige werkwijze:** Meldingen komen binnen via telefoon naar het onthaal en de mailbox service@; wie opneemt schat de urgentie in. Gevolg: soms een rit voor iets dat kon wachten, terwijl een echt dringend geval tot de middag in de mailbox blijft hangen.

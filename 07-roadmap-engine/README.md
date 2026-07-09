@@ -203,12 +203,19 @@ PAIN ids are numbered **once across the whole engagement** (`PAIN-1…n`), even
 though each department keeps its own `pains.md` — OPP blocks reference them
 globally, and a reused id across departments is ambiguous.
 
-### `content/NN-<dept>.md` — status header + `## <CODE>` blocks
+### `content/NN-<dept>.md` — status header + gate + `## <CODE>` blocks
 
 ```markdown
-| Client | Afdeling | Status | Laatst gereviewd |
-|---|---|---|---|
-| InstallTech BV | Verkoop & offertes | approved | 2026-06-20 |
+| Client | Afdeling | Status | Laatst gereviewd | Goedgekeurd door | Datum |
+|---|---|---|---|---|---|
+| InstallTech BV | Verkoop & offertes | approved | 2026-06-20 | zaakvoerder + consultant | 2026-06-20 |
+
+## Gate
+
+**Directieven**
+
+- [ ] doorlooptijd per offerte ook opnemen in SAL.030
+- [x] volume gecorrigeerd naar 40/maand (toegepast 2026-06-18)
 
 ## SAL.030 — Offerte opstellen
 - **Huidige werkwijze:** Binnendienst hertypt aanvraag uit e-mail in Excel-sjabloon, …
@@ -223,6 +230,13 @@ globally, and a reused id across departments is ambiguous.
 Enums — content `Status` (header table): `draft | consultant-review | client-review | approved`.
 Block `Severity`: `none | minor | major | critical` (drives the flow color).
 `Automability` (F4 first look): `human | automation | agent | hybrid`.
+
+The header table **is** the AS-IS approval gate: `Goedgekeurd door` and
+`Datum` are filled on approval (until then `—`). The `## Gate` section (before
+the first `## <CODE>` block) holds the reviewers' **directives** — change
+instructions recorded as a checklist, applied to this file, and ticked off
+with the date applied (`- [x] … (toegepast YYYY-MM-DD)`). `Status: approved`
+with an open `- [ ]` directive is a checker error.
 
 ### `analysis/opportunities.md` — `## OPP-x` block
 
@@ -319,6 +333,43 @@ slug (= folder name). Update the row on every stage change.
 
 ## Gates (enforced by `check_engagement.py`)
 
+The two human gates each live on a **gate carrier** with a `## Gate` block:
+a status plus a **Directieven** checklist. Directives are the human's change
+instructions given at review: the assistant records them in the block, applies
+them to that artifact, and ticks them off with the date applied
+(`- [x] … (toegepast YYYY-MM-DD)`).
+
+1. **AS-IS approval, per department** — carrier: the content file's status
+   header table (extended with `Goedgekeurd door` + `Datum`; `Status` enum
+   unchanged: `draft | consultant-review | client-review | approved`) plus a
+   `## Gate` section holding the directives. See the content schema above.
+2. **Roadmap confirmation** — carrier: `proposal/decision-log.md`, with a
+   `## Gate` block. Its status values are Dutch and stored as such in the
+   file: `gepland | in review | bevestigd`, mapping 1:1 to
+   `draft | in review | approved` — the checker treats `bevestigd` as the
+   approved state.
+
+```markdown
+## Gate
+
+| | |
+|---|---|
+| Status | gepland <!-- gepland / in review / bevestigd --> |
+| Goedgekeurd door | — |
+| Datum | — |
+
+**Directieven**
+
+- [ ] discard OPP-10 op de workshopagenda zetten
+```
+
+Checker rules:
+
+- **No approval with open directives**: `approved` (content file) or
+  `bevestigd` (decision log) with any unchecked `- [ ]` in that `## Gate`
+  section is an error — apply or withdraw them first.
+- **Visibility**: every run prints one `gates:` line with each gate's status
+  and open-directive count — that line is the consultant's to-do list.
 - `diagnosis` artifacts (`analysis/opportunities.md`) require every in-scope
   department's content `Status: approved`.
 - `build_proposal.py` refuses to build when a department is unapproved or the

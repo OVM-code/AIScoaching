@@ -1,8 +1,14 @@
-| Client | Afdeling | Status | Laatst gereviewd |
-|---|---|---|---|
-| InstallTech BV | Financiën & administratie | approved | 2026-06-26 |
+| Client | Afdeling | Status | Laatst gereviewd | Goedgekeurd door | Datum |
+|---|---|---|---|---|---|
+| InstallTech BV | Financiën & administratie | approved | 2026-06-26 | zaakvoerder + administratie (walkthrough) | 2026-06-26 |
 
 Vier personen administratie/finance, boekhouding in Exact Online met een externe accountant op kwartaalritme. De betaalprocessen en het wettelijke luik lopen degelijk; het grote lek is de facturatieketen die stroomopwaarts op papieren werkbonnen wacht — een werkkapitaalprobleem eerder dan een papierprobleem. AS-IS gevalideerd met administratie en zaakvoerder tijdens de walkthrough van 2026-06-26.
+
+## Gate
+
+**Directieven**
+
+- [x] Peppol-facturatie als goedlopend deel genoteerd bij FIN.010 — geen pijnpunt van maken (toegepast 2026-06-26)
 
 ## FIN.010 — Verkoopfacturatie
 - **Huidige werkwijze:** Administratie verzamelt papieren werkbonnen en WhatsApp-foto's per werf, ontcijfert het handschrift, zoekt materiaalprijzen op en typt alles in Exact. Gemiddeld drie weken tussen einde werken en factuur (tot een maand voor grote werven); sinds januari vertrekt alles via Peppol en dat deel loopt vanzelf.

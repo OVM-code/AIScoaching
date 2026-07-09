@@ -1,9 +1,21 @@
 # Decision log — roadmap confirmation workshop
 
-**Status: gepland** — de F3-workshop heeft nog niet plaatsgevonden (streefweek:
-20 juli 2026, vóór het bouwverlof). Dit skelet wordt pas ingevuld tijdens en
-na de workshop; tot dan blijven alle OPP-statussen `proposed` (behalve de
-gedocumenteerde discard OPP-10) en blijft de engagement-stage `diagnosis`.
+De F3-workshop heeft nog niet plaatsgevonden (streefweek: 20 juli 2026, vóór
+het bouwverlof). Dit skelet wordt pas ingevuld tijdens en na de workshop; tot
+dan blijven alle OPP-statussen `proposed` (behalve de gedocumenteerde discard
+OPP-10) en blijft de engagement-stage `diagnosis`.
+
+## Gate
+
+| | |
+|---|---|
+| Status | gepland <!-- gepland / in review / bevestigd --> |
+| Goedgekeurd door | — |
+| Datum | — |
+
+**Directieven**
+
+- [ ] discard OPP-10 met de klantonderbouwing op de workshopagenda zetten — de zaakvoerder wil de afwijzing zelf horen
 
 Record of the F3 workshop where the client challenges scores, adjusts the
 assumption sliders, selects initiatives and exports the confirmation JSON from

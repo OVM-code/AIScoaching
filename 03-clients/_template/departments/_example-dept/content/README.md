@@ -2,19 +2,38 @@
 
 One file per department: `NN-<dept>.md` (e.g. `02-sales.md`). It opens with the
 **status header table** — the approval gate the whole pipeline hangs on — then
-one `## <CODE>` block per in-scope catalog process describing how it runs today.
+a `## Gate` section with the reviewers' directives, then one `## <CODE>` block
+per in-scope catalog process describing how it runs today.
 
 ## Status header table (first thing in the file)
 
 ```markdown
-| Client | Afdeling | Status | Laatst gereviewd |
-|---|---|---|---|
-| InstallTech BV | Verkoop & offertes | draft | 2026-06-20 |
+| Client | Afdeling | Status | Laatst gereviewd | Goedgekeurd door | Datum |
+|---|---|---|---|---|---|
+| InstallTech BV | Verkoop & offertes | draft | 2026-06-20 | — | — |
 ```
 
 **Status** enum: `draft | consultant-review | client-review | approved`.
 Only set `approved` when consultant **and** client agree the AS-IS is a
-faithful picture — no diagnosis before that. Date is `YYYY-MM-DD`.
+faithful picture — no diagnosis before that. On approval fill in
+`Goedgekeurd door` (who approved) and `Datum`; until then both are `—`.
+Dates are `YYYY-MM-DD`.
+
+## `## Gate` section — directives (before the first `## <CODE>` block)
+
+```markdown
+## Gate
+
+**Directieven**
+
+- [ ] doorlooptijd per offerte ook opnemen in SAL.030
+- [x] volume gecorrigeerd naar 40/maand (toegepast 2026-06-18)
+```
+
+Directives are the consultant's/client's change instructions from a review:
+record them here, apply them to this file, and tick them off with the date
+applied. `Status: approved` with any open `- [ ]` directive is a
+`check_engagement.py` error — apply or withdraw them first.
 
 ## `## <CODE>` block per process
 

@@ -49,7 +49,8 @@ built on an unapproved AS-IS is worthless by definition.
 ## Process
 
 1. **Gate check.** Verify every in-scope department's content `Status:
-   approved`. Refuse to proceed otherwise.
+   approved` with no open `- [ ]` directives left in its `## Gate` section.
+   Refuse to proceed otherwise.
 2. **F1 maturity scan** → `analysis/maturity.md`: score the 6 dimensions to
    one decimal from AS-IS evidence (not aspiration; a level requires all
    evidence of the level below), name the binding constraint, and state which

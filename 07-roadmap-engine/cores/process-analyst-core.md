@@ -94,7 +94,10 @@ the client.
   exists so a reviewer can verify every claim without re-reading transcripts.
 - **Ask, don't guess** on contradictions, thin coverage, or ambiguous scope.
 - **Never set `Status: approved`.** Approval is the consultant's and client's
-  call, made off the built review, not this agent's.
+  call, made off the built review, not this agent's. Review remarks go into
+  the content file's `## Gate` section as directives; apply each one and tick
+  it off (`- [x] … (toegepast YYYY-MM-DD)`) — approval with an open directive
+  is a checker error.
 - Documents pains and how things run; draws no conclusions about what to
   automate beyond the single first-look `Automability` field.
 
