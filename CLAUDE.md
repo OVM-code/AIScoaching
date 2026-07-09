@@ -51,3 +51,12 @@ roadmap proposal.
   (`../Holding/06-agent-toolkit/`): model-agnostic core in
   `07-roadmap-engine/cores/`, thin Claude wrapper, Sonnet by default with the
   escalation condition stated in a `<!-- model: -->` note.
+- Org-wide agent working disciplines live in the **OVM-code/Main** skill
+  library (`skills/INDEX.md` there ranks them). When that repo is available in
+  the session, consult it before delegation-heavy or multi-component work; for
+  building a whole new system in stages, use its `/build-e2e-system` skill —
+  the Roadmap Engine build is its worked example.
+- At engagement milestones/close, run `/harvest-engagement 03-clients/<slug>`
+  to draft baseline recalibration, catalog evidence and assumption calibration
+  for human approval; `python3 07-roadmap-engine/tools/catalog_report.py`
+  shows evidence coverage and stale patterns.
