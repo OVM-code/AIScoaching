@@ -1,0 +1,11 @@
+{
+  "client": "InstallTech BV",
+  "slug": "_template",
+  "language": "nl",
+  "accentColor": "#D9480F",
+  "sector": "HVAC-installatie",
+  "departments": [2, 5, 8],
+  "day_rate": 950,
+  "currency": "EUR",
+  "_template_note": "Placeholder values from the spec example. On copy: set client/sector to the real client, slug to the folder name (they must match), language nl|en, departments to the catalog numbers actually in scope, day_rate to the agreed rate. Delete this note."
+}

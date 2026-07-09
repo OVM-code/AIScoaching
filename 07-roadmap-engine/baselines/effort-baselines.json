@@ -1,0 +1,12 @@
+{
+  "version": "0.1-seed",
+  "notes": "Conservative uncalibrated expert seeds — deliberately on the high side. Recalibrate from delivery actuals at each engagement close and bump the version. Cost model per OPP: implementation = days(allocatie, effort) x day_rate; year-1 cost = implementation + 12 x tooling EUR/month; payback (months) = year-1 cost / (annual value / 12).",
+  "day_rate_default": 950,
+  "implementation_days": {
+    "automation": { "S": 3, "M": 8, "L": 18 },
+    "agent-T1": { "S": 5, "M": 12, "L": 25 },
+    "agent-T2": { "S": 8, "M": 18, "L": 35 },
+    "agent-T3": { "S": 12, "M": 30, "L": 60 },
+    "hybrid": { "S": 5, "M": 12, "L": 25 }
+  }
+}

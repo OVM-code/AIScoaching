@@ -1,0 +1,4 @@
+{
+  "_template_note": "The assumption model: 4-8 sliders that EVERY euro figure in the proposal derives from via the OPP Waardeformule fields. Label everything directional; each assumption names its calibration path in 'source'. Example entry: { \"id\": \"quotes_per_month\", \"label\": { \"nl\": \"Offertes per maand\", \"en\": \"Quotes per month\" }, \"unit\": \"/maand\", \"min\": 10, \"max\": 100, \"step\": 5, \"default\": 40, \"source\": \"intake §3 — te kalibreren in pilotweek 1\" }. Ids are lowercase snake_case and unique; min <= default <= max. Delete this note once real assumptions are in.",
+  "assumptions": []
+}
