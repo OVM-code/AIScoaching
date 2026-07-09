@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AS-IS review — InstallTech BV</title>
+<style>
+/* Roadmap Engine — AS-IS interactive viewer. Self-contained, inlined at build time.
+ * Color model:
+ *   Pijn mode  (default) — step Severity:  none=blue, minor=amber, major=orange-red,
+ *                          critical=red, undocumented=grey dashed.
+ *   Kansen mode          — step Automability: human=grey-blue, automation=teal,
+ *                          agent=purple, hybrid=indigo, neutral=grey (not yet assessed).
+ * Dark-mode aware via prefers-color-scheme; everything keys off CSS custom props.
+ */
+:root {
+  color-scheme: light dark;
+  --accent: #00305e;
+  --accent-soft: #e8eef6;
+  --accent-ink: #ffffff;
+  --ink: #14202e;
+  --ink-soft: #4b5a6b;
+  --line: #d7dee7;
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  /* severity (Pijn mode) */
+  --sev-none: #2563eb;      --sev-none-bg: #eff6ff;
+  --sev-minor: #d97706;     --sev-minor-bg: #fffbeb;
+  --sev-major: #ea580c;     --sev-major-bg: #fff7ed;
+  --sev-critical: #dc2626;  --sev-critical-bg: #fef2f2;
+  --sev-undoc: #8195a9;     --sev-undoc-bg: #f8fafc;
+  /* automability (Kansen mode) */
+  --auto-human: #64748b;      --auto-human-bg: #f1f5f9;
+  --auto-automation: #0d9488; --auto-automation-bg: #f0fdfa;
+  --auto-agent: #7c3aed;      --auto-agent-bg: #f5f3ff;
+  --auto-hybrid: #4f46e5;     --auto-hybrid-bg: #eef2ff;
+  --auto-neutral: #8195a9;    --auto-neutral-bg: #f8fafc;
+  /* diagram chrome */
+  --lane-0: #fbfcfe;
+  --lane-1: #f3f6fa;
+  --flow-ink: #6b7c8f;
+  --evt-start: #15803d; --evt-start-bg: #f0fdf4;
+  --evt-end: #b91c1c;   --evt-end-bg: #fef2f2;
+  --gw-bg: #fefce8;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(16, 32, 46, .06), 0 4px 14px rgba(16, 32, 46, .08);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent-soft: #1c2c40;
+    --ink: #e4ebf3;
+    --ink-soft: #9db0c3;
+    --line: #2b3948;
+    --bg: #0e151d;
+    --card: #17212c;
+    --sev-none: #60a5fa;      --sev-none-bg: #172a45;
+    --sev-minor: #fbbf24;     --sev-minor-bg: #33270d;
+    --sev-major: #fb923c;     --sev-major-bg: #37200f;
+    --sev-critical: #f87171;  --sev-critical-bg: #3b1717;
+    --sev-undoc: #72869a;     --sev-undoc-bg: #1a232e;
+    --auto-human: #94a3b8;      --auto-human-bg: #1e2836;
+    --auto-automation: #2dd4bf; --auto-automation-bg: #0e2f2c;
+    --auto-agent: #a78bfa;      --auto-agent-bg: #271d40;
+    --auto-hybrid: #818cf8;     --auto-hybrid-bg: #1d2145;
+    --auto-neutral: #72869a;    --auto-neutral-bg: #1a232e;
+    --lane-0: #141d27;
+    --lane-1: #18232f;
+    --flow-ink: #8ba0b5;
+    --evt-start: #4ade80; --evt-start-bg: #122b1b;
+    --evt-end: #f87171;   --evt-end-bg: #3b1717;
+    --gw-bg: #2d2a14;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 14px rgba(0, 0, 0, .35);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font: 15px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ---------- header ---------- */
+.hdr {
+  background: var(--accent); color: var(--accent-ink);
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 22px; flex: none; flex-wrap: wrap;
+}
+.hdr .brand { font-weight: 700; font-size: 17px; letter-spacing: .2px; white-space: nowrap; }
+.hdr .brand small { display: block; font-weight: 400; font-size: 11.5px; opacity: .75; }
+.hdr nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.hdr nav a {
+  color: var(--accent-ink); text-decoration: none; padding: 7px 13px; border-radius: 7px;
+  font-size: 13.5px; opacity: .82; white-space: nowrap;
+}
+.hdr nav a .n { opacity: .7; font-size: 11.5px; margin-right: 5px; }
+.hdr nav a:hover { background: rgba(255, 255, 255, .12); opacity: 1; }
+.hdr nav a.on { background: rgba(255, 255, 255, .18); opacity: 1; font-weight: 600; }
+
+/* mode toggle: Pijn / Kansen */
+.mode-toggle {
+  display: flex; margin-left: auto; border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20px; overflow: hidden; flex: none;
+}
+.mode-toggle button {
+  border: none; background: transparent; color: var(--accent-ink); opacity: .75;
+  font: inherit; font-size: 12.5px; font-weight: 600; padding: 5px 14px; cursor: pointer;
+}
+.mode-toggle button.on { background: rgba(255, 255, 255, .22); opacity: 1; }
+
+/* header search + dropdown hits */
+.hdr .search { position: relative; flex: none; }
+.hdr .search input {
+  width: 230px; padding: 7px 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 8px;
+  font: inherit; font-size: 13px; outline: none;
+  background: rgba(255,255,255,.12); color: var(--accent-ink);
+}
+.hdr .search input::placeholder { color: rgba(255,255,255,.65); }
+.hdr .search input:focus { background: var(--card); color: var(--ink); border-color: var(--card); }
+.hits {
+  position: absolute; top: calc(100% + 6px); right: 0; width: 360px; max-height: 60vh;
+  overflow-y: auto; background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; box-shadow: var(--shadow); z-index: 60; display: none; padding: 6px;
+}
+.hits.open { display: block; }
+.hits .hit {
+  display: block; padding: 8px 10px; border-radius: 8px;
+  text-decoration: none; color: var(--ink); font-size: 12.5px;
+}
+.hits .hit code { color: var(--accent); font-weight: 600; }
+@media (prefers-color-scheme: dark) { .hits .hit code { color: var(--sev-none); } }
+.hits .hit:hover { background: var(--accent-soft); }
+.hits .none { color: var(--ink-soft); font-size: 13px; padding: 8px 10px; }
+
+/* ---------- layout ---------- */
+.content { flex: 1; overflow-y: auto; min-width: 0; padding: 22px 26px 60px; }
+.content > .inner { max-width: 1500px; margin: 0 auto; }
+
+/* ---------- generic ---------- */
+h1.pg { font-size: 21px; margin: 2px 0 2px; }
+.pg-sub { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 18px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 18px;
+}
+.chip {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .3px;
+  border-radius: 20px; padding: 2px 9px; vertical-align: 1px; white-space: nowrap;
+}
+.chip.sev-none { color: var(--sev-none); background: var(--sev-none-bg); border: 1px solid var(--sev-none); }
+.chip.sev-minor { color: var(--sev-minor); background: var(--sev-minor-bg); border: 1px solid var(--sev-minor); }
+.chip.sev-major { color: var(--sev-major); background: var(--sev-major-bg); border: 1px solid var(--sev-major); }
+.chip.sev-critical { color: var(--sev-critical); background: var(--sev-critical-bg); border: 1px solid var(--sev-critical); }
+.chip.sev-undoc { color: var(--sev-undoc); background: var(--sev-undoc-bg); border: 1px dashed var(--sev-undoc); }
+.chip.auto-human { color: var(--auto-human); background: var(--auto-human-bg); border: 1px solid var(--auto-human); }
+.chip.auto-automation { color: var(--auto-automation); background: var(--auto-automation-bg); border: 1px solid var(--auto-automation); }
+.chip.auto-agent { color: var(--auto-agent); background: var(--auto-agent-bg); border: 1px solid var(--auto-agent); }
+.chip.auto-hybrid { color: var(--auto-hybrid); background: var(--auto-hybrid-bg); border: 1px solid var(--auto-hybrid); }
+.chip.auto-neutral { color: var(--auto-neutral); background: var(--auto-neutral-bg); border: 1px solid var(--auto-neutral); }
+.chip.plain { color: var(--ink-soft); background: var(--bg); border: 1px solid var(--line); }
+.chip.pain { color: var(--sev-critical); background: var(--sev-critical-bg); border: 1px solid var(--sev-critical); cursor: pointer; }
+.chip.ref { color: var(--accent); background: var(--accent-soft); border: 1px solid var(--line); cursor: pointer; }
+@media (prefers-color-scheme: dark) { .chip.ref { color: var(--sev-none); } }
+.chip.link { cursor: pointer; }
+code.bs { font: 600 12px/1 ui-monospace, "Cascadia Mono", Consolas, monospace; color: var(--accent); }
+@media (prefers-color-scheme: dark) { code.bs { color: var(--sev-none); } }
+
+/* ---------- diagram ---------- */
+.diagram-card { padding: 10px 12px 12px; overflow: hidden; }
+.diagram-head { display: flex; align-items: center; gap: 12px; padding: 6px 8px 8px; flex-wrap: wrap; }
+.diagram-head .zoom { margin-left: auto; display: flex; gap: 4px; }
+.diagram-head .zoom button {
+  border: 1px solid var(--line); background: var(--card); border-radius: 7px; width: 30px; height: 28px;
+  font-size: 15px; cursor: pointer; color: var(--ink-soft);
+}
+.diagram-head .zoom button:hover { border-color: var(--accent); color: var(--accent); }
+.diagram-scroll { overflow: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+svg.bpmn { display: block; }
+svg.bpmn text { font-family: "Segoe UI", system-ui, sans-serif; }
+.bpmn .lane-band { stroke: var(--line); stroke-width: 1; }
+.bpmn .lane-band-0 { fill: var(--lane-0); }
+.bpmn .lane-band-1 { fill: var(--lane-1); }
+.bpmn .lane-label { fill: var(--ink-soft); font-size: 12px; font-weight: 600; letter-spacing: .4px; }
+.bpmn .flow { stroke: var(--flow-ink); stroke-width: 1.6; fill: none; }
+.bpmn .arrowhead { fill: var(--flow-ink); }
+.bpmn .flow-label { font-size: 11px; fill: var(--ink-soft); }
+.bpmn .flow-label-bg { fill: var(--card); opacity: .92; }
+.bpmn .node { cursor: default; }
+.bpmn .node.clickable { cursor: pointer; }
+.bpmn .node.clickable:hover .shape { filter: brightness(.96); }
+@media (prefers-color-scheme: dark) { .bpmn .node.clickable:hover .shape { filter: brightness(1.25); } }
+.bpmn .node .title { font-size: 12px; fill: var(--ink); }
+.bpmn .node .code { font-size: 9.5px; font-weight: 700; fill: var(--ink-soft); }
+.bpmn .node.selected .shape { stroke-width: 3; }
+/* Pijn mode — color by Severity */
+.mode-pijn .bpmn .sev-none .shape { stroke: var(--sev-none); fill: var(--sev-none-bg); }
+.mode-pijn .bpmn .sev-minor .shape { stroke: var(--sev-minor); fill: var(--sev-minor-bg); }
+.mode-pijn .bpmn .sev-major .shape { stroke: var(--sev-major); fill: var(--sev-major-bg); }
+.mode-pijn .bpmn .sev-critical .shape { stroke: var(--sev-critical); fill: var(--sev-critical-bg); }
+/* Kansen mode — color by Automability */
+.mode-kansen .bpmn .auto-human .shape { stroke: var(--auto-human); fill: var(--auto-human-bg); }
+.mode-kansen .bpmn .auto-automation .shape { stroke: var(--auto-automation); fill: var(--auto-automation-bg); }
+.mode-kansen .bpmn .auto-agent .shape { stroke: var(--auto-agent); fill: var(--auto-agent-bg); }
+.mode-kansen .bpmn .auto-hybrid .shape { stroke: var(--auto-hybrid); fill: var(--auto-hybrid-bg); }
+.mode-kansen .bpmn .auto-neutral .shape { stroke: var(--auto-neutral); fill: var(--auto-neutral-bg); }
+/* Undocumented — grey dashed in both modes */
+.bpmn .sev-undoc .shape { stroke: var(--sev-undoc) !important; fill: var(--sev-undoc-bg) !important; stroke-dasharray: 5 3; }
+.bpmn .n-start .shape { stroke: var(--evt-start); fill: var(--evt-start-bg); stroke-width: 2; }
+.bpmn .n-end .shape { stroke: var(--evt-end); fill: var(--evt-end-bg); stroke-width: 3.5; }
+.bpmn .n-gateway .shape, .bpmn .n-gateway-parallel .shape { stroke: var(--flow-ink); fill: var(--gw-bg); stroke-width: 2; }
+.bpmn .sub-mark { stroke: var(--flow-ink); stroke-width: 1.6; fill: var(--card); }
+.bpmn .evt-label { font-size: 11px; fill: var(--ink-soft); }
+.bpmn .gw-label { font-size: 11px; fill: var(--ink-soft); font-weight: 600; }
+.bpmn .gw-mark { stroke: var(--flow-ink); stroke-width: 2.4; fill: none; }
+
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-soft); padding: 10px 6px 0; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; border: 2px solid; }
+
+/* ---------- process cards under diagram ---------- */
+.proc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 10px; }
+.proc-card {
+  background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--sev-undoc);
+  border-radius: 8px; padding: 10px 13px; cursor: pointer;
+}
+.proc-card:hover { box-shadow: var(--shadow); }
+.mode-pijn .proc-card.sev-none { border-left-color: var(--sev-none); }
+.mode-pijn .proc-card.sev-minor { border-left-color: var(--sev-minor); }
+.mode-pijn .proc-card.sev-major { border-left-color: var(--sev-major); }
+.mode-pijn .proc-card.sev-critical { border-left-color: var(--sev-critical); }
+.mode-kansen .proc-card.auto-human { border-left-color: var(--auto-human); }
+.mode-kansen .proc-card.auto-automation { border-left-color: var(--auto-automation); }
+.mode-kansen .proc-card.auto-agent { border-left-color: var(--auto-agent); }
+.mode-kansen .proc-card.auto-hybrid { border-left-color: var(--auto-hybrid); }
+.mode-kansen .proc-card.auto-neutral { border-left-color: var(--auto-neutral); }
+.proc-card .t { font-weight: 600; font-size: 13.5px; margin: 2px 0 3px; }
+.proc-card .m { font-size: 11.5px; color: var(--ink-soft); }
+h2.sect { font-size: 15px; margin: 26px 0 10px; color: var(--ink-soft); font-weight: 600; }
+
+/* ---------- doc panel ---------- */
+.panel-wrap { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
+.panel-wrap.open { pointer-events: auto; }
+.panel-wrap .veil { position: absolute; inset: 0; background: rgba(16, 32, 46, .28); opacity: 0; transition: opacity .18s; }
+@media (prefers-color-scheme: dark) { .panel-wrap .veil { background: rgba(0, 0, 0, .5); } }
+.panel-wrap.open .veil { opacity: 1; }
+.panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(560px, 92vw);
+  background: var(--card); box-shadow: -8px 0 30px rgba(16, 32, 46, .18);
+  transform: translateX(102%); transition: transform .2s ease-out;
+  display: flex; flex-direction: column;
+}
+.panel-wrap.open .panel { transform: none; }
+.panel .p-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--line); }
+.panel .p-head .codes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+.panel .p-head h2 { margin: 0; font-size: 18px; line-height: 1.3; }
+.panel .p-head .dom { color: var(--ink-soft); font-size: 12.5px; margin-top: 4px; }
+.panel .p-close {
+  position: absolute; top: 12px; right: 14px; border: none; background: var(--bg);
+  border-radius: 8px; width: 32px; height: 32px; font-size: 16px; cursor: pointer; color: var(--ink-soft);
+}
+.panel .p-close:hover { background: var(--accent-soft); color: var(--accent); }
+@media (prefers-color-scheme: dark) { .panel .p-close:hover { color: var(--ink); } }
+.panel .p-body { padding: 14px 22px 40px; overflow-y: auto; }
+.panel .p-meta { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 12px; }
+
+/* AS-IS field list in the panel */
+.p-fields { margin: 0 0 14px; font-size: 13.5px; }
+.p-fields dt { font-weight: 600; color: var(--ink-soft); font-size: 11.5px; letter-spacing: .4px; text-transform: uppercase; margin-top: 10px; }
+.p-fields dd { margin: 2px 0 0; }
+
+/* pain entries inlined in the panel */
+.pain-inline {
+  border: 1px solid var(--line); border-left: 4px solid var(--sev-critical);
+  border-radius: 8px; padding: 10px 13px; margin: 10px 0; background: var(--bg);
+}
+.pain-inline.sev-minor { border-left-color: var(--sev-minor); }
+.pain-inline.sev-major { border-left-color: var(--sev-major); }
+.pain-inline.sev-critical { border-left-color: var(--sev-critical); }
+.pain-inline h4 { margin: 0 0 4px; font-size: 13px; }
+.pain-inline blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line); color: var(--ink-soft); font-style: italic; font-size: 13px; }
+.pain-inline .src { color: var(--ink-soft); font-size: 11.5px; margin: 4px 0 6px; }
+
+/* ---------- markdown body ---------- */
+.md h1, .md h2, .md h3, .md h4 { line-height: 1.3; margin: 1.2em 0 .45em; }
+.md h1 { font-size: 19px; } .md h2 { font-size: 16.5px; } .md h3 { font-size: 14.5px; } .md h4 { font-size: 13.5px; }
+.md p { margin: .55em 0; }
+.md ul, .md ol { margin: .5em 0; padding-left: 1.5em; }
+.md li { margin: .22em 0; }
+.md table { border-collapse: collapse; margin: .8em 0; font-size: 13px; width: 100%; }
+.md th, .md td { border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.md th { background: var(--bg); }
+.md blockquote { margin: .7em 0; padding: 6px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0; }
+.md code { background: var(--bg); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+.md img { max-width: 100%; }
+.md hr { border: none; border-top: 1px solid var(--line); margin: 1.2em 0; }
+
+/* ---------- registers (Processen / Pijnpunten) ---------- */
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 10px; align-items: center; }
+.filters .flabel { font-size: 11.5px; color: var(--ink-soft); font-weight: 600; letter-spacing: .4px; text-transform: uppercase; margin-right: 2px; }
+.filters button {
+  border: 1px solid var(--line); background: var(--card); border-radius: 20px; padding: 5px 13px;
+  font: inherit; font-size: 12.5px; cursor: pointer; color: var(--ink-soft);
+}
+.filters button.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.filters input[type="search"] {
+  border: 1px solid var(--line); border-radius: 20px; padding: 5px 13px;
+  font: inherit; font-size: 12.5px; background: var(--card); color: var(--ink); outline: none;
+}
+.filters input[type="search"]:focus { border-color: var(--accent); }
+table.reg { border-collapse: collapse; width: 100%; font-size: 13px; background: var(--card); }
+table.reg th, table.reg td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.reg th { background: var(--accent-soft); color: var(--accent); position: sticky; top: -23px; }
+@media (prefers-color-scheme: dark) { table.reg th { color: var(--ink); } }
+table.reg tr.click { cursor: pointer; }
+table.reg tr.click:hover td { background: var(--accent-soft); }
+table.reg tr.dim td { color: var(--ink-soft); background: var(--bg); }
+
+/* pain register cards */
+.pain-card { position: relative; border-left: 4px solid var(--sev-critical); }
+.pain-card.sev-minor { border-left-color: var(--sev-minor); }
+.pain-card.sev-major { border-left-color: var(--sev-major); }
+.pain-card.sev-critical { border-left-color: var(--sev-critical); }
+.pain-card h3 { margin: 0 0 6px; font-size: 15px; }
+.pain-card h3 .dept { color: var(--ink-soft); font-weight: 400; font-size: 12.5px; }
+.pain-card blockquote { margin: 8px 0; padding: 6px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0; font-style: italic; }
+.pain-card .src { color: var(--ink-soft); font-size: 12.5px; margin-bottom: 8px; }
+.pain-card .meta-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 8px 0 0; font-size: 12.5px; color: var(--ink-soft); }
+.pain-card.hl { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.empty { color: var(--ink-soft); font-style: italic; padding: 30px 0; text-align: center; }
+
+@media print {
+  .hdr nav, .hdr .search, .mode-toggle, .diagram-head .zoom { display: none !important; }
+  .content { overflow: visible; }
+  .panel-wrap { display: none; }
+}
+
+:root { --accent: #D9480F; }
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+window.ASIS = {"client": {"name": "InstallTech BV", "title": "AS-IS review", "sector": "HVAC-installatie", "language": "nl", "intro_html": "", "labels": {}}, "meta": {"catalog": "Roadmap Engine department model", "version": "", "generated": "2026-07-09"}, "departments": [{"number": 2, "id": "sales", "title": "Verkoop & offertes", "intro_html": "<p>De verkoop draait op een gedeelde mailbox, een Excel-sjabloon en de ervaring van de zaakvoerder en twee verkopers. Het kernproces — van aanvraag tot getekende offerte — is stabiel maar traag: het hertypen en de doorlooptijd van vier à vijf werkdagen zijn de grootste lekken. AS-IS gevalideerd met zaakvoerder en binnendienst tijdens de walkthrough van 2026-06-20.<\/p>", "status": "approved", "process": {"id": "sales-installtech", "domain": 2, "title": {"nl": "Verkoop & offertes", "en": "Sales & quoting"}, "subtitle": {"nl": "Van aanvraag tot order bij planning — AS-IS InstallTech", "en": "From inquiry to order at planning — AS-IS InstallTech"}, "lanes": [{"id": "binnendienst", "label": {"nl": "Binnendienst", "en": "Inside sales"}}, {"id": "verkoper", "label": {"nl": "Verkoper / zaakvoerder op de baan", "en": "Sales rep / owner in the field"}}, {"id": "zaakvoerder", "label": {"nl": "Zaakvoerder", "en": "Owner / manager"}}], "nodes": [{"id": "start", "type": "start", "label": {"nl": "Klantaanvraag", "en": "Customer inquiry"}, "lane": "binnendienst"}, {"id": "gw-kanaal", "type": "gateway", "label": {"nl": "Via welk kanaal?", "en": "Via which channel?"}, "lane": "binnendienst"}, {"id": "kanaal-mail", "type": "task", "label": {"nl": "Mail in gedeelde inbox verkoop@", "en": "Mail in shared inbox verkoop@"}, "lane": "binnendienst", "process": "SAL.010"}, {"id": "kanaal-telefoon", "type": "task", "label": {"nl": "Telefonisch — genoteerd op post-it", "en": "Phone — noted on a post-it"}, "lane": "binnendienst", "process": "SAL.010"}, {"id": "kanaal-werf", "type": "task", "label": {"nl": "Klant spreekt technieker aan op de werf", "en": "Customer approaches technician on site"}, "lane": "verkoper", "process": "SAL.010"}, {"id": "registreren", "type": "task", "label": {"nl": "Aanvraag kwalificeren (geen leadlijst)", "en": "Qualify inquiry (no lead list)"}, "lane": "binnendienst", "process": "SAL.010"}, {"id": "gw-bezoek", "type": "gateway", "label": {"nl": "Meer dan ketelvervanging?", "en": "More than a boiler swap?"}, "lane": "binnendienst"}, {"id": "werfbezoek", "type": "task", "label": {"nl": "Werfbezoek: boekje + foto's op eigen gsm", "en": "Site visit: notebook + photos on own phone"}, "lane": "verkoper", "process": "SAL.020"}, {"id": "offerte", "type": "task", "label": {"nl": "Offerte hertypen in Excel-sjabloon", "en": "Re-type quote into Excel template"}, "lane": "binnendienst", "process": "SAL.030"}, {"id": "gw-drempel", "type": "gateway", "label": {"nl": "Boven €10.000?", "en": "Above €10,000?"}, "lane": "binnendienst"}, {"id": "goedkeuren", "type": "task", "label": {"nl": "Zaakvoerder kijkt 's avonds na", "en": "Owner reviews in the evening"}, "lane": "zaakvoerder", "process": "SAL.040"}, {"id": "versturen", "type": "task", "label": {"nl": "Offerte versturen", "en": "Send quote"}, "lane": "binnendienst", "process": "SAL.030"}, {"id": "opvolgen", "type": "task", "label": {"nl": "Opvolgen als het stil is", "en": "Follow up when things are quiet"}, "lane": "binnendienst", "process": "SAL.050"}, {"id": "gw-akkoord", "type": "gateway", "label": {"nl": "Klant akkoord?", "en": "Customer accepts?"}, "lane": "binnendienst"}, {"id": "end-verloren", "type": "end", "label": {"nl": "Offerte verloren / verdampt", "en": "Quote lost / evaporated"}, "lane": "binnendienst"}, {"id": "bevestigen", "type": "task", "label": {"nl": "Offerte doormailen naar planning", "en": "Forward quote by mail to planning"}, "lane": "binnendienst", "process": "SAL.060"}, {"id": "crm", "type": "task", "label": {"nl": "Excel-klantenlijst bijwerken (soms)", "en": "Update Excel customer list (sometimes)"}, "lane": "binnendienst", "process": "SAL.080"}, {"id": "end", "type": "end", "label": {"nl": "Order naar uitvoering", "en": "Order to operations"}, "lane": "binnendienst"}], "flows": [{"from": "start", "to": "gw-kanaal"}, {"from": "gw-kanaal", "to": "kanaal-mail", "label": {"nl": "mail", "en": "mail"}}, {"from": "gw-kanaal", "to": "kanaal-telefoon", "label": {"nl": "telefoon", "en": "phone"}}, {"from": "gw-kanaal", "to": "kanaal-werf", "label": {"nl": "werf", "en": "site"}}, {"from": "kanaal-mail", "to": "registreren"}, {"from": "kanaal-telefoon", "to": "registreren"}, {"from": "kanaal-werf", "to": "registreren", "label": {"nl": "soms een week later", "en": "sometimes a week later"}}, {"from": "registreren", "to": "gw-bezoek"}, {"from": "gw-bezoek", "to": "werfbezoek", "label": {"nl": "ja", "en": "yes"}}, {"from": "werfbezoek", "to": "offerte"}, {"from": "gw-bezoek", "to": "offerte", "label": {"nl": "nee", "en": "no"}}, {"from": "offerte", "to": "gw-drempel"}, {"from": "gw-drempel", "to": "goedkeuren", "label": {"nl": "ja", "en": "yes"}}, {"from": "goedkeuren", "to": "versturen"}, {"from": "gw-drempel", "to": "versturen", "label": {"nl": "nee", "en": "no"}}, {"from": "versturen", "to": "opvolgen"}, {"from": "opvolgen", "to": "gw-akkoord"}, {"from": "gw-akkoord", "to": "end-verloren", "label": {"nl": "nee", "en": "no"}}, {"from": "gw-akkoord", "to": "opvolgen", "label": {"nl": "nog geen antwoord", "en": "no answer yet"}}, {"from": "gw-akkoord", "to": "bevestigen", "label": {"nl": "ja", "en": "yes"}}, {"from": "bevestigen", "to": "crm"}, {"from": "crm", "to": "end"}]}, "processes": ["SAL.010", "SAL.020", "SAL.030", "SAL.040", "SAL.050", "SAL.060", "SAL.080"]}, {"number": 5, "id": "field-service", "title": "Buitendienst & uitvoering", "intro_html": "<p>Achttien techniekers, één ervaren planner en een papieren werkbonnenstroom. De uitvoering zelf is vakwerk en loopt goed; de waardevernietiging zit in alles errond: de papieren registratie, de ontbrekende installatiehistoriek en de contractopvolging in een verouderde Excel. AS-IS gevalideerd met planner, technieker en zaakvoerder tijdens de walkthrough van 2026-06-24.<\/p>", "status": "approved", "process": {"id": "field-service-installtech", "domain": 5, "title": {"nl": "Buitendienst & uitvoering", "en": "Field service & execution"}, "subtitle": {"nl": "Van servicemelding tot factureerbare werkbon — AS-IS InstallTech", "en": "From service request to billable job report — AS-IS InstallTech"}, "lanes": [{"id": "servicedesk", "label": {"nl": "Onthaal / service@", "en": "Front office / service@"}}, {"id": "planner", "label": {"nl": "Planner-dispatcher", "en": "Planner / dispatcher"}}, {"id": "technieker", "label": {"nl": "Technieker", "en": "Technician"}}, {"id": "administratie", "label": {"nl": "Administratie", "en": "Back office"}}], "nodes": [{"id": "start", "type": "start", "label": {"nl": "Servicemelding (telefoon / service@)", "en": "Service request (phone / service@)"}, "lane": "servicedesk"}, {"id": "triage", "type": "task", "label": {"nl": "Urgentie inschatten op gevoel", "en": "Judge urgency by feel"}, "lane": "servicedesk", "process": "SVC.010"}, {"id": "gw-contract", "type": "gateway", "label": {"nl": "Onder onderhoudscontract?", "en": "Under maintenance contract?"}, "lane": "servicedesk"}, {"id": "contract", "type": "task", "label": {"nl": "Contract opzoeken in Excel van 2019", "en": "Look up contract in the 2019 Excel"}, "lane": "servicedesk", "process": "SVC.070"}, {"id": "plannen", "type": "task", "label": {"nl": "Inplannen op planbord + Outlook-agenda", "en": "Schedule on wall board + Outlook calendar"}, "lane": "planner", "process": "SVC.020"}, {"id": "voorbereiden", "type": "task", "label": {"nl": "Werkvoorbereiding: bellen naar bureau voor historiek", "en": "Job prep: phone the office for history"}, "lane": "technieker", "process": "SVC.030"}, {"id": "uitvoeren", "type": "task", "label": {"nl": "Interventie uitvoeren (vakwerk)", "en": "Execute intervention (craft work)"}, "lane": "technieker", "process": "SVC.040"}, {"id": "gw-opgelost", "type": "gateway", "label": {"nl": "Opgelost in één bezoek?", "en": "Fixed in one visit?"}, "lane": "technieker"}, {"id": "vervolg", "type": "task", "label": {"nl": "\"Ik kom nog eens terug\" — leeft in het hoofd", "en": "\"I'll come back later\" — lives in the head"}, "lane": "technieker", "process": "SVC.060"}, {"id": "werkbon-papier", "type": "task", "label": {"nl": "Papieren drieluikbon invullen en laten aftekenen", "en": "Fill in & sign the paper triplicate job sheet"}, "lane": "technieker", "process": "SVC.050"}, {"id": "tijd", "type": "task", "label": {"nl": "Uren op de bon; vrijdag week reconstrueren", "en": "Hours on the sheet; reconstruct week on Friday"}, "lane": "technieker", "process": "SVC.090"}, {"id": "werkbon-foto", "type": "task", "label": {"nl": "Foto van de bon in de WhatsApp-groep", "en": "Photo of the sheet into the WhatsApp group"}, "lane": "technieker", "process": "SVC.050"}, {"id": "overtypen", "type": "task", "label": {"nl": "Handschrift ontcijferen en overtypen", "en": "Decipher handwriting & re-type"}, "lane": "administratie", "process": "SVC.050"}, {"id": "controleren", "type": "task", "label": {"nl": "Werkbon controleren voor facturatie", "en": "Check job sheet for invoicing"}, "lane": "administratie", "process": "SVC.050"}, {"id": "end", "type": "end", "label": {"nl": "Naar facturatie (FIN.010)", "en": "To invoicing (FIN.010)"}, "lane": "administratie"}], "flows": [{"from": "start", "to": "triage"}, {"from": "triage", "to": "gw-contract"}, {"from": "gw-contract", "to": "contract", "label": {"nl": "ja", "en": "yes"}}, {"from": "contract", "to": "plannen"}, {"from": "gw-contract", "to": "plannen", "label": {"nl": "nee", "en": "no"}}, {"from": "plannen", "to": "voorbereiden"}, {"from": "voorbereiden", "to": "uitvoeren"}, {"from": "uitvoeren", "to": "gw-opgelost"}, {"from": "gw-opgelost", "to": "vervolg", "label": {"nl": "nee", "en": "no"}}, {"from": "vervolg", "to": "plannen", "label": {"nl": "tweede bezoek — als de klant belt", "en": "second visit — if the customer calls"}}, {"from": "gw-opgelost", "to": "werkbon-papier", "label": {"nl": "ja", "en": "yes"}}, {"from": "vervolg", "to": "werkbon-papier"}, {"from": "werkbon-papier", "to": "tijd"}, {"from": "tijd", "to": "werkbon-foto"}, {"from": "werkbon-foto", "to": "overtypen", "label": {"nl": "soms pas vrijdag", "en": "sometimes only on Friday"}}, {"from": "overtypen", "to": "controleren"}, {"from": "controleren", "to": "end"}]}, "processes": ["SVC.010", "SVC.020", "SVC.030", "SVC.050", "SVC.060", "SVC.070", "SVC.090"]}, {"number": 8, "id": "finance", "title": "Financiën & administratie", "intro_html": "<p>Vier personen administratie/finance, boekhouding in Exact Online met een externe accountant op kwartaalritme. De betaalprocessen en het wettelijke luik lopen degelijk; het grote lek is de facturatieketen die stroomopwaarts op papieren werkbonnen wacht — een werkkapitaalprobleem eerder dan een papierprobleem. AS-IS gevalideerd met administratie en zaakvoerder tijdens de walkthrough van 2026-06-26.<\/p>", "status": "approved", "process": {"id": "finance-installtech", "domain": 8, "title": {"nl": "Financiën & administratie", "en": "Finance & administration"}, "subtitle": {"nl": "Van werkbon tot btw-kwartaal — AS-IS InstallTech", "en": "From job sheet to VAT quarter — AS-IS InstallTech"}, "lanes": [{"id": "boekhouding", "label": {"nl": "Administratie / boekhouding", "en": "Back office / bookkeeping"}}, {"id": "zaakvoerder", "label": {"nl": "Zaakvoerder", "en": "Owner / manager"}}, {"id": "accountant", "label": {"nl": "Externe accountant", "en": "External accountant"}}], "nodes": [{"id": "start", "type": "start", "label": {"nl": "Werkbonnen komen binnen (papier / WhatsApp-foto)", "en": "Job sheets arrive (paper / WhatsApp photo)"}, "lane": "boekhouding"}, {"id": "verzamelen", "type": "task", "label": {"nl": "Bonnen verzamelen, handschrift ontcijferen, prijzen opzoeken", "en": "Collect sheets, decipher handwriting, look up prices"}, "lane": "boekhouding", "process": "FIN.010"}, {"id": "factureren", "type": "task", "label": {"nl": "Factuur hertypen in Exact en via Peppol versturen", "en": "Re-type invoice into Exact & send via Peppol"}, "lane": "boekhouding", "process": "FIN.010"}, {"id": "gw-betaald", "type": "gateway", "label": {"nl": "Betaald binnen termijn?", "en": "Paid within terms?"}, "lane": "boekhouding"}, {"id": "aanmanen", "type": "task", "label": {"nl": "Bel- en mailronde als Dirk erom vraagt", "en": "Call & mail round when the owner asks"}, "lane": "boekhouding", "process": "FIN.040"}, {"id": "aankoopfacturen", "type": "task", "label": {"nl": "Aankoopfacturen één voor één intikken", "en": "Key in purchase invoices one by one"}, "lane": "boekhouding", "process": "FIN.020"}, {"id": "betalen", "type": "task", "label": {"nl": "Wekelijkse betaalrun voorbereiden", "en": "Prepare weekly payment run"}, "lane": "boekhouding", "process": "FIN.030"}, {"id": "goedkeuren", "type": "task", "label": {"nl": "Aftekenen met kaartlezer (vier ogen)", "en": "Sign off with card reader (four eyes)"}, "lane": "zaakvoerder", "process": "FIN.030"}, {"id": "afletteren", "type": "task", "label": {"nl": "Uittreksels afpunten (maandags)", "en": "Reconcile statements (Mondays)"}, "lane": "boekhouding", "process": "FIN.030"}, {"id": "gw-btw", "type": "gateway", "label": {"nl": "Btw-kwartaal?", "en": "VAT quarter?"}, "lane": "accountant"}, {"id": "btw", "type": "task", "label": {"nl": "Btw-aangifte indienen (loopt vlot sinds Peppol)", "en": "File VAT return (smooth since Peppol)"}, "lane": "accountant", "process": "FIN.060"}, {"id": "nacalculeren", "type": "task", "label": {"nl": "Nacalculatie enkel voor pijnlijke werven", "en": "Job costing only for painful jobs"}, "lane": "boekhouding", "process": "FIN.080"}, {"id": "cashflow", "type": "task", "label": {"nl": "Banksaldo + buikgevoel", "en": "Bank balance + gut feel"}, "lane": "zaakvoerder", "process": "FIN.090"}, {"id": "end", "type": "end", "label": {"nl": "Kwartaal afgesloten", "en": "Quarter closed"}, "lane": "zaakvoerder"}], "flows": [{"from": "start", "to": "verzamelen", "label": {"nl": "±3 weken na de werken", "en": "±3 weeks after the work"}}, {"from": "verzamelen", "to": "factureren"}, {"from": "factureren", "to": "gw-betaald"}, {"from": "gw-betaald", "to": "aanmanen", "label": {"nl": "nee (±25%)", "en": "no (±25%)"}}, {"from": "aanmanen", "to": "gw-betaald", "label": {"nl": "herinnering", "en": "reminder"}}, {"from": "gw-betaald", "to": "aankoopfacturen", "label": {"nl": "ja", "en": "yes"}}, {"from": "aankoopfacturen", "to": "betalen"}, {"from": "betalen", "to": "goedkeuren"}, {"from": "goedkeuren", "to": "afletteren"}, {"from": "afletteren", "to": "gw-btw"}, {"from": "gw-btw", "to": "btw", "label": {"nl": "ja", "en": "yes"}}, {"from": "btw", "to": "nacalculeren"}, {"from": "gw-btw", "to": "nacalculeren", "label": {"nl": "nee", "en": "no"}}, {"from": "nacalculeren", "to": "cashflow"}, {"from": "cashflow", "to": "end"}]}, "processes": ["FIN.010", "FIN.020", "FIN.030", "FIN.040", "FIN.060", "FIN.080", "FIN.090"]}], "processes": {"SAL.010": {"code": "SAL.010", "title": "Leadontvangst en kwalificatie", "department": 2, "severity": "minor", "automability": "automation", "pains": [], "fields": {"werkwijze": "Aanvragen komen binnen via de gedeelde mailbox verkoop@, telefonisch (genoteerd op post-its) en via klanten die een technieker op de werf aanspreken; dat laatste kanaal geraakt soms pas een week later bij de binnendienst. Er bestaat geen leadlijst, dus verloren aanvragen blijven onzichtbaar.", "wie": "binnendienst (2 pers.), sporadisch de techniekers als doorgeefluik", "systemen": "Outlook (verkoop@), post-its, WhatsApp", "volume": "±60 aanvragen/maand (schatting — geen registratie), kwalificatie ad hoc"}, "html": ""}, "SAL.020": {"code": "SAL.020", "title": "Plaatsbezoek en behoefteanalyse", "department": 2, "severity": "major", "automability": "hybrid", "pains": ["2.PAIN-2"], "fields": {"werkwijze": "Voor alles boven een ketelvervanging gaat de zaakvoerder of één van de twee verkopers ter plaatse; notities in een papieren boekje, foto's op de eigen gsm. Een deel van de mondelinge afspraken bereikt de offerte nooit, waarna de binnendienst de klant moet terugbellen.", "wie": "zaakvoerder + 2 verkopers (bezoek), binnendienst (verwerking)", "systemen": "papieren boekje, gsm-foto's, geen gestructureerd bezoekverslag", "volume": "±25 werfbezoeken/maand; ±20 min herwerk per dossier door ontbrekende info"}, "html": ""}, "SAL.030": {"code": "SAL.030", "title": "Offerte opstellen", "department": 2, "severity": "critical", "automability": "agent", "pains": ["2.PAIN-1", "2.PAIN-2"], "fields": {"werkwijze": "Binnendienst hertypt de aanvraagmail en de werfnotities in een Excel-sjabloon en zoekt de actuele groothandelsprijzen manueel op omdat het sjabloon veroudert. Tussen werfbezoek en verstuurde offerte zit gemiddeld 4–5 werkdagen; minstens twee dossiers per maand gaan aantoonbaar verloren aan snellere concurrenten.", "wie": "binnendienst 1 (opmaak), verkoper (input), zaakvoerder (grote dossiers)", "systemen": "Outlook, Excel-sjabloon, prijslijsten groothandel (PDF)", "volume": "±45 offertes/maand, ±50 min per offerte"}, "html": ""}, "SAL.040": {"code": "SAL.040", "title": "Prijszetting en offertegoedkeuring", "department": 2, "severity": "none", "automability": "human", "pains": [], "fields": {"werkwijze": "Alles boven €10.000 passeert bij de zaakvoerder, die 's avonds nakijkt en de dag erna laat vertrekken. Dit werkt naar ieders tevredenheid en de zaakvoerder wil de grote dossiers expliciet blijven zien — bewust te vrijwaren in de roadmap.", "wie": "zaakvoerder (goedkeuring), binnendienst (voorbereiding)", "systemen": "Excel, mail", "volume": "±10 offertes/maand boven de drempel, doorlooptijd goedkeuring <1 dag"}, "html": ""}, "SAL.050": {"code": "SAL.050", "title": "Offerteopvolging", "department": 2, "severity": "major", "automability": "automation", "pains": ["2.PAIN-3"], "fields": {"werkwijze": "Opvolging gebeurt \"als het stil is\", en het is nooit stil: op elk moment staan ±30 offertes open zonder dat iemand ernaar omkijkt. Er is geen statusoverzicht — de laatste versie moet per klant in submappen op de server gezocht worden.", "wie": "binnendienst 2, ad hoc", "systemen": "mappenstructuur op de server (\"Offertes 2026\"), Outlook", "volume": "±30 open offertes op elk moment; opvolging onregelmatig en niet geregistreerd"}, "html": ""}, "SAL.060": {"code": "SAL.060", "title": "Orderbevestiging en overdracht naar uitvoering", "department": 2, "severity": "major", "automability": "automation", "pains": ["2.PAIN-4"], "fields": {"werkwijze": "Bij akkoord stuurt de binnendienst de offerte per mail door naar de planning; afspraken die alleen in de mailthread staan (toegang, gehuurd materieel, beloofde data) gaan geregeld verloren. Vorige maand stond een ploeg op de werf zonder de beloofde hoogtewerker.", "wie": "binnendienst (doorsturen), planning (interpretatie)", "systemen": "Outlook (forward), planbord", "volume": "±20 orders/maand; 1–2 overdrachtincidenten/maand"}, "html": ""}, "SAL.080": {"code": "SAL.080", "title": "CRM-gegevensbeheer", "department": 2, "severity": "minor", "automability": "automation", "pains": [], "fields": {"werkwijze": "Er is geen CRM; de klantenlijst is een half bijgehouden Excel. Adressen kloppen meestal, maar de installatie- en contacthistoriek zit verspreid over mailboxen en het geheugen van de zaakvoerder.", "wie": "binnendienst, zaakvoerder", "systemen": "Excel-klantenlijst, Outlook-mailboxen", "volume": "±1.800 klantrecords; bijwerking sporadisch"}, "html": ""}, "SVC.010": {"code": "SVC.010", "title": "Intake en triage van servicemeldingen", "department": 5, "severity": "minor", "automability": "agent", "pains": [], "fields": {"werkwijze": "Meldingen komen binnen via telefoon naar het onthaal en de mailbox service@; wie opneemt schat de urgentie in. Gevolg: soms een rit voor iets dat kon wachten, terwijl een echt dringend geval tot de middag in de mailbox blijft hangen.", "wie": "onthaal/binnendienst, planner (escalatie)", "systemen": "telefoon, Outlook (service@)", "volume": "±40 meldingen/dag in het seizoen; triage op gevoel, niet geregistreerd"}, "html": ""}, "SVC.020": {"code": "SVC.020", "title": "Dispatching en routeplanning", "department": 5, "severity": "minor", "automability": "human", "pains": [], "fields": {"werkwijze": "De planner plant de 18 techniekers op het planbord in de gang en in de gedeelde Outlook-agenda, op basis van jarenlange kennis van skills, zones en klanten. Dit werkt goed maar hangt volledig aan één persoon: bij haar afwezigheid \"staat de gsm roodgloeiend\".", "wie": "planner-dispatcher (1 pers.), backup beperkt", "systemen": "fysiek planbord, gedeelde Outlook-agenda", "volume": "dagplanning voor 18 techniekers, ±85 opdrachten/week; dagelijks 1–2 u herschikken"}, "html": ""}, "SVC.030": {"code": "SVC.030", "title": "Werkvoorbereiding voor interventies", "department": 5, "severity": "major", "automability": "agent", "pains": ["5.PAIN-6"], "fields": {"werkwijze": "Techniekers vertrekken zonder gebundelde historiek: welke ketel er hangt en wat er vorige keer gebeurd is, zit in servermappen en in hoofden. Ze bellen 5–10 keer per dag naar het bureau; af en toe volgt een tweede rit omdat het juiste stuk niet in de camionette lag.", "wie": "technieker (vraagt), planner en binnendienst (zoeken op)", "systemen": "servermappen per klant, telefoon", "volume": "5–10 opzoektelefoons/dag; enkele vermijdbare tweede bezoeken/maand"}, "html": ""}, "SVC.050": {"code": "SVC.050", "title": "Werkbon en materiaalregistratie", "department": 5, "severity": "critical", "automability": "agent", "pains": ["5.PAIN-5"], "fields": {"werkwijze": "Papieren drieluikbon, ingevuld en afgetekend op de werf — in het beste geval; vaak pas dagen later van thuis uit, met foto's in de WhatsApp-groep richting administratie, die alles ontcijfert en overtypt. Klein materiaal wordt structureel vergeten en dus nooit aangerekend.", "wie": "18 techniekers (invullen), administratie (overtypen)", "systemen": "papieren drieluik, WhatsApp-groep, Excel/Exact (overtypen)", "volume": "±85 werkbonnen/week; ±15 min avondwerk per bon plus overtypen op kantoor"}, "html": ""}, "SVC.060": {"code": "SVC.060", "title": "Vervolgwerk en tweede bezoeken", "department": 5, "severity": "major", "automability": "hybrid", "pains": ["5.PAIN-7"], "fields": {"werkwijze": "\"Ik kom daar nog eens terug voor dat ventiel\" leeft in het hoofd van de technieker en nergens anders; als de klant niet zelf belt, komt er van het vervolgwerk niets. Offertes voor vastgesteld meerwerk worden zelden gemaakt.", "wie": "technieker (constateert), niemand (capteert)", "systemen": "geen — geheugen en losse opmerkingen op de werkbon", "volume": "±3–4 verloren vervolgwerken/maand, telkens een gemiste offerte"}, "html": ""}, "SVC.070": {"code": "SVC.070", "title": "Onderhoudscontracten en periodieke bezoeken", "department": 5, "severity": "major", "automability": "automation", "pains": ["5.PAIN-8"], "fields": {"werkwijze": "220 onderhoudscontracten worden opgevolgd in een Excel uit 2019; de planning van de najaarsbeurten gebeurt manueel vanaf die lijst. Vorig jaar zijn zeker tien beurten niet uitgevoerd; van de installatiebasis van de laatste tien jaar heeft ruwweg de helft geen contract.", "wie": "planner (planning), zaakvoerder (contracten)", "systemen": "Excel (versie 2019), planbord", "volume": "220 contracten, piek sept–dec; ±10 gemiste beurten/jaar"}, "html": ""}, "SVC.090": {"code": "SVC.090", "title": "Tijdsregistratie techniekers", "department": 5, "severity": "major", "automability": "agent", "pains": ["5.PAIN-5"], "fields": {"werkwijze": "Uren worden op de papieren werkbon geschreven en op vrijdag door de technieker gereconstrueerd voor het sociaal secretariaat; verplaatsings- en werktijd lopen door elkaar. De loonverwerking en elke poging tot nacalculatie erven die ruis.", "wie": "techniekers (schrijven), administratie 2 (verwerkt richting sociaal secretariaat)", "systemen": "papieren werkbon, Excel-urenstaat", "volume": "18 techniekers × wekelijkse reconstructie; foutmarge onbekend maar erkend (§12)"}, "html": ""}, "FIN.010": {"code": "FIN.010", "title": "Verkoopfacturatie", "department": 8, "severity": "critical", "automability": "automation", "pains": ["8.PAIN-9"], "fields": {"werkwijze": "Administratie verzamelt papieren werkbonnen en WhatsApp-foto's per werf, ontcijfert het handschrift, zoekt materiaalprijzen op en typt alles in Exact. Gemiddeld drie weken tussen einde werken en factuur (tot een maand voor grote werven); sinds januari vertrekt alles via Peppol en dat deel loopt vanzelf.", "wie": "administratie 1", "systemen": "papieren werkbonnen, WhatsApp, Exact Online, Peppol", "volume": "±190 verkoopfacturen/maand, ±12 min hertypen per factuur; 3 weken gemiddelde vertraging"}, "html": ""}, "FIN.020": {"code": "FIN.020", "title": "Aankoopfacturen verwerken", "department": 8, "severity": "major", "automability": "automation", "pains": ["8.PAIN-10"], "fields": {"werkwijze": "Alle leveranciersfacturen (groothandels, leasing, telefonie) worden één voor één manueel in Exact ingetikt — twee volle dagen op het einde van elke maand. Goedkeuring verloopt mondeling: zonder de krul van de zaakvoerder wordt niet betaald.", "wie": "administratie 1, zaakvoerder (goedkeuring)", "systemen": "Exact Online, papier/PDF-facturen per mail", "volume": "±120 aankoopfacturen/maand × ±8 min"}, "html": ""}, "FIN.030": {"code": "FIN.030", "title": "Betalingen en bankafstemming", "department": 8, "severity": "minor", "automability": "automation", "pains": [], "fields": {"werkwijze": "Wekelijkse betaalrun in de bankapp met de zaakvoerder ernaast; alles wordt met de kaartlezer afgetekend — het vieroogprincipe wordt nooit losgelaten en blijft ook in elke toekomstige oplossing behouden. Afpunten van de uittreksels gebeurt maandags, ±1 u.", "wie": "administratie 1 (voorbereiding), zaakvoerder (goedkeuring)", "systemen": "bankapp (Isabel-achtig), Exact Online", "volume": "1 betaalrun/week; ±1 u afpunten per week"}, "html": ""}, "FIN.040": {"code": "FIN.040", "title": "Debiteurenopvolging en aanmaningen", "department": 8, "severity": "major", "automability": "hybrid", "pains": ["8.PAIN-11"], "fields": {"werkwijze": "Aanmanen gebeurt op afroep, wanneer de zaakvoerder vraagt hoeveel er openstaat; dan worden de openstaande posten uit Exact getrokken en volgt een bel- en mailronde. Er is geen ouderdomsoverzicht; ±een kwart van de facturen gaat over de vervaldag. Veel debiteuren zijn twintigjarige relaties, wat de toon delicaat maakt.", "wie": "administratie 2, zaakvoerder (delicate gevallen)", "systemen": "Exact Online (openstaande posten), telefoon, mail", "volume": "±25% van 190 facturen/maand over vervaldag; belrondes ad hoc"}, "html": ""}, "FIN.060": {"code": "FIN.060", "title": "Btw-aangifte en wettelijke verplichtingen", "department": 8, "severity": "none", "automability": "human", "pains": [], "fields": {"werkwijze": "De externe accountant dient per kwartaal de btw-aangifte en de overige verplichtingen in vanuit Exact; sinds de Peppol-omschakeling van januari 2026 vraagt hij beduidend minder stukken op. Dit proces loopt naar ieders tevredenheid.", "wie": "externe accountant, administratie 1 (aanlevering)", "systemen": "Exact Online, portaal accountant, Peppol", "volume": "kwartaalritme; aanlevering ±0,5 dag per kwartaal"}, "html": ""}, "FIN.080": {"code": "FIN.080", "title": "Kostenopvolging en nacalculatie", "department": 8, "severity": "major", "automability": "automation", "pains": ["8.PAIN-12"], "fields": {"werkwijze": "Nacalculatie gebeurt alleen voor werven die \"echt pijn gedaan hebben\" — twee à drie per jaar. De inputs zijn bovendien onbetrouwbaar: uren op de bonnen zijn geschat en klein materiaal ontbreekt, dus marge per werf of per klant is in feite onbekend.", "wie": "zaakvoerder + administratie 1, ad hoc", "systemen": "Excel (handmatige samenraapsels), Exact Online", "volume": "2–3 nacalculaties/jaar op ±240 werven"}, "html": ""}, "FIN.090": {"code": "FIN.090", "title": "Cashflowprognose", "department": 8, "severity": "minor", "automability": "human", "pains": [], "fields": {"werkwijze": "Het banksaldo plus het buikgevoel van de zaakvoerder; eind december werd het spannend door voorafbetalingen en twee grote werven die pas in januari gefactureerd geraakten. Er is geen rollend overzicht van in- en uitgaande kasstromen; de zaakvoerder legt de prioriteit zelf bij snellere facturatie.", "wie": "zaakvoerder", "systemen": "bankapp, hoofdrekenen", "volume": "ad hoc, geen vast ritme"}, "html": ""}}, "coverage": [{"code": "SAL.010", "title": "Leadontvangst en kwalificatie", "department": 2, "scope": true, "severity": "minor", "note": "drie kanalen zonder registratie; verloren aanvragen onzichtbaar"}, {"code": "SAL.020", "title": "Plaatsbezoek en behoefteanalyse", "department": 2, "scope": true, "severity": "major", "note": "±25 bezoeken/maand, notities bereiken de offerte niet volledig"}, {"code": "SAL.030", "title": "Offerte opstellen", "department": 2, "scope": true, "severity": "critical", "note": "kernproces en grootste pijn: hertypen + 4–5 dagen doorlooptijd"}, {"code": "SAL.040", "title": "Prijszetting en offertegoedkeuring", "department": 2, "scope": true, "severity": "none", "note": "gedocumenteerd als sterkte — werkt goed, expliciet te vrijwaren"}, {"code": "SAL.050", "title": "Offerteopvolging", "department": 2, "scope": true, "severity": "major", "note": "±30 open offertes zonder opvolging of overzicht"}, {"code": "SAL.060", "title": "Orderbevestiging en overdracht naar uitvoering", "department": 2, "scope": true, "severity": "major", "note": "1–2 overdrachtincidenten/maand met werfimpact"}, {"code": "SAL.070", "title": "Contract- en prijsherzieningen", "department": 2, "scope": false, "severity": null, "note": "installaties zijn eenmalig; onderhoudscontracten zitten bij buitendienst (SVC.070)"}, {"code": "SAL.080", "title": "CRM-gegevensbeheer", "department": 2, "scope": true, "severity": "minor", "note": "geen CRM; klanthistoriek verspreid over Excel en mailboxen"}, {"code": "SAL.090", "title": "Pijplijnreview en verkoopforecast", "department": 2, "scope": false, "severity": null, "note": "bestaat vandaag niet — zinvol pas na SAL.050/SAL.080-hygiëne (zaakvoerder, transcript §23)"}, {"code": "SAL.100", "title": "Aanbestedingen en RFP's beantwoorden", "department": 2, "scope": false, "severity": null, "note": "InstallTech doet bewust niet mee aan openbare aanbestedingen (transcript §21)"}, {"code": "SVC.010", "title": "Intake en triage van servicemeldingen", "department": 5, "scope": true, "severity": "minor", "note": "urgentie-inschatting op gevoel; dringende gevallen blijven in de mailbox hangen"}, {"code": "SVC.020", "title": "Dispatching en routeplanning", "department": 5, "scope": true, "severity": "minor", "note": "werkt goed maar hangt volledig aan één planner — gedocumenteerd als sterkte én risico"}, {"code": "SVC.030", "title": "Werkvoorbereiding voor interventies", "department": 5, "scope": true, "severity": "major", "note": "5–10 opzoektelefoons/dag; installatiehistoriek niet ontsloten"}, {"code": "SVC.040", "title": "Uitvoering en diagnose ter plaatse", "department": 5, "scope": false, "severity": null, "note": "het vakwerk zelf is mensenwerk (F4); de pijn zit in de papierstroom errond, niet in de uitvoering"}, {"code": "SVC.050", "title": "Werkbon en materiaalregistratie", "department": 5, "scope": true, "severity": "critical", "note": "papieren drieluik + overtypen; grootste pijn van de afdeling"}, {"code": "SVC.060", "title": "Vervolgwerk en tweede bezoeken", "department": 5, "scope": true, "severity": "major", "note": "±3–4 verloren vervolgwerken/maand — omzetlek"}, {"code": "SVC.070", "title": "Onderhoudscontracten en periodieke bezoeken", "department": 5, "scope": true, "severity": "major", "note": "Excel uit 2019, ±10 gemiste beurten/jaar, halve installatiebasis zonder contract"}, {"code": "SVC.080", "title": "Garantie en claims afhandelen", "department": 5, "scope": false, "severity": null, "note": "±2 gevallen/maand, vlot afgehandeld door de aankoper met de leverancier (transcript §19)"}, {"code": "SVC.090", "title": "Tijdsregistratie techniekers", "department": 5, "scope": true, "severity": "major", "note": "uren gereconstrueerd op vrijdag; loon én nacalculatie erven de ruis"}, {"code": "FIN.010", "title": "Verkoopfacturatie", "department": 8, "scope": true, "severity": "critical", "note": "3 weken facturatievertraging — het werkkapitaallek van het bedrijf"}, {"code": "FIN.020", "title": "Aankoopfacturen verwerken", "department": 8, "scope": true, "severity": "major", "note": "±120 facturen/maand manueel ingetikt, 2 dagen/maand"}, {"code": "FIN.030", "title": "Betalingen en bankafstemming", "department": 8, "scope": true, "severity": "minor", "note": "loopt degelijk (vier ogen); gedocumenteerd om het te vrijwaren"}, {"code": "FIN.040", "title": "Debiteurenopvolging en aanmaningen", "department": 8, "scope": true, "severity": "major", "note": "geen ouderdomsoverzicht; ±25% facturen over vervaldag"}, {"code": "FIN.050", "title": "Onkosten en kaarttransacties verwerken", "department": 8, "scope": false, "severity": null, "note": "klein volume; tankkaarten en tickets gaan rechtstreeks naar de accountant (transcript §16)"}, {"code": "FIN.060", "title": "Btw-aangifte en wettelijke verplichtingen", "department": 8, "scope": true, "severity": "none", "note": "gedocumenteerd als sterkte — accountant + Peppol lopen vlot"}, {"code": "FIN.070", "title": "Maandafsluiting", "department": 8, "scope": false, "severity": null, "note": "geen interne maandafsluiting — kwartaalritme van de accountant; herbekijken zodra registratie aan de bron digitaal is"}, {"code": "FIN.080", "title": "Kostenopvolging en nacalculatie", "department": 8, "scope": true, "severity": "major", "note": "marge per werf onbekend; nacalculatie is de uitzondering"}, {"code": "FIN.090", "title": "Cashflowprognose", "department": 8, "scope": true, "severity": "minor", "note": "banksaldo + buikgevoel; eind december spannend geweest"}], "pains": [{"uid": "2.PAIN-1", "id": "PAIN-1", "department": 2, "title": "Offertes hertypen uit aanvraagmail en werfnotities", "quote": "Elke offerte typ ik letterlijk over: eerst uit de mail van de klant, dan uit de werfnotities van de verkoper.", "source": "inputs/2026-06-10-verkoop-transcript.md §8", "type": "retype", "severity": "critical", "volume": "45/maand × ±50 min, plus 4–5 werkdagen doorlooptijd werfbezoek → offerte", "value": "±25 u/maand binnendienst vrij te spelen; doorlooptijd naar ≤2 dagen brengt verloren dossiers terug (2 gekende verliezen vorige maand, §11)", "processes": ["SAL.030"], "html": ""}, {"uid": "2.PAIN-2", "id": "PAIN-2", "department": 2, "title": "Werfbezoeknotities geraken niet volledig tot bij de offerte", "quote": "De helft van wat op de werf gezegd wordt, staat nergens. Dan bel ik de klant achteraf terug om het opnieuw te vragen.", "source": "inputs/2026-06-10-verkoop-transcript.md §6", "type": "retype", "severity": "major", "volume": "±25 werfbezoeken/maand; herwerk en terugbelrondes ±20 min per dossier", "value": "±8 u/maand herwerk weg; professionelere indruk bij de klant (geen dubbele vragen)", "processes": ["SAL.020", "SAL.030"], "html": ""}, {"uid": "2.PAIN-3", "id": "PAIN-3", "department": 2, "title": "Offerteopvolging gebeurt enkel als er tijd is", "quote": "Opvolgen doen we als het stil is. En het is nooit stil.", "source": "inputs/2026-06-10-verkoop-transcript.md §14", "type": "chase", "severity": "major", "volume": "±30 openstaande offertes zonder opvolging op elk moment; geen statusoverzicht (§16)", "value": "systematische opvolging op dag 3/7/14 verhoogt de winratio; exacte uplift te meten in de pilot", "processes": ["SAL.050"], "html": ""}, {"uid": "2.PAIN-4", "id": "PAIN-4", "department": 2, "title": "Overdracht naar planning verliest afspraken uit de mailthread", "quote": "Ik stuur de offerte door naar de planning en hoop dat ze alles zien staan. Vorige maand stonden we op een werf zonder de beloofde hoogtewerker.", "source": "inputs/2026-06-10-verkoop-transcript.md §18", "type": "error", "severity": "major", "volume": "1–2 incidenten/maand met verloren werfuren of een extra verplaatsing tot gevolg", "value": "gestructureerde overdracht vermijdt ±1 verloren werfdag/maand en de bijhorende klantirritatie", "processes": ["SAL.060"], "html": ""}, {"uid": "5.PAIN-5", "id": "PAIN-5", "department": 5, "title": "Papieren werkbonnen dagen later ingevuld en overgetypt", "quote": "Ik zit op vrijdagavond aan de keukentafel werkbonnen van maandag in te vullen. Wat ik me dan nog herinner, schrijf ik op.", "source": "inputs/2026-06-15-buitendienst-transcript.md §9", "type": "retype", "severity": "critical", "volume": "±85 werkbonnen/week; ±15 min avondwerk per bon plus het overtypen door administratie; klein materiaal wordt structureel niet aangerekend", "value": "±20 u/week ploegbreed aan avond- en overtypwerk; niet-gefactureerd materiaal recupereren (bedrag te meten in pilotweek 1)", "processes": ["SVC.050", "SVC.090"], "html": ""}, {"uid": "5.PAIN-6", "id": "PAIN-6", "department": 5, "title": "Techniekers vertrekken zonder installatiehistoriek en bellen naar het bureau", "quote": "Ik sta bij de klant en moet naar den bureau bellen om te weten welke ketel daar hangt en wat we er vorige keer aan gedaan hebben.", "source": "inputs/2026-06-15-buitendienst-transcript.md §5", "type": "chase", "severity": "major", "volume": "5–10 telefoons/dag naar het bureau; sporadisch een tweede bezoek omdat het juiste stuk niet mee was (§6)", "value": "minder onderbrekingen voor planning én technieker; elke vermeden tweede rit is ±2 u plus verplaatsing", "processes": ["SVC.030"], "html": ""}, {"uid": "5.PAIN-7", "id": "PAIN-7", "department": 5, "title": "Vervolgwerk leeft enkel in het hoofd van de technieker", "quote": "'Ik kom daar nog eens terug voor dat ventiel' — dat zit in het hoofd van de technieker en nergens anders.", "source": "inputs/2026-06-15-buitendienst-transcript.md §13", "type": "no-visibility", "severity": "major", "volume": "±3–4 verloren vervolgwerken/maand, telkens een gemiste offerte", "value": "gecapteerd vervolgwerk is directe extra omzet; omvang te staven met een telling over het voorbije kwartaal", "processes": ["SVC.060"], "html": ""}, {"uid": "5.PAIN-8", "id": "PAIN-8", "department": 5, "title": "Onderhoudscontracten opgevolgd in een verouderde Excel", "quote": "Die contracten zitten in een Excel van 2019. Vorig jaar zijn er zeker tien onderhoudsbeurten gewoon niet gebeurd.", "source": "inputs/2026-06-15-buitendienst-transcript.md §16", "type": "no-visibility", "severity": "major", "volume": "220 contracten; ±10 gemiste beurten/jaar; ±helft van de installatiebasis heeft geen contract (§17)", "value": "gemiste beurten naar nul (contractuele plicht + klantbehoud); onbenutte installatiebasis is een groeipool aan recurrente omzet", "processes": ["SVC.070"], "html": ""}, {"uid": "8.PAIN-9", "id": "PAIN-9", "department": 8, "title": "Facturatie wacht weken op papieren werkbonnen en hertypt alles", "quote": "Tussen het einde van de werken en de factuur zit gemiddeld drie weken. Ik moet wachten op de werkbonnen en dan alles hertypen.", "source": "inputs/2026-06-17-financien-transcript.md §3", "type": "wait", "severity": "critical", "volume": "±190 verkoopfacturen/maand; ±12 min hertypen per factuur; 3 weken gemiddelde facturatievertraging (tot een maand voor grote werven)", "value": "±38 u/maand typwerk weg én werkkapitaal: 3 weken sneller factureren op deze omzet is het echte cijfer — DSO meten voor/na", "processes": ["FIN.010"], "html": ""}, {"uid": "8.PAIN-10", "id": "PAIN-10", "department": 8, "title": "Aankoopfacturen één voor één manueel ingetikt", "quote": "Alle leveranciersfacturen tik ik één voor één in. Op het einde van de maand ben ik daar twee volle dagen mee bezig.", "source": "inputs/2026-06-17-financien-transcript.md §7", "type": "retype", "severity": "major", "volume": "±120 aankoopfacturen/maand × ±8 min; goedkeuring verloopt mondeling", "value": "±2 werkdagen/maand administratie vrij te spelen; herkenningssoftware in het Exact-ecosysteem is beschikbaar en beproefd", "processes": ["FIN.020"], "html": ""}, {"uid": "8.PAIN-11", "id": "PAIN-11", "department": 8, "title": "Aanmaningen ad hoc, geen ouderdomsoverzicht van openstaande facturen", "quote": "Aanmanen doe ik als Dirk vraagt hoeveel er openstaat. Een lijst per ouderdom heb ik niet.", "source": "inputs/2026-06-17-financien-transcript.md §11", "type": "chase", "severity": "major", "volume": "±25% van de facturen over de vervaldag; belrondes op afroep i.p.v. systematisch", "value": "getrapte herinneringen verkorten de betaaltermijn; relatiegevoelige klanten blijven bij een mens (twintigjarige relaties, §11)", "processes": ["FIN.040"], "html": ""}, {"uid": "8.PAIN-12", "id": "PAIN-12", "department": 8, "title": "Geen zicht op marge per werf; nacalculatie is de uitzondering", "quote": "Of we op een werf verdiend hebben? Dat voelen we, maar zwart op wit zien we het nooit.", "source": "inputs/2026-06-17-financien-transcript.md §15", "type": "no-visibility", "severity": "major", "volume": "nacalculatie voor 2–3 werven/jaar (enkel de pijnlijke); uren en klein materiaal op de bonnen zijn onbetrouwbaar als input", "value": "verliesmakende werven en klanten detecteren; pas zinvol zodra de registratie aan de bron (werkbonnen, uren) digitaal en betrouwbaar is", "processes": ["FIN.080"], "html": ""}]};
+</script>
+<script>
+/* Roadmap Engine — AS-IS interactive viewer.
+ * Consumes window.ASIS (injected at build time by tools/build_asis.py):
+ *   client      {name, title, sector, language, intro_html, labels{}}
+ *   meta        {catalog, version, generated}
+ *   departments [{number, id, title, intro_html, status, process, processes:[codes]}]
+ *   processes   { code: {code,title,department,severity,automability,pains:[uids],fields{},html} }
+ *   coverage    [{code,title,department,scope,severity,note}]
+ *   pains       [{uid,id,department,title,quote,source,type,severity,volume,value,processes:[],html}]
+ * Severity: "none" | "minor" | "major" | "critical"; undocumented steps render "undoc".
+ * Automability: "human" | "automation" | "agent" | "hybrid"; absent renders "neutral".
+ * Modes: "pijn" (color by severity, default) | "kansen" (color by automability).
+ */
+(function () {
+  "use strict";
+  var D = window.ASIS;
+  if (!D) { document.getElementById("app").textContent = "Geen AS-IS-data gevonden."; return; }
+
+  // Built-in language packs. Add a language: add a key here (and translate the
+  // flow labels); per-client overrides go in engagement-config.json "labels".
+  var LANGS = {
+    nl: {
+      intro: "Inleiding", processes: "Processen", pains: "Pijnpunten",
+      search: "Zoek proces of pijnpunt…", inScope: "in scope", outScope: "buiten scope",
+      noResults: "Geen resultaten", allProcesses: "Alle processen in deze afdeling",
+      gotoProcess: "Ga naar processtroom", linkedPains: "Gekoppelde pijnpunten",
+      deptDocOnly: "Voor deze afdeling is geen processtroom gedefinieerd; de processen staan hieronder.",
+      scopeCols: ["Code", "Proces", "Afdeling", "Scope", "Severity", "Reden"],
+      filterAll: "alle", generated: "opgemaakt", statusLbl: "status",
+      modePijn: "Pijn", modeKansen: "Kansen",
+      sev: { none: "Loopt goed", minor: "Lichte frictie", major: "Structurele pijn",
+             critical: "Kritiek", undoc: "Niet gedocumenteerd" },
+      auto: { human: "Mens", automation: "Automatisering", agent: "AI-agent",
+              hybrid: "Hybride", neutral: "Nog niet ingeschat" },
+      ptype: { retype: "hertypen", chase: "achternalopen", wait: "wachten", error: "fouten",
+               "skill-bottleneck": "kennis-bottleneck", "no-visibility": "geen zicht" },
+      fields: { werkwijze: "Huidige werkwijze", wie: "Wie", systemen: "Systemen", volume: "Volume & tijd" },
+      severityHdr: "severity", typeHdr: "type", volumeLbl: "Volume", valueLbl: "Waardehypothese",
+      register: "register"
+    },
+    en: {
+      intro: "Introduction", processes: "Processes", pains: "Pain points",
+      search: "Search process or pain point…", inScope: "in scope", outScope: "out of scope",
+      noResults: "No results", allProcesses: "All processes in this department",
+      gotoProcess: "Go to process flow", linkedPains: "Linked pain points",
+      deptDocOnly: "No process flow is defined for this department; its processes are listed below.",
+      scopeCols: ["Code", "Process", "Department", "Scope", "Severity", "Reason"],
+      filterAll: "all", generated: "generated", statusLbl: "status",
+      modePijn: "Pain", modeKansen: "Opportunities",
+      sev: { none: "Runs fine", minor: "Minor friction", major: "Structural pain",
+             critical: "Critical", undoc: "Not documented" },
+      auto: { human: "Human", automation: "Automation", agent: "AI agent",
+              hybrid: "Hybrid", neutral: "Not yet assessed" },
+      ptype: { retype: "retype", chase: "chase", wait: "wait", error: "errors",
+               "skill-bottleneck": "skill bottleneck", "no-visibility": "no visibility" },
+      fields: { werkwijze: "Current way of working", wie: "Who", systemen: "Systems", volume: "Volume & time" },
+      severityHdr: "severity", typeHdr: "type", volumeLbl: "Volume", valueLbl: "Value hypothesis",
+      register: "register"
+    }
+  };
+  var lang = D.client.language || "nl";
+  document.documentElement.lang = lang;
+  var L = Object.assign({}, LANGS.nl, LANGS[lang] || {}, D.client.labels || {});
+  ["sev", "auto", "ptype", "fields"].forEach(function (k) {
+    L[k] = Object.assign({}, LANGS.nl[k], (LANGS[lang] || {})[k] || {}, (D.client.labels || {})[k] || {});
+  });
+
+  // Flow labels may be plain strings or {nl: "...", en: "..."} objects.
+  function lbl(v) {
+    if (v && typeof v === "object") return v[lang] || v.nl || v.en || "";
+    return v || "";
+  }
+
+  var app = document.getElementById("app");
+  var mode = "pijn"; // "pijn" | "kansen"
+  var deptByNum = {};
+  D.departments.forEach(function (d) { deptByNum[d.number] = d; });
+  var painByUid = {};
+  D.pains.forEach(function (p) { painByUid[p.uid] = p; });
+
+  /* ---------------- helpers ---------------- */
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function proc(code) { return D.processes[code]; }
+  function sevOf(code) {
+    var s = proc(code);
+    return s ? (s.severity || "none") : "undoc";
+  }
+  function autoOf(code) {
+    var s = proc(code);
+    if (!s) return null; // undocumented: stays grey dashed in both modes
+    return s.automability || "neutral";
+  }
+  function sevChip(sev) {
+    return '<span class="chip sev-' + esc(sev) + '">' + esc(L.sev[sev] || sev) + "</span>";
+  }
+  function autoChip(a) {
+    return '<span class="chip auto-' + esc(a) + '">' + esc(L.auto[a] || a) + "</span>";
+  }
+  function wrapText(text, max) {
+    var words = String(text).split(/\s+/), lines = [], cur = "";
+    words.forEach(function (w) {
+      if ((cur + " " + w).trim().length > max && cur) { lines.push(cur); cur = w; }
+      else cur = (cur + " " + w).trim();
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+
+  /* ---------------- BPMN layout (ported intact from the BPA viewer) ---------------- */
+  var NW = 176, NH = 56, GX = 78, ROW = 92, LANE_PAD = 14, CORR = 34, LBL_W = 34, M = 16;
+
+  function shapeHalf(n) {
+    if (n.type === "start" || n.type === "end") return { w: 20, h: 20 };
+    if (n.type.indexOf("gateway") === 0) return { w: 26, h: 26 };
+    return { w: NW / 2, h: NH / 2 };
+  }
+
+  function layoutProcess(p) {
+    var byId = {}, out = {}, incoming = {};
+    p.nodes.forEach(function (n) { byId[n.id] = n; out[n.id] = []; incoming[n.id] = 0; });
+    p.flows.forEach(function (f) { out[f.from].push(f.to); });
+
+    // classify back edges with DFS from start nodes (then any unvisited)
+    var back = {}, state = {}; // 0 unseen, 1 on stack, 2 done
+    function dfs(u) {
+      state[u] = 1;
+      out[u].forEach(function (v) {
+        if (state[v] === 1) back[u + ">" + v] = true;
+        else if (!state[v]) dfs(v);
+      });
+      state[u] = 2;
+    }
+    p.nodes.filter(function (n) { return n.type === "start"; }).forEach(function (n) { if (!state[n.id]) dfs(n.id); });
+    p.nodes.forEach(function (n) { if (!state[n.id]) dfs(n.id); });
+
+    var fwd = p.flows.filter(function (f) { return !back[f.from + ">" + f.to]; });
+    fwd.forEach(function (f) { incoming[f.to]++; });
+
+    // longest-path layering (Kahn)
+    var layer = {}, q = [];
+    p.nodes.forEach(function (n) { layer[n.id] = 0; if (!incoming[n.id]) q.push(n.id); });
+    var order = [], deg = Object.assign({}, incoming);
+    while (q.length) {
+      var u = q.shift(); order.push(u);
+      fwd.forEach(function (f) {
+        if (f.from !== u) return;
+        if (layer[f.to] < layer[u] + 1) layer[f.to] = layer[u] + 1;
+        if (--deg[f.to] === 0) q.push(f.to);
+      });
+    }
+
+    // rows per (lane, layer)
+    var laneIdx = {}, laneRows = {};
+    p.lanes.forEach(function (l, i) { laneIdx[l.id] = i; laneRows[l.id] = 1; });
+    var cellCount = {};
+    var rowOf = {};
+    p.nodes.forEach(function (n) {
+      var key = n.lane + "|" + layer[n.id];
+      rowOf[n.id] = cellCount[key] = (cellCount[key] || 0);
+      cellCount[key]++;
+      if (cellCount[key] > laneRows[n.lane]) laneRows[n.lane] = cellCount[key];
+    });
+
+    var lanes = [], y = M;
+    p.lanes.forEach(function (l) {
+      var h = LANE_PAD * 2 + laneRows[l.id] * ROW + CORR;
+      lanes.push({ id: l.id, label: l.label, y: y, h: h });
+      y += h;
+    });
+    var laneBy = {}; lanes.forEach(function (l) { laneBy[l.id] = l; });
+
+    var maxLayer = 0;
+    p.nodes.forEach(function (n) { if (layer[n.id] > maxLayer) maxLayer = layer[n.id]; });
+    var width = M + LBL_W + (maxLayer + 1) * (NW + GX) - GX + M + 60;
+    var height = y + M;
+
+    var pos = {};
+    p.nodes.forEach(function (n) {
+      var ln = laneBy[n.lane];
+      pos[n.id] = {
+        node: n,
+        cx: M + LBL_W + layer[n.id] * (NW + GX) + NW / 2,
+        cy: ln.y + LANE_PAD + rowOf[n.id] * ROW + ROW / 2 - CORR / 4,
+        layer: layer[n.id]
+      };
+    });
+
+    // route edges
+    var edges = p.flows.map(function (f) {
+      var s = pos[f.from], t = pos[f.to];
+      var sh = shapeHalf(s.node), th = shapeHalf(t.node);
+      var pts, labelAt;
+      var isBack = back[f.from + ">" + f.to] || t.layer <= s.layer;
+      if (!isBack && t.layer - s.layer > 1) {
+        // long edge: route through the node-free corridor at the bottom of the
+        // source lane so it never crosses nodes in the layers it skips
+        var lnS = laneBy[s.node.lane];
+        var corrY = lnS.y + lnS.h - CORR / 2;
+        var xo = s.cx + sh.w, xi = t.cx - th.w;
+        pts = [[xo, s.cy], [xo + GX / 2 - 8, s.cy], [xo + GX / 2 - 8, corrY],
+               [xi - GX / 2 + 8, corrY], [xi - GX / 2 + 8, t.cy], [xi, t.cy]];
+        labelAt = [xo + 8, s.cy - 7];
+      } else if (!isBack) {
+        var x0 = s.cx + sh.w, x1 = t.cx - th.w;
+        if (Math.abs(s.cy - t.cy) < 2) {
+          pts = [[x0, s.cy], [x1, t.cy]];
+        } else {
+          var mx = x1 - GX / 2 + 8;
+          pts = [[x0, s.cy], [mx, s.cy], [mx, t.cy], [x1, t.cy]];
+        }
+        labelAt = [x0 + 8, s.cy - 7];
+      } else {
+        var ln = laneBy[s.node.lane];
+        var cy = ln.y + ln.h - CORR / 2;
+        pts = [[s.cx, s.cy + sh.h], [s.cx, cy], [t.cx, cy], [t.cx, t.cy + th.h]];
+        labelAt = [Math.min(s.cx, t.cx) + 14, cy - 6];
+      }
+      return { flow: f, pts: pts, labelAt: labelAt };
+    });
+
+    return { lanes: lanes, pos: pos, edges: edges, width: width, height: height };
+  }
+
+  /* ---------------- BPMN render ---------------- */
+  function svgNode(pos) {
+    var n = pos.node, cx = pos.cx, cy = pos.cy;
+    var s = proc(n.process);
+    var sev = n.process ? sevOf(n.process) : null;
+    var auto = n.process ? autoOf(n.process) : null;
+    var cls = "node n-" + n.type + (sev ? " sev-" + sev : "") + (auto ? " auto-" + auto : "") +
+      (n.process || n.goto ? " clickable" : "");
+    var g = '<g class="' + cls + '" data-node="' + esc(n.id) + '"' +
+      (n.process ? ' data-process="' + esc(n.process) + '"' : "") +
+      (n.goto ? ' data-goto="' + esc(n.goto) + '"' : "") + ">";
+    var title = lbl(n.label) || (s ? s.title : n.id);
+
+    if (n.type === "start" || n.type === "end") {
+      g += '<circle class="shape" cx="' + cx + '" cy="' + cy + '" r="20"/>';
+      wrapText(title, 20).slice(0, 2).forEach(function (ln, i) {
+        g += '<text class="evt-label" x="' + cx + '" y="' + (cy + 34 + i * 13) + '" text-anchor="middle">' + esc(ln) + "</text>";
+      });
+    } else if (n.type.indexOf("gateway") === 0) {
+      var h = 26;
+      g += '<path class="shape" d="M' + cx + " " + (cy - h) + " L" + (cx + h) + " " + cy +
+        " L" + cx + " " + (cy + h) + " L" + (cx - h) + " " + cy + ' Z"/>';
+      if (n.type === "gateway-parallel") {
+        g += '<path class="gw-mark" d="M' + (cx - 9) + " " + cy + " H" + (cx + 9) + " M" + cx + " " + (cy - 9) + " V" + (cy + 9) + '"/>';
+      } else {
+        g += '<path class="gw-mark" d="M' + (cx - 7) + " " + (cy - 7) + " L" + (cx + 7) + " " + (cy + 7) +
+          " M" + (cx + 7) + " " + (cy - 7) + " L" + (cx - 7) + " " + (cy + 7) + '"/>';
+      }
+      if (title) {
+        var glines = wrapText(title, 18).slice(0, 2);
+        var gy = cy - h - 8 - (glines.length - 1) * 13;
+        glines.forEach(function (ln, i) {
+          g += '<text class="gw-label" x="' + cx + '" y="' + (gy + i * 13) + '" text-anchor="middle">' + esc(ln) + "</text>";
+        });
+      }
+    } else { // task / subprocess
+      var x = cx - NW / 2, yy = cy - NH / 2;
+      g += '<rect class="shape" x="' + x + '" y="' + yy + '" width="' + NW + '" height="' + NH + '" rx="9" stroke-width="2"/>';
+      if (n.process) {
+        g += '<text class="code" x="' + (x + 9) + '" y="' + (yy + 14) + '">' + esc(n.process) + "</text>";
+      }
+      var lines = wrapText(title, 26).slice(0, 2);
+      var ty = cy + (n.process ? 6 : 0) - (lines.length - 1) * 7;
+      lines.forEach(function (ln, i) {
+        g += '<text class="title" x="' + cx + '" y="' + (ty + i * 15) + '" text-anchor="middle">' + esc(ln) + "</text>";
+      });
+      if (n.type === "subprocess") {
+        var bx = cx - 7, by = yy + NH - 15;
+        g += '<rect class="sub-mark" x="' + bx + '" y="' + by + '" width="14" height="14" rx="2"/>' +
+          '<path class="gw-mark" style="stroke-width:1.6" d="M' + (bx + 3) + " " + (by + 7) + " H" + (bx + 11) +
+          " M" + (bx + 7) + " " + (by + 3) + " V" + (by + 11) + '"/>';
+      }
+    }
+    return g + "</g>";
+  }
+
+  function renderDiagram(p, selected) {
+    var lay = layoutProcess(p);
+    var s = '<svg class="bpmn" viewBox="0 0 ' + lay.width + " " + lay.height + '" width="' + lay.width + '" height="' + lay.height + '">';
+    s += '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">' +
+      '<path class="arrowhead" d="M0 0 L10 5 L0 10 z"/></marker></defs>';
+    // lanes
+    lay.lanes.forEach(function (l, i) {
+      s += '<rect class="lane-band lane-band-' + (i % 2) + '" x="' + M + '" y="' + l.y + '" width="' + (lay.width - 2 * M) + '" height="' + l.h + '"/>';
+      s += '<text class="lane-label" transform="translate(' + (M + 20) + " " + (l.y + l.h / 2) + ') rotate(-90)" text-anchor="middle">' + esc(lbl(l.label)) + "</text>";
+    });
+    // edges
+    lay.edges.forEach(function (e) {
+      var d = e.pts.map(function (pt, i) { return (i ? "L" : "M") + pt[0] + " " + pt[1]; }).join(" ");
+      s += '<path class="flow" d="' + d + '" marker-end="url(#arr)"/>';
+      var flabel = lbl(e.flow.label);
+      if (flabel) {
+        var w = flabel.length * 6 + 8;
+        s += '<rect class="flow-label-bg" x="' + (e.labelAt[0] - 3) + '" y="' + (e.labelAt[1] - 10) + '" width="' + w + '" height="14" rx="3"/>' +
+          '<text class="flow-label" x="' + e.labelAt[0] + '" y="' + (e.labelAt[1] + 1) + '">' + esc(flabel) + "</text>";
+      }
+    });
+    // nodes
+    p.nodes.forEach(function (n) {
+      var g = svgNode(lay.pos[n.id]);
+      if (selected && n.process === selected) g = g.replace('class="node', 'class="node selected');
+      s += g;
+    });
+    return s + "</svg>";
+  }
+
+  /* ---------------- views ---------------- */
+  function chrome(active) {
+    var tabs = [["#/intro", esc(L.intro)]];
+    D.departments.forEach(function (d) {
+      tabs.push(["#/dept/" + d.number, '<span class="n">' + d.number + "</span>" + esc(d.title)]);
+    });
+    if (D.coverage.length) tabs.push(["#/processen", esc(L.processes)]);
+    if (D.pains.length) tabs.push(["#/pains", esc(L.pains)]);
+    var nav = tabs.map(function (t) {
+      return '<a href="' + t[0] + '"' + (active === t[0] ? ' class="on"' : "") + ">" + t[1] + "</a>";
+    }).join("");
+    app.className = "mode-" + mode;
+    app.innerHTML =
+      '<header class="hdr"><div class="brand">' + esc(D.client.title || "AS-IS review") +
+      "<small>" + esc(D.client.name) + (D.client.sector ? " · " + esc(D.client.sector) : "") + "</small></div>" +
+      "<nav>" + nav + "</nav>" +
+      '<div class="search"><input id="q" type="search" placeholder="' + esc(L.search) + '" autocomplete="off">' +
+      '<div class="hits" id="hits"></div></div>' +
+      '<div class="mode-toggle" id="modetoggle">' +
+      '<button data-mode="pijn"' + (mode === "pijn" ? ' class="on"' : "") + ">" + esc(L.modePijn) + "</button>" +
+      '<button data-mode="kansen"' + (mode === "kansen" ? ' class="on"' : "") + ">" + esc(L.modeKansen) + "</button></div>" +
+      "</header>" +
+      '<section class="content"><div class="inner" id="view"></div></section>' +
+      '<div class="panel-wrap" id="panelwrap"><div class="veil"></div><div class="panel" id="panel"></div></div>';
+
+    var q = document.getElementById("q");
+    q.addEventListener("input", onSearch);
+    q.addEventListener("focus", onSearch);
+    document.addEventListener("click", function (ev) {
+      if (!ev.target.closest(".hdr .search")) document.getElementById("hits").classList.remove("open");
+    });
+    document.getElementById("hits").addEventListener("click", function () {
+      document.getElementById("hits").classList.remove("open");
+    });
+    document.querySelectorAll("#modetoggle button").forEach(function (b) {
+      b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); });
+    });
+    document.querySelector("#panelwrap .veil").addEventListener("click", closePanel);
+  }
+
+  function setMode(m) {
+    if (m === mode) return;
+    mode = m;
+    app.className = "mode-" + mode;
+    document.querySelectorAll("#modetoggle button").forEach(function (b) {
+      b.classList.toggle("on", b.getAttribute("data-mode") === mode);
+    });
+    route(); // re-render current view (legend + card accents follow the mode)
+  }
+
+  function onSearch(ev) {
+    var q = ev.target.value.trim().toLowerCase();
+    var hits = document.getElementById("hits");
+    if (q.length < 2) { hits.classList.remove("open"); return; }
+    var res = [];
+    Object.keys(D.processes).forEach(function (code) {
+      var s = D.processes[code];
+      if (code.toLowerCase().indexOf(q) >= 0 || (s.title || "").toLowerCase().indexOf(q) >= 0) {
+        res.push('<a class="hit" href="#/dept/' + s.department + "/doc/" + esc(code) + '"><code>' + esc(code) + "</code> " + esc(s.title) + "</a>");
+      }
+    });
+    D.pains.forEach(function (p) {
+      var hay = (p.id + " " + (p.title || "") + " " + (p.quote || "")).toLowerCase();
+      if (hay.indexOf(q) >= 0) {
+        res.push('<a class="hit" href="#/pains/' + esc(p.uid) + '"><code>' + esc(p.id) + "</code> " + esc(p.title) + "</a>");
+      }
+    });
+    res = res.slice(0, 40);
+    hits.innerHTML = res.length ? res.join("") : '<div class="none">' + esc(L.noResults) + "</div>";
+    hits.classList.add("open");
+  }
+
+  function legend() {
+    function item(color, bg, label, dashed) {
+      return '<span><i style="border-color:var(' + color + ');background:var(' + bg + ')' +
+        (dashed ? ";border-style:dashed" : "") + '"></i>' + esc(label) + "</span>";
+    }
+    var h = '<div class="legend">';
+    if (mode === "kansen") {
+      h += item("--auto-human", "--auto-human-bg", L.auto.human) +
+        item("--auto-automation", "--auto-automation-bg", L.auto.automation) +
+        item("--auto-agent", "--auto-agent-bg", L.auto.agent) +
+        item("--auto-hybrid", "--auto-hybrid-bg", L.auto.hybrid) +
+        item("--auto-neutral", "--auto-neutral-bg", L.auto.neutral) +
+        item("--sev-undoc", "--sev-undoc-bg", L.sev.undoc, true);
+    } else {
+      h += item("--sev-none", "--sev-none-bg", L.sev.none) +
+        item("--sev-minor", "--sev-minor-bg", L.sev.minor) +
+        item("--sev-major", "--sev-major-bg", L.sev.major) +
+        item("--sev-critical", "--sev-critical-bg", L.sev.critical) +
+        item("--sev-undoc", "--sev-undoc-bg", L.sev.undoc, true);
+    }
+    return h + "</div>";
+  }
+
+  function procCard(code) {
+    var s = proc(code);
+    if (!s) return "";
+    var sev = sevOf(code), auto = autoOf(code);
+    return '<div class="proc-card sev-' + sev + (auto ? " auto-" + auto : "") + '" data-process="' + esc(code) + '">' +
+      '<div class="m"><code class="bs">' + esc(code) + "</code></div>" +
+      '<div class="t">' + esc(s.title) + "</div>" +
+      '<div class="m">' + sevChip(sev) + (s.automability ? " " + autoChip(s.automability) : "") +
+      (s.pains || []).map(function (u) {
+        var p = painByUid[u];
+        return p ? ' <span class="chip pain">' + esc(p.id) + "</span>" : "";
+      }).join("") + "</div></div>";
+  }
+
+  function markDept(num) {
+    document.querySelectorAll(".hdr nav a").forEach(function (a) {
+      a.classList.toggle("on", a.getAttribute("href") === (num == null ? " " : "#/dept/" + num));
+    });
+  }
+
+  function viewDept(num, docCode) {
+    var d = deptByNum[num];
+    if (!d) return viewIntro();
+    markDept(num);
+    var v = document.getElementById("view");
+    var h = '<h1 class="pg">' + d.number + ". " + esc(d.title) + "</h1>";
+    var sub = [];
+    if (d.process) sub.push(esc(lbl(d.process.subtitle)));
+    if (d.status) sub.push(esc(L.statusLbl) + ": " + esc(d.status));
+    if (sub.length) h += '<p class="pg-sub">' + sub.filter(Boolean).join(" · ") + "</p>";
+    if (d.intro_html) h += '<div class="card md">' + d.intro_html + "</div>";
+    if (d.process) {
+      h += '<div class="card diagram-card"><div class="diagram-head">' + legend() +
+        '<div class="zoom"><button data-z="-">−</button><button data-z="0">⤢</button><button data-z="+">+</button></div></div>' +
+        '<div class="diagram-scroll" id="dscroll">' + renderDiagram(d.process, docCode) + "</div></div>";
+    } else if (d.processes.length) {
+      h += '<p class="pg-sub">' + esc(L.deptDocOnly) + "</p>";
+    }
+    if (d.processes.length) {
+      h += '<h2 class="sect">' + esc(L.allProcesses) + " (" + d.processes.length + ')</h2><div class="proc-grid">' +
+        d.processes.map(procCard).join("") + "</div>";
+    }
+    if (!d.process && !d.processes.length) h += '<div class="empty">—</div>';
+    v.innerHTML = h;
+
+    var zoom = 1, svg = v.querySelector("svg.bpmn");
+    var baseW = svg ? +svg.getAttribute("width") : 0;
+    v.querySelectorAll(".zoom button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var z = b.getAttribute("data-z");
+        zoom = z === "+" ? Math.min(zoom * 1.2, 3) : z === "-" ? Math.max(zoom / 1.2, .4) : 1;
+        if (svg) { svg.setAttribute("width", baseW * zoom); svg.removeAttribute("height"); }
+      });
+    });
+    v.querySelectorAll("[data-process]").forEach(function (n) {
+      n.addEventListener("click", function () {
+        location.hash = "#/dept/" + num + "/doc/" + n.getAttribute("data-process");
+      });
+    });
+    v.querySelectorAll("svg [data-goto]:not([data-process])").forEach(function (n) {
+      n.addEventListener("click", function () {
+        var target = findFlowDept(n.getAttribute("data-goto"));
+        if (target != null) location.hash = "#/dept/" + target;
+      });
+    });
+    if (docCode) openPanel(docCode, num); else closePanel();
+  }
+
+  function findFlowDept(pid) {
+    for (var i = 0; i < D.departments.length; i++) {
+      if (D.departments[i].process && D.departments[i].process.id === pid) return D.departments[i].number;
+    }
+    return null;
+  }
+
+  function painInline(uid) {
+    var p = painByUid[uid];
+    if (!p) return "";
+    return '<div class="pain-inline sev-' + esc(p.severity || "major") + '">' +
+      "<h4><code class=\"bs\">" + esc(p.id) + "</code> " + esc(p.title) +
+      ' <span class="chip ref link" data-nav="#/pains/' + esc(p.uid) + '">↗ ' + esc(L.register) + "</span></h4>" +
+      (p.quote ? "<blockquote>“" + esc(p.quote) + "”</blockquote>" : "") +
+      (p.source ? '<div class="src">' + esc(p.source) + "</div>" : "") +
+      "<div>" +
+      (p.type ? '<span class="chip plain">' + esc(L.ptype[p.type] || p.type) + "</span> " : "") +
+      (p.severity ? sevChip(p.severity) + " " : "") +
+      (p.volume ? '<span class="chip plain">' + esc(p.volume) + "</span>" : "") +
+      "</div></div>";
+  }
+
+  function openPanel(code, deptNum) {
+    var s = proc(code);
+    var wrap = document.getElementById("panelwrap"), panel = document.getElementById("panel");
+    if (!s) { closePanel(); return; }
+    var d = deptByNum[s.department];
+    var chips = sevChip(sevOf(code)) + (s.automability ? " " + autoChip(s.automability) : "");
+    (s.pains || []).forEach(function (u) {
+      var p = painByUid[u];
+      if (p) chips += ' <span class="chip pain" data-nav="#/pains/' + esc(p.uid) + '">' + esc(p.id) + "</span>";
+    });
+    var goto_ = null;
+    if (d && d.process) {
+      d.process.nodes.some(function (n) { if (n.process === code && n.goto) { goto_ = n.goto; return true; } return false; });
+    }
+    var fields = "";
+    ["werkwijze", "wie", "systemen", "volume"].forEach(function (k) {
+      if (s.fields && s.fields[k]) {
+        fields += "<dt>" + esc(L.fields[k]) + "</dt><dd>" + esc(s.fields[k]) + "</dd>";
+      }
+    });
+    panel.innerHTML =
+      '<div class="p-head"><button class="p-close" title="✕">✕</button>' +
+      '<div class="codes"><code class="bs">' + esc(code) + "</code></div>" +
+      "<h2>" + esc(s.title) + "</h2>" +
+      '<div class="dom">' + (d ? d.number + ". " + esc(d.title) : "") + "</div></div>" +
+      '<div class="p-body"><div class="p-meta">' + chips + "</div>" +
+      (goto_ != null && findFlowDept(goto_) != null
+        ? '<p><span class="chip ref" data-nav="#/dept/' + findFlowDept(goto_) + '">↗ ' + esc(L.gotoProcess) + "</span></p>" : "") +
+      (fields ? '<dl class="p-fields">' + fields + "</dl>" : "") +
+      '<div class="md">' + (s.html || (fields ? "" : "<p><em>—</em></p>")) + "</div>" +
+      ((s.pains || []).length
+        ? '<h3 class="sect">' + esc(L.linkedPains) + "</h3>" + s.pains.map(painInline).join("") : "") +
+      "</div>";
+    panel.querySelector(".p-close").addEventListener("click", closePanel);
+    panel.querySelectorAll("[data-nav]").forEach(function (c) {
+      c.addEventListener("click", function () { location.hash = c.getAttribute("data-nav"); });
+    });
+    panel.querySelector(".p-body").scrollTop = 0;
+    wrap.classList.add("open");
+  }
+
+  function closePanel() {
+    var w = document.getElementById("panelwrap");
+    if (w) w.classList.remove("open");
+    var m = location.hash.match(/^#\/dept\/(\d+)\/doc\//);
+    if (m) history.replaceState(null, "", "#/dept/" + m[1]);
+  }
+
+  function viewIntro() {
+    markDept(null);
+    var v = document.getElementById("view");
+    v.innerHTML = '<h1 class="pg">' + esc(L.intro) + "</h1>" +
+      '<p class="pg-sub">' + esc(D.client.name) +
+      (D.client.sector ? " · " + esc(D.client.sector) : "") +
+      (D.meta && D.meta.version ? " · v" + esc(D.meta.version) : "") +
+      (D.meta && D.meta.generated ? " · " + esc(L.generated) + " " + esc(D.meta.generated) : "") + "</p>" +
+      '<div class="card md">' + (D.client.intro_html || "") + "</div>";
+  }
+
+  function viewScope() {
+    markDept(null);
+    var v = document.getElementById("view");
+    var filters = ["all", "none", "minor", "major", "critical", "undoc", "out"];
+    var flabel = { all: L.filterAll, none: L.sev.none, minor: L.sev.minor, major: L.sev.major,
+                   critical: L.sev.critical, undoc: L.sev.undoc, out: L.outScope };
+    var h = '<h1 class="pg">' + esc(L.processes) + '</h1><p class="pg-sub">' +
+      D.coverage.filter(function (c) { return c.scope; }).length + " " + esc(L.inScope) + " · " +
+      D.coverage.filter(function (c) { return !c.scope; }).length + " " + esc(L.outScope) + "</p>" +
+      '<div class="filters">' + filters.map(function (f) {
+        return '<button data-f="' + f + '"' + (f === "all" ? ' class="on"' : "") + ">" + esc(flabel[f]) + "</button>";
+      }).join("") + "</div>" +
+      '<table class="reg"><thead><tr>' + L.scopeCols.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      D.coverage.map(function (c) {
+        var s = proc(c.code);
+        var sev = c.scope ? (s ? sevOf(c.code) : "undoc") : "out";
+        var d = deptByNum[c.department];
+        return '<tr class="' + (s ? "click " : "") + (c.scope ? "" : "dim") + '" data-f="' + sev + '"' +
+          (s ? ' data-process="' + esc(c.code) + '" data-dept="' + c.department + '"' : "") + ">" +
+          '<td><code class="bs">' + esc(c.code) + "</code></td><td>" + esc(c.title) + "</td>" +
+          "<td>" + (d ? d.number + ". " + esc(d.title) : esc(c.department)) + "</td>" +
+          "<td>" + (c.scope ? esc(L.inScope) : esc(L.outScope)) + "</td>" +
+          "<td>" + (c.scope ? sevChip(s ? sevOf(c.code) : "undoc") : "—") + "</td>" +
+          "<td>" + esc(c.note || "") + "</td></tr>";
+      }).join("") + "</tbody></table>";
+    v.innerHTML = h;
+    v.querySelectorAll(".filters button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        v.querySelectorAll(".filters button").forEach(function (x) { x.classList.remove("on"); });
+        b.classList.add("on");
+        var f = b.getAttribute("data-f");
+        v.querySelectorAll("tbody tr").forEach(function (tr) {
+          tr.style.display = f === "all" || tr.getAttribute("data-f") === f ? "" : "none";
+        });
+      });
+    });
+    v.querySelectorAll("tr.click").forEach(function (tr) {
+      tr.addEventListener("click", function () {
+        location.hash = "#/dept/" + tr.getAttribute("data-dept") + "/doc/" + tr.getAttribute("data-process");
+      });
+    });
+  }
+
+  function linkedProcChips(codes) {
+    return (codes || []).map(function (c) {
+      var s = proc(c);
+      return s ? '<span class="chip ref link" data-nav="#/dept/' + s.department + "/doc/" + esc(c) + '">' + esc(c) + "</span>"
+               : '<span class="chip plain">' + esc(c) + "</span>";
+    }).join(" ");
+  }
+
+  function viewPains(highlightUid) {
+    markDept(null);
+    var v = document.getElementById("view");
+    var types = [];
+    D.pains.forEach(function (p) { if (p.type && types.indexOf(p.type) < 0) types.push(p.type); });
+    var sevs = ["all", "minor", "major", "critical"];
+    var h = '<h1 class="pg">' + esc(L.pains) + '</h1><p class="pg-sub">' + D.pains.length + "</p>" +
+      '<div class="filters" id="pf-sev"><span class="flabel">' + esc(L.severityHdr) + "</span>" +
+      sevs.map(function (f) {
+        return '<button data-f="' + f + '"' + (f === "all" ? ' class="on"' : "") + ">" +
+          esc(f === "all" ? L.filterAll : L.sev[f]) + "</button>";
+      }).join("") + "</div>" +
+      '<div class="filters" id="pf-type"><span class="flabel">' + esc(L.typeHdr) + "</span>" +
+      ['<button data-f="all" class="on">' + esc(L.filterAll) + "</button>"].concat(types.map(function (t) {
+        return '<button data-f="' + esc(t) + '">' + esc(L.ptype[t] || t) + "</button>";
+      })).join("") +
+      '<input id="pq" type="search" placeholder="' + esc(L.search) + '">' + "</div>" +
+      (D.pains.length ? D.pains.map(function (p) {
+        var d = deptByNum[p.department];
+        var text = (p.id + " " + (p.title || "") + " " + (p.quote || "") + " " + (p.value || "")).toLowerCase();
+        return '<div class="card pain-card sev-' + esc(p.severity || "major") + '" id="pain-' + esc(p.uid) +
+          '" data-sev="' + esc(p.severity || "") + '" data-type="' + esc(p.type || "") +
+          '" data-text="' + esc(text) + '">' +
+          '<h3><code class="bs">' + esc(p.id) + "</code> " + esc(p.title) +
+          (d ? ' <span class="dept">· ' + d.number + ". " + esc(d.title) + "</span>" : "") + "</h3>" +
+          (p.quote ? "<blockquote>“" + esc(p.quote) + "”</blockquote>" : "") +
+          (p.source ? '<div class="src">' + esc(p.source) + "</div>" : "") +
+          (p.html ? '<div class="md">' + p.html + "</div>" : "") +
+          '<div class="meta-row">' +
+          (p.type ? '<span class="chip plain">' + esc(L.ptype[p.type] || p.type) + "</span>" : "") +
+          (p.severity ? sevChip(p.severity) : "") +
+          (p.volume ? "<span>" + esc(L.volumeLbl) + ": " + esc(p.volume) + "</span>" : "") +
+          (p.value ? "<span>" + esc(L.valueLbl) + ": " + esc(p.value) + "</span>" : "") +
+          "</div>" +
+          (p.processes && p.processes.length ? '<div class="meta-row">' + linkedProcChips(p.processes) + "</div>" : "") +
+          "</div>";
+      }).join("") : '<div class="empty">—</div>');
+    v.innerHTML = h;
+
+    var fSev = "all", fType = "all", fText = "";
+    function apply() {
+      v.querySelectorAll(".pain-card").forEach(function (c) {
+        var ok = (fSev === "all" || c.getAttribute("data-sev") === fSev) &&
+                 (fType === "all" || c.getAttribute("data-type") === fType) &&
+                 (!fText || c.getAttribute("data-text").indexOf(fText) >= 0);
+        c.style.display = ok ? "" : "none";
+      });
+    }
+    ["pf-sev", "pf-type"].forEach(function (id) {
+      var box = document.getElementById(id);
+      if (!box) return;
+      box.querySelectorAll("button").forEach(function (b) {
+        b.addEventListener("click", function () {
+          box.querySelectorAll("button").forEach(function (x) { x.classList.remove("on"); });
+          b.classList.add("on");
+          if (id === "pf-sev") fSev = b.getAttribute("data-f"); else fType = b.getAttribute("data-f");
+          apply();
+        });
+      });
+    });
+    var pq = document.getElementById("pq");
+    if (pq) pq.addEventListener("input", function () { fText = pq.value.trim().toLowerCase(); apply(); });
+    bindNav(v);
+    if (highlightUid) {
+      var card = document.getElementById("pain-" + highlightUid);
+      if (card) {
+        card.classList.add("hl");
+        card.scrollIntoView({ block: "center" });
+      }
+    }
+  }
+
+  function bindNav(root) {
+    root.querySelectorAll("[data-nav]").forEach(function (c) {
+      c.addEventListener("click", function () { location.hash = c.getAttribute("data-nav"); });
+    });
+  }
+
+  /* ---------------- router ---------------- */
+  function route() {
+    var h = location.hash || "";
+    var m;
+    if ((m = h.match(/^#\/dept\/(\d+)(?:\/doc\/([A-Za-z0-9.\-]+))?/))) {
+      chromeOnce(null);
+      viewDept(+m[1], m[2] || null);
+      return;
+    }
+    closePanel();
+    if ((m = h.match(/^#\/pains(?:\/([A-Za-z0-9.\-]+))?$/))) {
+      chromeOnce("#/pains"); viewPains(m[1] || null); return;
+    }
+    if (h === "#/processen") { chromeOnce("#/processen"); viewScope(); return; }
+    chromeOnce("#/intro"); viewIntro();
+  }
+
+  var chromed = null;
+  function chromeOnce(active) {
+    // rebuild header nav highlight cheaply; full chrome only once
+    if (!chromed) { chrome(active); chromed = true; }
+    document.querySelectorAll(".hdr nav a").forEach(function (a) {
+      a.classList.toggle("on", a.getAttribute("href") === active);
+    });
+  }
+
+  window.addEventListener("hashchange", route);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePanel(); });
+  route();
+})();
+
+</script>
+</body>
+</html>

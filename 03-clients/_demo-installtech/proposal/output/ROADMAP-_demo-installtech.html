@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>InstallTech BV — AI-integratie roadmap</title>
+<style>
+/* Roadmap proposal — house style: warm paper, accent from engagement-config.
+   Theme contract: custom props on :root, dark via @media AND [data-theme]
+   overrides (the artifact viewer toggle must win in both directions). */
+
+:root {
+  --bg:#FBF8F3; --card:#FFFFFF; --ink:#22272E; --ink-2:#5C6672; --ink-3:#8B93A0;
+  --line:#E8E2D8; --grid:#EDE7DC;
+  --accent:#D9480F; --accent-fg:#FFFFFF;
+  --accent-dark:color-mix(in srgb, var(--accent) 80%, black);
+  --accent-text:color-mix(in srgb, var(--accent) 85%, black);
+  --accent-soft:color-mix(in srgb, var(--accent) 9%, var(--bg));
+  --ok:#2B8A3E;
+  /* categorical series (F4 allocation) — muted, medium lightness, no red/green pair */
+  --c-automation:#0B8272; --c-agent-t1:#3B77C2; --c-agent-t2:#7A5BD6;
+  --c-agent-t3:#B0498C;   --c-hybrid:#9C7514;
+  --shadow:0 1px 2px rgba(34,39,46,.05), 0 6px 20px rgba(34,39,46,.06);
+  --mono:ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg:#171412; --card:#201C18; --ink:#EDE7DF; --ink-2:#B3AA9E; --ink-3:#877E73;
+  --line:#352F28; --grid:#2B2620;
+  --accent-fg:#FFFFFF;
+  --accent-dark:color-mix(in srgb, var(--accent) 78%, black);
+  --accent-text:color-mix(in srgb, var(--accent) 62%, white);
+  --accent-soft:color-mix(in srgb, var(--accent) 16%, var(--bg));
+  --ok:#57B36A;
+  --c-automation:#35B3A0; --c-agent-t1:#6FA8EC; --c-agent-t2:#A28BEA;
+  --c-agent-t3:#D57EB4;   --c-hybrid:#C7A22C;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"] {
+  --bg:#171412; --card:#201C18; --ink:#EDE7DF; --ink-2:#B3AA9E; --ink-3:#877E73;
+  --line:#352F28; --grid:#2B2620;
+  --accent-fg:#FFFFFF;
+  --accent-dark:color-mix(in srgb, var(--accent) 78%, black);
+  --accent-text:color-mix(in srgb, var(--accent) 62%, white);
+  --accent-soft:color-mix(in srgb, var(--accent) 16%, var(--bg));
+  --ok:#57B36A;
+  --c-automation:#35B3A0; --c-agent-t1:#6FA8EC; --c-agent-t2:#A28BEA;
+  --c-agent-t3:#D57EB4;   --c-hybrid:#C7A22C;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.35);
+}
+:root[data-theme="light"] {
+  --bg:#FBF8F3; --card:#FFFFFF; --ink:#22272E; --ink-2:#5C6672; --ink-3:#8B93A0;
+  --line:#E8E2D8; --grid:#EDE7DC;
+  --accent-fg:#FFFFFF;
+  --accent-dark:color-mix(in srgb, var(--accent) 80%, black);
+  --accent-text:color-mix(in srgb, var(--accent) 85%, black);
+  --accent-soft:color-mix(in srgb, var(--accent) 9%, var(--bg));
+  --ok:#2B8A3E;
+  --c-automation:#0B8272; --c-agent-t1:#3B77C2; --c-agent-t2:#7A5BD6;
+  --c-agent-t3:#B0498C;   --c-hybrid:#9C7514;
+  --shadow:0 1px 2px rgba(34,39,46,.05), 0 6px 20px rgba(34,39,46,.06);
+}
+
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { display:flex; max-width:1340px; margin:0 auto; gap:34px; padding:0 26px 130px; }
+a { color:var(--accent-text); }
+code { font:12.5px var(--mono); background:var(--accent-soft); border-radius:4px; padding:1px 5px; }
+.num, output, .figure { font-variant-numeric:tabular-nums; }
+
+nav.rail { position:sticky; top:0; align-self:flex-start; width:196px; flex:none;
+  padding:34px 0 22px; display:flex; flex-direction:column; gap:2px; }
+nav.rail .brand { font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin:0 0 14px 12px; }
+nav.rail a { color:var(--ink-2); text-decoration:none; font-size:13.5px;
+  padding:6px 12px; border-radius:7px; }
+nav.rail a:hover { background:var(--accent-soft); color:var(--ink); }
+nav.rail a:focus-visible, button:focus-visible, input:focus-visible,
+summary:focus-visible, [tabindex]:focus-visible
+  { outline:2px solid var(--accent); outline-offset:2px; }
+#theme-toggle { margin:16px 0 0 12px; align-self:flex-start; font:600 12.5px system-ui,sans-serif;
+  border:1px solid var(--line); background:var(--card); color:var(--ink-2);
+  border-radius:20px; padding:5px 13px; cursor:pointer; }
+#theme-toggle:hover { border-color:var(--accent); color:var(--ink); }
+main { flex:1; min-width:0; max-width:1020px; }
+@media (max-width:900px) { nav.rail { display:none; } .wrap { gap:0; padding:0 16px 150px; } }
+
+header.hero { padding:50px 0 8px; }
+.eyebrow { font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent-text); font-weight:650; margin:0 0 10px; }
+h1 { font-size:clamp(26px,3.4vw,37px); line-height:1.15; margin:0 0 12px;
+  font-weight:700; letter-spacing:-.015em; text-wrap:balance; }
+.hero p.lede { font-size:16.5px; color:var(--ink-2); max-width:64ch; margin:0; }
+.hero .stamp { font:12px var(--mono); color:var(--ink-3); margin-top:14px; }
+
+section { margin-top:54px; scroll-margin-top:24px; }
+h2 { font-size:21px; font-weight:700; letter-spacing:-.01em; margin:0 0 6px; text-wrap:balance; }
+.kicker { font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); font-weight:650; margin:0 0 6px; }
+section > p.sub { color:var(--ink-2); max-width:70ch; margin:0 0 18px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:13px;
+  box-shadow:var(--shadow); padding:20px 22px; }
+
+/* headline stats */
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(205px,1fr)); gap:12px; margin:26px 0 0; }
+.stat { background:var(--card); border:1px solid var(--line); border-radius:13px; padding:15px 18px; }
+.stat .v { font-size:29px; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.stat .l { font-size:12.5px; color:var(--ink-2); margin-top:2px; }
+.stat .n { font-size:11.5px; color:var(--ink-3); margin-top:6px; }
+
+/* assumptions */
+.assump { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px 28px; }
+.assump label { display:block; font-size:13px; color:var(--ink-2); }
+.assump .row { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+.assump .row span:first-child { color:var(--ink); font-weight:600; }
+.assump output { font:650 15px var(--mono); color:var(--ink); }
+.assump input[type=range] { width:100%; accent-color:var(--accent); margin-top:6px; }
+.assump .src { font-size:11.5px; color:var(--ink-3); margin-top:3px; line-height:1.45; }
+.assump-foot { margin-top:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.assump-foot .note-inline { font-size:12px; color:var(--ink-3); }
+button.ghost { font:600 12.5px system-ui,sans-serif; border:1px solid var(--line);
+  background:var(--card); color:var(--ink-2); border-radius:20px; padding:6px 15px; cursor:pointer; }
+button.ghost:hover { border-color:var(--accent); color:var(--ink); }
+
+/* chips */
+.chip { display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600;
+  border-radius:20px; padding:2px 10px; white-space:nowrap; }
+.chip i { width:8px; height:8px; border-radius:50%; display:inline-block; flex:none; }
+.chip.plain { color:var(--ink-2); background:var(--bg); border:1px solid var(--line); }
+.chip.qw { color:var(--accent-text); background:var(--accent-soft); }
+.chip.bb { color:var(--c-agent-t1); background:color-mix(in srgb, var(--c-agent-t1) 13%, var(--card)); }
+.chip.fi { color:var(--ink-2); background:color-mix(in srgb, var(--ink) 7%, var(--card)); }
+.chip.dc { color:var(--ink-3); background:transparent; border:1px dashed var(--line); }
+
+/* filters */
+.filters { display:flex; flex-wrap:wrap; gap:8px 8px; margin:0 0 16px; align-items:center; }
+.filters .glabel { font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-3); font-weight:650; margin-right:2px; }
+.filters button { font:600 12.5px system-ui, sans-serif; border:1px solid var(--line);
+  background:var(--card); color:var(--ink-2); border-radius:20px; padding:5px 13px; cursor:pointer; }
+.filters button.on { background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+.filters .sep { width:1px; align-self:stretch; background:var(--line); margin:2px 5px; }
+
+/* opportunity cards */
+.opp { border:1px solid var(--line); border-radius:13px; background:var(--card);
+  box-shadow:var(--shadow); margin-bottom:12px; overflow:hidden; }
+.opp.discard { opacity:.75; }
+.opp.discard .ot { color:var(--ink-2); }
+.opp summary { list-style:none; cursor:pointer; padding:13px 18px; display:flex; flex-wrap:wrap;
+  align-items:center; gap:9px 12px; }
+.opp summary::-webkit-details-marker { display:none; }
+.opp summary:hover { background:var(--accent-soft); }
+.opp .pick { width:17px; height:17px; accent-color:var(--accent); cursor:pointer; flex:none; }
+.opp .oid { font:650 12px var(--mono); color:var(--ink-3); }
+.opp .ot { font-size:15px; font-weight:650; flex:1 1 240px; }
+.opp .ov { font:650 14px var(--mono); font-variant-numeric:tabular-nums; margin-left:auto; }
+.opp .o-body { border-top:1px solid var(--line); padding:16px 20px 18px;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px 26px; }
+.opp .o-body h4 { margin:0 0 4px; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-3); }
+.opp .o-body p { margin:0; font-size:13.8px; color:var(--ink-2); }
+.opp .o-body p strong { color:var(--ink); }
+.opp .full { grid-column:1 / -1; }
+.scoreline { font:12.5px var(--mono); color:var(--ink-2); }
+.scoreline b { color:var(--ink); }
+
+/* scatter */
+.viz { background:var(--card); border:1px solid var(--line); border-radius:13px;
+  box-shadow:var(--shadow); padding:18px 18px 8px; }
+.viz .legend { display:flex; flex-wrap:wrap; gap:12px; padding:2px 4px 10px;
+  font-size:12.5px; color:var(--ink-2); align-items:center; }
+.viz svg { display:block; width:100%; height:auto; }
+.viz text { font:11.5px system-ui, sans-serif; fill:var(--ink-2); }
+.viz .axl { fill:var(--ink-3); font-size:11px; }
+.viz .quad { fill:var(--ink-3); font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; }
+.viz .dotl { font:650 10.5px var(--mono); fill:var(--ink); }
+.viz line, .viz rect.qbg, .viz text { pointer-events:none; }
+.viz .pt.dim { opacity:.15; }
+.tip { position:fixed; z-index:60; pointer-events:none; background:var(--card); color:var(--ink);
+  border:1px solid var(--line); box-shadow:var(--shadow); border-radius:8px; padding:8px 12px;
+  font-size:12.5px; max-width:300px; display:none; }
+.tip b { display:block; margin-bottom:2px; }
+.tip .figure { font-family:var(--mono); }
+
+/* roadmap */
+.waves { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:14px; }
+.wave { border:1px solid var(--line); border-radius:13px; background:var(--card); box-shadow:var(--shadow); }
+.wave .w-h { padding:14px 18px 11px; border-bottom:1px solid var(--line); }
+.wave .w-h .t { font-weight:700; font-size:15px; }
+.wave .w-h .s { font-size:12px; color:var(--ink-3); }
+.wave .w-h .v { font:650 12.5px var(--mono); color:var(--accent-text); margin-top:6px; line-height:1.5; }
+.wave ul { list-style:none; margin:0; padding:10px 18px 16px; display:flex; flex-direction:column; gap:9px; }
+.wave li { font-size:13.5px; color:var(--ink-2); }
+.wave li .oref { font:650 11px var(--mono); color:var(--accent-text); cursor:pointer; }
+.wave li.off { opacity:.5; text-decoration:line-through; text-decoration-color:var(--ink-3); }
+.wave li .liv { font:600 12px var(--mono); color:var(--ink-3); white-space:nowrap; }
+
+/* keep / method */
+.keep-body h3, .keep-body h4 { margin:1.2em 0 .4em; font-size:15px; }
+.keep-body ul { margin:.4em 0; padding-left:20px; }
+.keep-body li { margin-bottom:6px; color:var(--ink-2); }
+.keep-body p { color:var(--ink-2); max-width:72ch; }
+.note { border-left:3px solid var(--accent); background:var(--accent-soft);
+  border-radius:0 10px 10px 0; padding:12px 16px; font-size:13.5px; color:var(--ink-2); max-width:75ch; }
+.note strong { color:var(--ink); }
+
+/* confirm bar */
+#confirm-bar { position:fixed; left:0; right:0; bottom:0; z-index:40;
+  background:color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter:blur(8px); border-top:1px solid var(--line);
+  padding:10px max(18px, env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)); }
+#confirm-bar .cb-in { max-width:1340px; margin:0 auto; display:flex; align-items:center;
+  gap:16px 22px; flex-wrap:wrap; }
+#confirm-bar .cb-stat { font-size:13px; color:var(--ink-2); }
+#confirm-bar .cb-stat b { font:650 14px var(--mono); color:var(--ink); font-variant-numeric:tabular-nums; }
+#confirm-bar .cb-btn { margin-left:auto; font:650 13.5px system-ui,sans-serif;
+  background:var(--accent); color:var(--accent-fg); border:none; border-radius:999px;
+  padding:10px 22px; cursor:pointer; }
+#confirm-bar .cb-btn:hover { background:var(--accent-dark); }
+#confirm-bar .cb-btn:disabled { opacity:.45; cursor:not-allowed; }
+
+/* confirm dialog */
+dialog#confirm-dialog { border:1px solid var(--line); border-radius:14px; background:var(--card);
+  color:var(--ink); box-shadow:var(--shadow); padding:24px 26px; max-width:620px; width:min(92vw,620px); }
+dialog#confirm-dialog::backdrop { background:rgba(20,16,12,.45); backdrop-filter:blur(2px); }
+#confirm-dialog h3 { margin:0 0 4px; font-size:18px; }
+#confirm-dialog .d-sub { font-size:13px; color:var(--ink-2); margin:0 0 14px; }
+#confirm-dialog h4 { margin:14px 0 4px; font-size:12px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); }
+#confirm-dialog ul { margin:0; padding-left:2px; list-style:none; }
+#confirm-dialog li { font-size:13.5px; color:var(--ink-2); padding:2px 0; }
+#confirm-dialog li .oid { font:650 11.5px var(--mono); color:var(--accent-text); }
+#confirm-dialog .d-total { margin-top:14px; padding-top:12px; border-top:1px solid var(--line);
+  font:650 14px var(--mono); font-variant-numeric:tabular-nums; }
+#confirm-dialog .d-note { font-size:12px; color:var(--ink-3); margin-top:8px; }
+#confirm-dialog .d-actions { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+#confirm-dialog .d-actions a, #confirm-dialog .d-actions button {
+  font:650 13px system-ui,sans-serif; border-radius:999px; padding:9px 18px; cursor:pointer;
+  text-decoration:none; }
+#confirm-dialog a.dl { background:var(--accent); color:var(--accent-fg); border:1px solid var(--accent); }
+#confirm-dialog a.dl:hover { background:var(--accent-dark); }
+#confirm-dialog .d-actions button { background:var(--card); color:var(--ink-2); border:1px solid var(--line); }
+#confirm-dialog .d-actions button:hover { border-color:var(--accent); color:var(--ink); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .opp, .stat, .filters button { transition:border-color .12s, background .12s; }
+}
+@media print {
+  nav.rail, #confirm-bar, #theme-toggle, .filters { display:none !important; }
+  .wrap { padding-bottom:20px; }
+  body { background:#fff; }
+}
+
+</style>
+
+<div class="wrap">
+<nav class="rail" aria-label="Sections">
+  <p class="brand" data-i18n="brand"></p>
+  <a href="#overzicht" data-i18n="navOverview"></a>
+  <a href="#aannames" data-i18n="navAssumptions"></a>
+  <a href="#kaart" data-i18n="navMap"></a>
+  <a href="#register" data-i18n="navRegister"></a>
+  <a href="#roadmap" data-i18n="navRoadmap"></a>
+  <a href="#keep" id="nav-keep" data-i18n="navKeep"></a>
+  <a href="#methode" data-i18n="navMethod"></a>
+  <button id="theme-toggle" type="button" aria-pressed="false"></button>
+</nav>
+<main>
+
+<header class="hero" id="overzicht">
+  <p class="eyebrow" data-i18n="eyebrow"></p>
+  <h1 id="hero-title"></h1>
+  <p class="lede" id="hero-lede"></p>
+  <p class="stamp" id="hero-stamp"></p>
+  <div class="stats">
+    <div class="stat"><div class="v" id="st-total">—</div><div class="l" data-i18n="stTotal"></div><div class="n" data-i18n="stTotalNote"></div></div>
+    <div class="stat" id="st-hours-tile"><div class="v" id="st-hours">—</div><div class="l" data-i18n="stHours"></div><div class="n" data-i18n="stHoursNote"></div></div>
+    <div class="stat"><div class="v" id="st-wave1">—</div><div class="l" data-i18n="stWave1"></div><div class="n" data-i18n="stWave1Note"></div></div>
+    <div class="stat"><div class="v" id="st-payback">—</div><div class="l" data-i18n="stPayback"></div><div class="n" data-i18n="stPaybackNote"></div></div>
+  </div>
+</header>
+
+<section id="aannames">
+  <p class="kicker" data-i18n="kAssump"></p>
+  <h2 data-i18n="hAssump"></h2>
+  <p class="sub" data-i18n="subAssump"></p>
+  <div class="card">
+    <div class="assump" id="assump-grid"></div>
+    <div class="assump-foot">
+      <span class="note-inline" data-i18n="assumpFootNote"></span>
+      <button class="ghost" id="assump-reset" type="button" data-i18n="btnReset"></button>
+    </div>
+  </div>
+</section>
+
+<section id="kaart">
+  <p class="kicker" data-i18n="kMap"></p>
+  <h2 data-i18n="hMap"></h2>
+  <p class="sub" data-i18n="subMap"></p>
+  <div class="viz">
+    <div class="legend" id="viz-legend"></div>
+    <div id="scatter"></div>
+  </div>
+</section>
+
+<section id="register">
+  <p class="kicker" data-i18n="kRegister"></p>
+  <h2 data-i18n="hRegister"></h2>
+  <p class="sub" data-i18n="subRegister"></p>
+  <div class="filters" id="reg-filters"></div>
+  <div id="reg-list"></div>
+</section>
+
+<section id="roadmap">
+  <p class="kicker" data-i18n="kRoadmap"></p>
+  <h2 data-i18n="hRoadmap"></h2>
+  <p class="sub" data-i18n="subRoadmap"></p>
+  <div class="waves" id="waves"></div>
+</section>
+
+<section id="keep">
+  <p class="kicker" data-i18n="kKeep"></p>
+  <h2 data-i18n="hKeep"></h2>
+  <p class="sub" data-i18n="subKeep"></p>
+  <div class="card keep-body" id="keep-body"></div>
+</section>
+
+<section id="methode">
+  <p class="kicker" data-i18n="kMethod"></p>
+  <h2 data-i18n="hMethod"></h2>
+  <p class="sub" id="method-weights"></p>
+  <p class="note" id="method-note"></p>
+</section>
+
+</main>
+</div>
+
+<div id="confirm-bar" role="region">
+  <div class="cb-in">
+    <span class="cb-stat" id="cb-count"></span>
+    <span class="cb-stat" id="cb-value"></span>
+    <span class="cb-stat" id="cb-cost"></span>
+    <button class="cb-btn" id="cb-btn" type="button"></button>
+  </div>
+</div>
+
+<dialog id="confirm-dialog">
+  <h3 data-i18n="dTitle"></h3>
+  <p class="d-sub" data-i18n="dSub"></p>
+  <div id="d-body"></div>
+  <div class="d-total" id="d-total"></div>
+  <p class="d-note" data-i18n="dNote"></p>
+  <div class="d-actions">
+    <a class="dl" id="d-download" download data-i18n="dDownload"></a>
+    <button type="button" id="d-print" data-i18n="dPrint"></button>
+    <button type="button" id="d-close" data-i18n="dClose"></button>
+  </div>
+</dialog>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+var DATA = {
+  "client": "InstallTech BV",
+  "slug": "_demo-installtech",
+  "lang": "nl",
+  "accent": "#D9480F",
+  "sector": "HVAC-installatie",
+  "currency": "EUR",
+  "day_rate": 950,
+  "built": "2026-07-09T09:24:10Z",
+  "weights": {
+    "value": {
+      "hours": 0.5,
+      "quality": 0.25,
+      "strategic": 0.25
+    },
+    "feasibility": {
+      "data": 0.4,
+      "technical": 0.3,
+      "ownership": 0.3
+    },
+    "high": 3.5
+  },
+  "hourly_id": "loaded_hourly_cost",
+  "assumptions": [
+    {
+      "id": "quotes_per_month",
+      "label": {
+        "nl": "Offertes per maand",
+        "en": "Quotes per month"
+      },
+      "unit": "/maand",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 45,
+      "source": "verkoopworkshop 2026-06-10 §10 (schatting binnendienst) — te kalibreren via telling servermap 'Offertes 2026' in pilotweek 1"
+    },
+    {
+      "id": "minutes_saved_per_quote",
+      "label": {
+        "nl": "Minuten bespaard per offerte",
+        "en": "Minutes saved per quote"
+      },
+      "unit": "min",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "source": "afgeleid uit verkoopworkshop §8; te meten door 2 weken schaduwdraaien op de laatste 20 offertes (Eerste stap OPP-2)"
+    },
+    {
+      "id": "loaded_hourly_cost",
+      "label": {
+        "nl": "Loonkost per uur (all-in)",
+        "en": "Loaded hourly cost"
+      },
+      "unit": "€/u",
+      "min": 40,
+      "max": 75,
+      "step": 5,
+      "default": 55,
+      "source": "sectorgemiddelde bediende/technieker PC 149.01 — te valideren met de loonstaten via het sociaal secretariaat"
+    },
+    {
+      "id": "jobs_per_week",
+      "label": {
+        "nl": "Werkbonnen per week (hele ploeg)",
+        "en": "Job sheets per week (whole team)"
+      },
+      "unit": "/week",
+      "min": 40,
+      "max": 140,
+      "step": 5,
+      "default": 85,
+      "source": "buitendienstworkshop 2026-06-15 §10 (planner) — te kalibreren via telling van 4 weken bonnen in pilotweek 1"
+    },
+    {
+      "id": "invoices_per_month",
+      "label": {
+        "nl": "Verkoopfacturen per maand",
+        "en": "Sales invoices per month"
+      },
+      "unit": "/maand",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 190,
+      "source": "financiënworkshop 2026-06-17 §5 — exact aantal eenvoudig te trekken uit Exact (verkoopdagboek, laatste 6 maanden)"
+    },
+    {
+      "id": "minutes_per_invoice",
+      "label": {
+        "nl": "Minuten hertypen per verkoopfactuur",
+        "en": "Minutes re-typing per sales invoice"
+      },
+      "unit": "min",
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "default": 12,
+      "source": "financiënworkshop 2026-06-17 §2–3 (schatting administratie) — te meten met een tijdsteekproef van 10 facturen"
+    }
+  ],
+  "opps": [
+    {
+      "id": "OPP-1",
+      "title": "Werkbonnen digitaliseren met een 60-seconden-spraaknotitie van de technieker",
+      "status": "proposed",
+      "departments": [
+        "SVC"
+      ],
+      "processes": [
+        "SVC.050",
+        "SVC.090"
+      ],
+      "pains": [
+        "PAIN-5"
+      ],
+      "allocation": "agent-T1",
+      "effort": "M",
+      "wave": 1,
+      "scores": {
+        "hours": 5.0,
+        "quality": 4.0,
+        "strategic": 4.0,
+        "data": 4.0,
+        "technical": 4.0,
+        "ownership": 4.0,
+        "adoption": 4.0
+      },
+      "value": 4.5,
+      "feasibility": 4.0,
+      "quadrant": "quick-win",
+      "verdict": "quick-win",
+      "confidence": "high",
+      "tooling": 200.0,
+      "days": 12,
+      "impl_cost": 11400,
+      "year1_cost": 13800,
+      "formula_text": "jobs_per_week * 46 * 15 / 60 * loaded_hourly_cost",
+      "would_change": "als de spraakherkenning op werf-Vlaams en vakjargon onder de ±90% bruikbaarheid blijft in de pilot, of de invoertijd per bon boven de 2 minuten uitkomt, zakt adoptie en schuift dit naar een app-met-velden-variant in wave 2.",
+      "enablers": "gestructureerd werkbonsjabloon (velden: werk, materiaal, uren, vervolgwerk-vlag); digitale handtekening op de gsm; starten met de meest gemotiveerde technieker (transcript §21), nooit met de scepticus",
+      "risk": "beperkt risico; technieker keurt elke gegenereerde bon na (T1). Urenregistratie raakt aan monitoringgevoeligheid — vooraf kaderen als facturatienauwkeurigheid, team betrekken (F4 §6)",
+      "first_step": "2 weken pilot met 2 techniekers; parallel 20 papieren bonnen naspellen om het niet-aangerekende klein materiaal te becijferen",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-2",
+      "title": "Offertes genereren uit aanvraagmail en werfnotities met een LLM-assistent",
+      "status": "proposed",
+      "departments": [
+        "SAL"
+      ],
+      "processes": [
+        "SAL.030",
+        "SAL.020"
+      ],
+      "pains": [
+        "PAIN-1",
+        "PAIN-2"
+      ],
+      "allocation": "agent-T1",
+      "effort": "M",
+      "wave": 1,
+      "scores": {
+        "hours": 4.0,
+        "quality": 3.0,
+        "strategic": 5.0,
+        "data": 4.0,
+        "technical": 4.0,
+        "ownership": 3.0,
+        "adoption": 4.0
+      },
+      "value": 4.0,
+      "feasibility": 3.7,
+      "quadrant": "quick-win",
+      "verdict": "quick-win",
+      "confidence": "high",
+      "tooling": 150.0,
+      "days": 12,
+      "impl_cost": 11400,
+      "year1_cost": 13200,
+      "formula_text": "quotes_per_month * 12 * minutes_saved_per_quote / 60 * loaded_hourly_cost",
+      "would_change": "als minder dan 60% van de aanvragen bruikbaar gestructureerd blijkt (catalogus-caveat SAL.030), zakt data-feasibility naar 2 en schuift dit naar wave 2 achter een intake-opschoning. De échte prijs is de doorlooptijd (4–5 dagen → ≤2): als de winratio niet meetbaar stijgt, is het uurcijfer alleen te mager.",
+      "enablers": "offerte-sjabloon en prijsboek standaardiseren (de \"prijzen kloppen nooit\"-klacht eerst oplossen); werfnotities digitaal capteren (spraaknotitie verkoper, zelfde patroon als OPP-1)",
+      "risk": "beperkt risico; binnendienst en zaakvoerder reviewen elke offerte (T1) — prijszetting en eindgoedkeuring blijven menselijk per F4",
+      "first_step": "2 weken schaduwdraaien op de laatste 20 offertes; meten: minuten per offerte en doorlooptijd werfbezoek → verstuurd",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-3",
+      "title": "Verkoopfacturen dezelfde dag opmaken vanuit de digitale werkbon",
+      "status": "proposed",
+      "departments": [
+        "FIN"
+      ],
+      "processes": [
+        "FIN.010"
+      ],
+      "pains": [
+        "PAIN-9"
+      ],
+      "allocation": "automation",
+      "effort": "M",
+      "wave": 1,
+      "scores": {
+        "hours": 4.0,
+        "quality": 4.0,
+        "strategic": 4.0,
+        "data": 3.0,
+        "technical": 4.0,
+        "ownership": 4.0,
+        "adoption": 5.0
+      },
+      "value": 4.0,
+      "feasibility": 3.6,
+      "quadrant": "quick-win",
+      "verdict": "quick-win",
+      "confidence": "medium",
+      "tooling": 100.0,
+      "days": 8,
+      "impl_cost": 7600,
+      "year1_cost": 8800,
+      "formula_text": "invoices_per_month * 12 * minutes_per_invoice / 60 * loaded_hourly_cost",
+      "would_change": "dit staat of valt met OPP-1 — zonder digitale werkbon is er niets om automatisch te factureren (data=3 is al een voorschot op die afhankelijkheid). De business case wordt gewonnen op werkkapitaal, niet op uren: als de DSO-meting voor/na geen ±2 weken verbetering toont, is de formule hierboven de ondergrens, niet het verhaal.",
+      "enablers": "OPP-1 live bij minstens de helft van de ploeg; conceptfactuur-flow in Exact activeren (administratie keurt elke factuur goed vóór Peppol-verzending)",
+      "risk": "minimaal risico — regelgebaseerde automatisering; factuur vertrekt nooit zonder menselijke vrijgave",
+      "first_step": "DSO-nulmeting uit Exact (laatste 6 maanden); daarna conceptfacturen genereren voor één week interventies en de correctiegraad meten",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-4",
+      "title": "Betaalherinneringen versturen via een getrapte sequentie met menselijke overname",
+      "status": "proposed",
+      "departments": [
+        "FIN"
+      ],
+      "processes": [
+        "FIN.040"
+      ],
+      "pains": [
+        "PAIN-11"
+      ],
+      "allocation": "hybrid",
+      "effort": "S",
+      "wave": 1,
+      "scores": {
+        "hours": 3.0,
+        "quality": 4.0,
+        "strategic": 4.0,
+        "data": 4.0,
+        "technical": 5.0,
+        "ownership": 4.0,
+        "adoption": 4.0
+      },
+      "value": 3.5,
+      "feasibility": 4.3,
+      "quadrant": "quick-win",
+      "verdict": "quick-win",
+      "confidence": "high",
+      "tooling": 50.0,
+      "days": 5,
+      "impl_cost": 4750,
+      "year1_cost": 5350,
+      "formula_text": "invoices_per_month * 12 * 0.25 * 10 / 60 * loaded_hourly_cost",
+      "would_change": "de formule telt alleen de vermeden belrondes (±25% van de facturen, ±10 min); de grotere winst — kortere betaaltermijn — is bewust niet becijferd tot de ouderdomsanalyse er is. Als één geautomatiseerde aanmaning bij een twintigjarige relatie verkeerd valt, gaat de uitzonderingslijst vóór alles (catalogus-caveat FIN.040).",
+      "enablers": "ouderdomsrapport uit Exact als wekelijkse trigger; uitzonderingslijst relatiegevoelige klanten (zaakvoerder beslist wie); toonladder in de woorden van de zaakvoerder (agent-T1 ontwerpt de drie brieven éénmalig)",
+      "risk": "beperkt risico; stap 1–2 automatisch, stap 3 en alle gevoelige accounts altijd menselijk",
+      "first_step": "ouderdomsanalyse uit Exact; uitzonderingslijst opstellen met de zaakvoerder; sequentie 4 weken draaien op de niet-gevoelige helft",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-5",
+      "title": "Onderhoudscontracten aanbieden via een reminder-engine over de installatiebasis",
+      "status": "proposed",
+      "departments": [
+        "SVC"
+      ],
+      "processes": [
+        "SVC.070"
+      ],
+      "pains": [
+        "PAIN-8"
+      ],
+      "allocation": "automation",
+      "effort": "L",
+      "wave": 2,
+      "scores": {
+        "hours": 3.0,
+        "quality": 3.0,
+        "strategic": 5.0,
+        "data": 2.0,
+        "technical": 4.0,
+        "ownership": 3.0,
+        "adoption": 3.0
+      },
+      "value": 3.5,
+      "feasibility": 2.9,
+      "quadrant": "big-bet",
+      "verdict": "big-bet",
+      "confidence": "medium",
+      "tooling": 75.0,
+      "days": 18,
+      "impl_cost": 17100,
+      "year1_cost": 18000,
+      "formula_text": "480 * 0.08 * 340",
+      "would_change": "dit is een groeicase, geen efficiëntiecase (catalogus: score als growth). Als de telling van de installatiebasis onder de ±300 contractloze installaties uitkomt, of de proefmailing onder 4% conversie blijft, halveert de case en wordt het een fill-in. De datafeasibility (2) is het echte werk: de installatiebasis bestaat vandaag alleen als servermappen.",
+      "enablers": "installatiebasis reconstrueren uit servermappen + Exact-facturatiehistoriek (het enabler-project); contract-Excel van 2019 vervangen door één onderhouden lijst; gemiste beurten eerst naar nul (contractuele plicht)",
+      "risk": "minimaal risico — reminder-automatisering; commerciële voorstellen vertrekken pas na menselijke check",
+      "first_step": "installatiebasis van de laatste 10 jaar tellen (steekproef 3 jaargangen); proefmailing naar 50 contractloze klanten in het najaar",
+      "uses_hourly": false
+    },
+    {
+      "id": "OPP-6",
+      "title": "Vervolgwerk capteren via werkbon-vlaggen en automatisch offertes klaarzetten",
+      "status": "proposed",
+      "departments": [
+        "SVC",
+        "SAL"
+      ],
+      "processes": [
+        "SVC.060",
+        "SAL.030"
+      ],
+      "pains": [
+        "PAIN-7"
+      ],
+      "allocation": "hybrid",
+      "effort": "M",
+      "wave": 3,
+      "scores": {
+        "hours": 3.0,
+        "quality": 3.0,
+        "strategic": 5.0,
+        "data": 2.0,
+        "technical": 3.0,
+        "ownership": 3.0,
+        "adoption": 3.0
+      },
+      "value": 3.5,
+      "feasibility": 2.6,
+      "quadrant": "big-bet",
+      "verdict": "big-bet",
+      "confidence": "low",
+      "tooling": 50.0,
+      "days": 12,
+      "impl_cost": 11400,
+      "year1_cost": 12000,
+      "formula_text": "jobs_per_week * 46 * 0.03 * 250",
+      "would_change": "volledig stroomafwaarts van OPP-1: zonder vervolgwerk-vlag op een digitale bon bestaat de dataketen niet (data=2). Catalogus-caveat SVC.060: eerst het lek meten — als de telling van \"kom ik nog eens terug\"-vermeldingen vorig kwartaal onder de 5 uitkomt, is dit een fill-in of een discard.",
+      "enablers": "vervolgwerk-vlag als verplicht veld in het werkbonsjabloon (OPP-1); wekelijkse takenlijst bij binnendienst 2 (routing); conceptofferte via het OPP-2-patroon",
+      "risk": "beperkt risico; elke conceptofferte langs de normale menselijke offerteflow (T1)",
+      "first_step": "telling over het voorbije kwartaal: vermeldingen van vervolgwerk op bonnen/in WhatsApp vs. effectief verstuurde offertes — het cijfer verkoopt (of begraaft) de case",
+      "uses_hourly": false
+    },
+    {
+      "id": "OPP-7",
+      "title": "Nacalculatie per werf opbouwen met automatische marge-signalering",
+      "status": "proposed",
+      "departments": [
+        "FIN"
+      ],
+      "processes": [
+        "FIN.080"
+      ],
+      "pains": [
+        "PAIN-12"
+      ],
+      "allocation": "agent-T2",
+      "effort": "L",
+      "wave": 3,
+      "scores": {
+        "hours": 3.0,
+        "quality": 4.0,
+        "strategic": 5.0,
+        "data": 1.0,
+        "technical": 3.0,
+        "ownership": 3.0,
+        "adoption": 3.0
+      },
+      "value": 3.75,
+      "feasibility": 2.2,
+      "quadrant": "big-bet",
+      "verdict": "big-bet",
+      "confidence": "low",
+      "tooling": 100.0,
+      "days": 35,
+      "impl_cost": 33250,
+      "year1_cost": 34450,
+      "formula_text": "jobs_per_week * 46 * 0.02 * 260",
+      "would_change": "data=1 is de F1-bindende beperking in het klein: uren zijn geschat en klein materiaal ontbreekt (transcript §15), dus vandaag automatiseert dit alleen gissingen (catalogus-caveat FIN.080). Pas zinvol na twee kwartalen betrouwbare digitale registratie (OPP-1 + OPP-3). Blijkt de eerste betrouwbare roll-up dat marges overal gezond zijn, dan is dit een rapport, geen agent — en zakt het naar fill-in.",
+      "enablers": "OPP-1 (uren + materiaal digitaal) en OPP-3 (facturatie gekoppeld) twee kwartalen live; werfcodes consequent in Exact",
+      "risk": "beperkt risico; agent-T2 stelt maandcommentaar en uitschieters voor, controller/zaakvoerder interpreteert — geen automatische beslissingen",
+      "first_step": "niets bouwen; na kwartaal 1 van OPP-1 een handmatige nacalculatie van 10 werven doen als datakwaliteitstest",
+      "uses_hourly": false
+    },
+    {
+      "id": "OPP-8",
+      "title": "Aankoopfacturen inlezen met documentherkenning in de boekhouding",
+      "status": "proposed",
+      "departments": [
+        "FIN"
+      ],
+      "processes": [
+        "FIN.020"
+      ],
+      "pains": [
+        "PAIN-10"
+      ],
+      "allocation": "automation",
+      "effort": "S",
+      "wave": 2,
+      "scores": {
+        "hours": 3.0,
+        "quality": 4.0,
+        "strategic": 2.0,
+        "data": 4.0,
+        "technical": 5.0,
+        "ownership": 4.0,
+        "adoption": 5.0
+      },
+      "value": 3.0,
+      "feasibility": 4.3,
+      "quadrant": "fill-in",
+      "verdict": "fill-in",
+      "confidence": "high",
+      "tooling": 60.0,
+      "days": 3,
+      "impl_cost": 2850,
+      "year1_cost": 3570,
+      "formula_text": "120 * 12 * 6 / 60 * loaded_hourly_cost",
+      "would_change": "catalogus-caveat FIN.020: dit is het vaakst al-half-opgeloste proces — als de scan-en-herken-module van het accountantsplatform/Exact dit out-of-the-box dekt, is het een activatie van een halve dag en geen project. Dan stijgt het rendement en blijft het een fill-in dat gewoon meteen mag.",
+      "enablers": "check welke herkenningsmodule in het bestaande Exact-abonnement of bij de accountant zit (eerst activeren, dan pas kopen); goedkeuringsdrempels afspreken zodat de mondelinge krul een digitale wordt",
+      "risk": "minimaal risico; boekingsvoorstellen, administratie valideert — vier ogen op betalingen blijft onaangeroerd",
+      "first_step": "demo van de bestaande Exact/accountant-module op de facturen van vorige maand; foutgraad meten op 50 stuks",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-9",
+      "title": "Klanten verwittigen met automatische ETA-berichten bij elke interventie",
+      "status": "proposed",
+      "departments": [
+        "SVC"
+      ],
+      "processes": [
+        "SVC.020",
+        "SVC.010"
+      ],
+      "pains": [
+        "PAIN-6"
+      ],
+      "allocation": "automation",
+      "effort": "S",
+      "wave": 2,
+      "scores": {
+        "hours": 2.0,
+        "quality": 4.0,
+        "strategic": 3.0,
+        "data": 4.0,
+        "technical": 4.0,
+        "ownership": 4.0,
+        "adoption": 4.0
+      },
+      "value": 2.75,
+      "feasibility": 4.0,
+      "quadrant": "fill-in",
+      "verdict": "fill-in",
+      "confidence": "medium",
+      "tooling": 40.0,
+      "days": 3,
+      "impl_cost": 2850,
+      "year1_cost": 3330,
+      "formula_text": "jobs_per_week * 46 * 0.15 * 4 / 60 * loaded_hourly_cost",
+      "would_change": "klein in uren, groot in klantperceptie — bewust een fill-in naast de wave-2-enablerprojecten. Als de streepjesmeting onder de 5% \"waar blijft hij\"-oproepen uitkomt, vervalt de case; Rita blijft eigenaar van de planning, dit verstuurt alleen wat zij beslist (assist, niet replace — catalogus-caveat SVC.020).",
+      "enablers": "planning digitaal genoeg (Outlook-agenda volstaat als bron); sms/WhatsApp Business-kanaal met opt-in conform GDPR",
+      "risk": "minimaal risico — berichtenautomatisering zonder besluitvorming; geen locatietracking van techniekers (rode lijn monitoring)",
+      "first_step": "één week streepjes turven aan het onthaal (\"waar blijft hij\"-oproepen); daarna 2 weken proef met de service-ploeg",
+      "uses_hourly": true
+    },
+    {
+      "id": "OPP-10",
+      "title": "Dagplanning volledig automatiseren met een autonome dispatch-agent",
+      "status": "discarded",
+      "departments": [
+        "SVC"
+      ],
+      "processes": [
+        "SVC.020"
+      ],
+      "pains": [
+        "PAIN-6"
+      ],
+      "allocation": "agent-T3",
+      "effort": "L",
+      "wave": 0,
+      "scores": {
+        "hours": 3.0,
+        "quality": 2.0,
+        "strategic": 3.0,
+        "data": 2.0,
+        "technical": 2.0,
+        "ownership": 2.0,
+        "adoption": 2.0
+      },
+      "value": 2.75,
+      "feasibility": 2.0,
+      "quadrant": "discard",
+      "verdict": "discard",
+      "confidence": "high",
+      "tooling": 0.0,
+      "days": 60,
+      "impl_cost": 57000,
+      "year1_cost": 57000,
+      "formula_text": "",
+      "would_change": "de planning is vandaag een sterkte, geen pijn (\"De planning van Rita, daar blijf je af\" — intake; bevestigd in de workshop §22). Skills, zones en klantgevoeligheden zitten in Rita's hoofd, niet in data (data=2), en niemand wil eigenaar zijn van een autonome planner (ownership=2). Heropenen alléén als Rita's opvolging concreet wordt: dan eerst haar kennis vastleggen, en zelfs dan als assistent (T1), nooit autonoom.",
+      "enablers": "n.v.t. — bewust niet starten; wel Rita's planningsregels documenteren als continuïteitsmaatregel (zit in keep.md als guardrail)",
+      "risk": "een autonome dispatch-agent stuurt de facto werkroosters — raakt aan arbeidsorganisatie en monitoringgevoeligheid; dat governancegewicht is voor deze organisatie disproportioneel (F4 §6, F6)",
+      "first_step": "geen — gedocumenteerd zodat de vraag niet elk kwartaal terugkomt",
+      "uses_hourly": false
+    },
+    {
+      "id": "OPP-11",
+      "title": "Cashflowprognose genereren uit openstaande posten met een AI-model",
+      "status": "proposed",
+      "departments": [
+        "FIN"
+      ],
+      "processes": [
+        "FIN.090"
+      ],
+      "pains": [
+        "PAIN-9",
+        "PAIN-11"
+      ],
+      "allocation": "agent-T1",
+      "effort": "M",
+      "wave": 0,
+      "scores": {
+        "hours": 2.0,
+        "quality": 3.0,
+        "strategic": 3.0,
+        "data": 2.0,
+        "technical": 3.0,
+        "ownership": 2.0,
+        "adoption": 3.0
+      },
+      "value": 2.5,
+      "feasibility": 2.3,
+      "quadrant": "discard",
+      "verdict": "discard",
+      "confidence": "medium",
+      "tooling": 0.0,
+      "days": 12,
+      "impl_cost": 11400,
+      "year1_cost": 11400,
+      "formula_text": "",
+      "would_change": "de zaakvoerder benoemt het zelf (§18): eerst snellere facturatie, dan is de helft van het cashprobleem weg. Een prognose bovenop een lege orderpijplijn (SAL.090 out of scope) en late facturatie voorspelt vooral de eigen achterstand (catalogus-caveat FIN.090). Herbekijken zodra OPP-3 en OPP-4 twee kwartalen draaien en er wél een ouderdoms- en orderbeeld bestaat — dan als eenvoudig 13-wekenmodel (automation), niet als AI-project.",
+      "enablers": "n.v.t. in deze fase — afhankelijkheden eerst (OPP-3, OPP-4, pijplijnzicht)",
+      "risk": "beperkt risico, maar een schijnzekere prognose is erger dan buikgevoel — richtinggevend labelen is hier geen formaliteit",
+      "first_step": "niet starten; herevaluatie geagendeerd bij de kwartaalreview na wave 1",
+      "uses_hourly": false
+    },
+    {
+      "id": "OPP-12",
+      "title": "Offertes onder de drempel automatisch laten goedkeuren door een prijsmodel",
+      "status": "proposed",
+      "departments": [
+        "SAL"
+      ],
+      "processes": [
+        "SAL.040"
+      ],
+      "pains": [
+        "PAIN-1"
+      ],
+      "allocation": "agent-T2",
+      "effort": "M",
+      "wave": 0,
+      "scores": {
+        "hours": 2.0,
+        "quality": 2.0,
+        "strategic": 3.0,
+        "data": 3.0,
+        "technical": 3.0,
+        "ownership": 1.0,
+        "adoption": 2.0
+      },
+      "value": 2.25,
+      "feasibility": 2.4,
+      "quadrant": "discard",
+      "verdict": "discard",
+      "confidence": "high",
+      "tooling": 0.0,
+      "days": 18,
+      "impl_cost": 17100,
+      "year1_cost": 17100,
+      "formula_text": "",
+      "would_change": "SAL.040 is vandaag géén bottleneck: goedkeuring binnen de dag en de zaakvoerder wil de grote dossiers expliciet blijven zien (§13 — een uitgesproken rode lijn, ownership=1). De doorlooptijdwinst zit in de opmaak (OPP-2), niet in de goedkeuring. Zou pas heropend worden als het offertevolume verdubbelt én de goedkeuring aantoonbaar >1 dag vertraging veroorzaakt — en dan als marge-signalering naast de mens (T2), nooit als autogoedkeuring (accountability moment per F4).",
+      "enablers": "n.v.t. — bewust niet starten",
+      "risk": "prijsbeslissingen met directe €-impact zonder menselijke controle zijn per F4 een accountability moment; bovendien haaks op de expliciete wens van de sponsor",
+      "first_step": "niet starten; drempel en doorlooptijd goedkeuring jaarlijks even nameten bij de portfolioreview",
+      "uses_hourly": false
+    }
+  ],
+  "keep_html": "<h3>Keep — wat NIET verandert<\/h3>\n<p>Wat vandaag goed werkt en expliciet beschermd wordt tegen de roadmap. De proposalpagina toont deze sectie — een consultant die alleen problemen ziet, heeft niet goed gekeken.<\/p>\n<h4>Works well — leave alone<\/h4>\n<ul>\n<li><strong>De planning van Rita (SVC.020)<\/strong> — \"De planning van Rita, daar blijf je af. Dat werkt.\" (intake, zaakvoerder; bevestigd buitendiensttranscript §4 en §22) — guardrail: OPP-9 verstuurt alleen wat Rita beslist; OPP-10 (autonome dispatch) is precies daarom een discard. Wel haar planningsregels documenteren als continuïteitsmaatregel.<\/li>\n<li><strong>Goedkeuring van grote offertes door de zaakvoerder (SAL.040)<\/strong> — goedkeuring binnen de dag, en hij wil de grote dossiers blijven zien (verkooptranscript §13) — guardrail: OPP-2 stopt bij een conceptofferte; niets raakt aan de drempel van €10.000 (OPP-12 discard).<\/li>\n<li><strong>Het vieroogprincipe op betalingen (FIN.030)<\/strong> — \"Vier ogen, daar wijken we nooit van af.\" (financiëntranscript §9) — guardrail: geen enkele finance-automatisering (OPP-3, OPP-4, OPP-8) voert ooit zelf een betaling uit.<\/li>\n<li><strong>De Exact + Peppol-facturatierails en de accountantsrelatie (FIN.060)<\/strong> — \"dat heeft de accountant goed opgezet — dat stuk loopt eigenlijk vanzelf\" (financiëntranscript §5, §13) — guardrail: OPP-3 en OPP-8 bouwen óp deze rails, nooit ernaast.<\/li>\n<\/ul>\n<h4>Strengths to build on<\/h4>\n<ul>\n<li><strong>De WhatsApp-discipline van de ploeg<\/strong> — de techniekers sturen vandaag al bonfoto's in de groep (buitendiensttranscript §8): de capture-gewoonte bestaat, alleen het formaat is fout. OPP-1 vervangt de foto door een spraaknotitie in dezelfde beweging.<\/li>\n<li><strong>Uitgesproken opinieleiders<\/strong> — Rita en de senior technieker (\"als die twee mee zijn, volgt de rest\", intake Part E): pilots starten bij hen.<\/li>\n<\/ul>\n<h4>Explicit non-goals<\/h4>\n<ul>\n<li>Geen personeelsafbouw in administratie of binnendienst — vrijgekomen uren gaan naar opvolging, dienst na verkoop en het wegwerken van de offerteachterstand (zo verteld door de zaakvoerder aan het team).<\/li>\n<li>Geen locatietracking of prestatiemonitoring van techniekers — urenregistratie via OPP-1 dient facturatienauwkeurigheid, en dat wordt vooraf zo afgesproken met de ploeg (F4 §6).<\/li>\n<li>Geen \"tweede gsm-administratie\" voor de buitendienst (rode lijn intake Part D): alles wat de technieker moet doen blijft binnen de 60-secondennorm, of het gebeurt niet.<\/li>\n<\/ul>",
+  "formulas": {
+    "OPP-1": (A) => (A.jobs_per_week * 46 * 15 / 60 * A.loaded_hourly_cost),
+    "OPP-2": (A) => (A.quotes_per_month * 12 * A.minutes_saved_per_quote / 60 * A.loaded_hourly_cost),
+    "OPP-3": (A) => (A.invoices_per_month * 12 * A.minutes_per_invoice / 60 * A.loaded_hourly_cost),
+    "OPP-4": (A) => (A.invoices_per_month * 12 * 0.25 * 10 / 60 * A.loaded_hourly_cost),
+    "OPP-5": (A) => (480 * 0.08 * 340),
+    "OPP-6": (A) => (A.jobs_per_week * 46 * 0.03 * 250),
+    "OPP-7": (A) => (A.jobs_per_week * 46 * 0.02 * 260),
+    "OPP-8": (A) => (120 * 12 * 6 / 60 * A.loaded_hourly_cost),
+    "OPP-9": (A) => (A.jobs_per_week * 46 * 0.15 * 4 / 60 * A.loaded_hourly_cost)
+  }
+};
+/* Roadmap proposal engine — vanilla JS, no CDNs, no eval.
+   One render path: state (assumptions + filters + selection) -> render functions.
+   DATA is injected by build_proposal.py; formulas are pre-compiled static
+   arrow functions (compiled in Python from validated Waardeformule tokens). */
+(function () {
+"use strict";
+if (typeof DATA === "undefined" || !DATA) return; // raw template opened directly
+
+/* ---------------- i18n ---------------- */
+var lang = DATA.lang === "en" ? "en" : "nl";
+var locale = lang === "nl" ? "nl-BE" : "en-GB";
+var STR = {
+  nl: {
+    brand: "Roadmapvoorstel",
+    navOverview: "Overzicht", navAssumptions: "Aannames", navMap: "Kansenkaart",
+    navRegister: "Register", navRoadmap: "Roadmap", navKeep: "Niet veranderen", navMethod: "Methode",
+    eyebrow: "AI-integratie · roadmapvoorstel",
+    heroTitle: "De AI-roadmap voor {client} — stel bij, kies, bevestig",
+    heroLede: "Elke euro hieronder is een open formule over {n} aannames. Schuif ze naar jullie realiteit en het hele voorstel herrekent — daarna vink je aan wat in de roadmap komt en bevestig je onderaan. Alle bedragen zijn richtinggevend, geen audit.",
+    heroStamp: "gebouwd {date} · {sector} · bedragen per jaar, bij de ingestelde aannames",
+    stTotal: "Totale jaarwaarde", stTotalNote: "alle voorgestelde kansen, wave 1–3",
+    stHours: "Vrijgespeelde uren / jaar", stHoursNote: "afgeleid uit de waardeformules ÷ uurkost",
+    stWave1: "Kansen in wave 1", stWave1Note: "quick wins — max. 2–3 bewust",
+    stPayback: "Gemiddelde terugverdientijd", stPaybackNote: "jaar-1 kost ÷ maandwaarde, wave 1–3",
+    kAssump: "Kalibreer", hAssump: "Aannames — zet ze naar jullie praktijk",
+    subAssump: "De standaardwaarden komen uit de intake en de workshops. Elk €-bedrag in dit voorstel is een live formule over deze schuivers; de formule per kans staat in zijn kaart.",
+    assumpFootNote: "Elke aanname vermeldt zijn bron en hoe hij in de pilot gemeten wordt.",
+    btnReset: "Terug naar standaard", srcLabel: "Bron",
+    kMap: "Prioritering (F3)", hMap: "Waarde × haalbaarheid",
+    subMap: "Elke kans geplot op de twee F3-assen; de grens 'hoog' ligt op 3,5. Kleur = allocatie (F4). Klik een punt om zijn kaart te openen.",
+    axisX: "haalbaarheid →", axisY: "waarde →",
+    qQw: "Quick wins", qBb: "Big bets", qFi: "Fill-ins", qDc: "Discard",
+    legendHint: "klik een punt voor detail",
+    kRegister: "Kansen", hRegister: "Kansenregister",
+    subRegister: "Elke kaart toont de scores, de formule achter het bedrag, de kostenraming en het falsifieerbare verdict. Vink aan wat in de roadmap komt; wave 1 staat vooraf aangevinkt.",
+    fDept: "Afdeling", fQuadrant: "Kwadrant", fAlloc: "Allocatie", fStatus: "Status", fAll: "alle",
+    sortValue: "sorteer: waarde", sortPayback: "sorteer: terugverdientijd",
+    noMatch: "Geen kansen voor deze filter.",
+    pick: "Opnemen in roadmap",
+    hScores: "Scores (F3)", hPains: "Gekoppelde pijnpunten", hFormula: "Waardeformule",
+    hCost: "Kostenraming", hPayback: "Terugverdientijd", hVerdict: "Verdict",
+    hWouldChange: "Wat dit zou veranderen", hEnablers: "Enablers", hRisk: "Risico / AI Act",
+    hFirstStep: "Eerste stap",
+    valueW: "Waarde", feasW: "Haalbaarheid", adoption: "Adoptie",
+    wHours: "uren", wQuality: "kwaliteit", wStrategic: "strategie",
+    wData: "data", wTechnical: "technisch", wOwnership: "eigenaarschap",
+    confidence: "vertrouwen", confMap: { high: "hoog", medium: "gemiddeld", low: "laag" },
+    perYear: "/jaar", months: "mnd", daysUnit: "d", hoursUnit: "u",
+    costLine: "{days} d × {rate} + 12 × {tooling}/mnd = {y1} in jaar 1",
+    costLineNoTool: "{days} d × {rate} = {y1} in jaar 1",
+    year1: "jaar-1 kost",
+    kRoadmap: "Sequentie", hRoadmap: "Roadmap in drie waves",
+    subRoadmap: "Totalen per wave rekenen alleen over de aangevinkte kansen en bewegen mee met de aannames. Doorgestreept = niet geselecteerd.",
+    wave: "Wave", waveSubs: { 1: "0–3 maanden · quick wins", 2: "3–9 maanden · big bets + enablers", 3: "9–18 maanden · opschalen" },
+    waveTotals: "waarde {v}/jaar · jaar-1 kost {c} · terugverdientijd {p}",
+    waveSelected: "{n} van {m} geselecteerd", waveEmpty: "Geen kansen in deze wave.",
+    kKeep: "Bewust niet", hKeep: "Niet veranderen",
+    subKeep: "Wat vandaag goed werkt en wat we bewust met rust laten — nee zeggen is de helft van een roadmap.",
+    kMethod: "Methode", hMethod: "Methode & kanttekeningen",
+    methodWeights: "Scores volgen F3: Waarde = {vw}; Haalbaarheid = {fw}. “Hoog” = ≥ {hi} op de as; adoptie (1–5) is de tie-breaker. Kosten per kans = implementatiedagen (effort-baseline per allocatie × T-shirtmaat) × dagtarief € {rate}, plus 12 × tooling/maand. Terugverdientijd = jaar-1 kost ÷ maandwaarde.",
+    methodNote: "<strong>Richtinggevend, geen audit.</strong> Zelfgerapporteerde tijdsbesparingen overschatten in de praktijk 2–3×; lees elk bedrag als hypothese, niet als belofte. Kalibratiepad: elke aanname hierboven noemt zijn bron; in de eerste pilotweken vervangen metingen de schattingen en wordt dit voorstel met dezelfde formules herrekend. De effort-baselines zijn conservatieve startwaarden en worden na elk traject bijgesteld.",
+    cbCount: "{n} geselecteerd", cbValue: "jaarwaarde {v}", cbCost: "jaar-1 kost {c}",
+    cbBtn: "Roadmap bevestigen",
+    dTitle: "Jullie roadmap-selectie",
+    dSub: "Dit is wat bevestigd wordt, bij de huidige stand van de schuivers.",
+    dNone: "Nog niets geselecteerd.",
+    dTotal: "Totaal: {v}/jaar · jaar-1 kost {c} · terugverdientijd {p}",
+    dNote: "Download het JSON-bestand en bezorg het aan de consultant — het wordt vastgelegd in proposal/decision-log.md.",
+    dDownload: "Download JSON", dPrint: "Afdrukken", dClose: "Sluiten",
+    themeBtn: "◐ thema",
+    alloc: { automation: "Automatisering", "agent-T1": "Agent T1", "agent-T2": "Agent T2", "agent-T3": "Agent T3", hybrid: "Hybride" },
+    quad: { "quick-win": "Quick win", "big-bet": "Big bet", "fill-in": "Fill-in", discard: "Discard" },
+    status: { proposed: "voorgesteld", confirmed: "bevestigd", deferred: "uitgesteld", discarded: "afgevoerd" }
+  },
+  en: {
+    brand: "Roadmap proposal",
+    navOverview: "Overview", navAssumptions: "Assumptions", navMap: "Opportunity map",
+    navRegister: "Register", navRoadmap: "Roadmap", navKeep: "Not changing", navMethod: "Method",
+    eyebrow: "AI integration · roadmap proposal",
+    heroTitle: "The AI roadmap for {client} — adjust, select, confirm",
+    heroLede: "Every euro below is an open formula over {n} assumptions. Slide them to your reality and the whole proposal recomputes — then tick what goes into the roadmap and confirm at the bottom. All figures are directional, not audited.",
+    heroStamp: "built {date} · {sector} · amounts per year, at the assumptions set below",
+    stTotal: "Total annual value", stTotalNote: "all proposed opportunities, waves 1–3",
+    stHours: "Hours released / year", stHoursNote: "derived from the value formulas ÷ hourly cost",
+    stWave1: "Wave-1 opportunities", stWave1Note: "quick wins — deliberately max 2–3",
+    stPayback: "Blended payback", stPaybackNote: "year-1 cost ÷ monthly value, waves 1–3",
+    kAssump: "Calibrate", hAssump: "Assumptions — set them to your practice",
+    subAssump: "Defaults come from the intake and the workshops. Every € figure in this proposal is a live formula over these sliders; each opportunity card shows its formula.",
+    assumpFootNote: "Each assumption names its source and how it will be measured in the pilot.",
+    btnReset: "Reset to defaults", srcLabel: "Source",
+    kMap: "Prioritisation (F3)", hMap: "Value × feasibility",
+    subMap: "Every opportunity plotted on the two F3 axes; the “high” threshold sits at 3.5. Colour = allocation (F4). Click a dot to open its card.",
+    axisX: "feasibility →", axisY: "value →",
+    qQw: "Quick wins", qBb: "Big bets", qFi: "Fill-ins", qDc: "Discard",
+    legendHint: "click a dot for detail",
+    kRegister: "Opportunities", hRegister: "Opportunity register",
+    subRegister: "Each card shows the scores, the formula behind the amount, the cost estimate and the falsifiable verdict. Tick what goes into the roadmap; wave 1 is pre-selected.",
+    fDept: "Department", fQuadrant: "Quadrant", fAlloc: "Allocation", fStatus: "Status", fAll: "all",
+    sortValue: "sort: value", sortPayback: "sort: payback",
+    noMatch: "No opportunities match this filter.",
+    pick: "Include in roadmap",
+    hScores: "Scores (F3)", hPains: "Linked pain points", hFormula: "Value formula",
+    hCost: "Cost estimate", hPayback: "Payback", hVerdict: "Verdict",
+    hWouldChange: "What would change this", hEnablers: "Enablers", hRisk: "Risk / AI Act",
+    hFirstStep: "First step",
+    valueW: "Value", feasW: "Feasibility", adoption: "Adoption",
+    wHours: "hours", wQuality: "quality", wStrategic: "strategic",
+    wData: "data", wTechnical: "technical", wOwnership: "ownership",
+    confidence: "confidence", confMap: { high: "high", medium: "medium", low: "low" },
+    perYear: "/yr", months: "mo", daysUnit: "d", hoursUnit: "h",
+    costLine: "{days} d × {rate} + 12 × {tooling}/mo = {y1} in year 1",
+    costLineNoTool: "{days} d × {rate} = {y1} in year 1",
+    year1: "year-1 cost",
+    kRoadmap: "Sequence", hRoadmap: "Roadmap in three waves",
+    subRoadmap: "Wave totals count only the ticked opportunities and move with the assumptions. Struck through = not selected.",
+    wave: "Wave", waveSubs: { 1: "0–3 months · quick wins", 2: "3–9 months · big bets + enablers", 3: "9–18 months · scale up" },
+    waveTotals: "value {v}/yr · year-1 cost {c} · payback {p}",
+    waveSelected: "{n} of {m} selected", waveEmpty: "No opportunities in this wave.",
+    kKeep: "Deliberately not", hKeep: "What NOT to change",
+    subKeep: "What works well today and what we deliberately leave alone — saying no is half of a roadmap.",
+    kMethod: "Method", hMethod: "Method & caveats",
+    methodWeights: "Scores follow F3: Value = {vw}; Feasibility = {fw}. “High” = ≥ {hi} on the axis; adoption (1–5) is the tie-breaker. Cost per opportunity = implementation days (effort baseline per allocation × T-shirt size) × day rate € {rate}, plus 12 × tooling/month. Payback = year-1 cost ÷ monthly value.",
+    methodNote: "<strong>Directional, not audited.</strong> Self-reported time savings inflate 2–3× in practice; read every amount as a hypothesis, not a promise. Calibration path: each assumption above names its source; in the first pilot weeks, measurements replace the estimates and this proposal is recomputed with the same formulas. The effort baselines are conservative seeds, recalibrated after every engagement.",
+    cbCount: "{n} selected", cbValue: "annual value {v}", cbCost: "year-1 cost {c}",
+    cbBtn: "Confirm roadmap",
+    dTitle: "Your roadmap selection",
+    dSub: "This is what gets confirmed, at the current slider positions.",
+    dNone: "Nothing selected yet.",
+    dTotal: "Total: {v}/yr · year-1 cost {c} · payback {p}",
+    dNote: "Download the JSON file and hand it to the consultant — it is recorded in proposal/decision-log.md.",
+    dDownload: "Download JSON", dPrint: "Print", dClose: "Close",
+    themeBtn: "◐ theme",
+    alloc: { automation: "Automation", "agent-T1": "Agent T1", "agent-T2": "Agent T2", "agent-T3": "Agent T3", hybrid: "Hybrid" },
+    quad: { "quick-win": "Quick win", "big-bet": "Big bet", "fill-in": "Fill-in", discard: "Discard" },
+    status: { proposed: "proposed", confirmed: "confirmed", deferred: "deferred", discarded: "discarded" }
+  }
+};
+var S = STR[lang];
+
+/* ---------------- helpers ---------------- */
+function esc(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function L(x) { return typeof x === "string" ? x : (x && (x[lang] || x.nl || x.en)) || ""; }
+function T(tpl, vars) {
+  return tpl.replace(/\{(\w+)\}/g, function (m, k) { return vars[k] != null ? vars[k] : m; });
+}
+function fmt(n) {
+  if (!isFinite(n)) return "—";
+  if (Math.abs(n) >= 1e6) return "€ " + (n / 1e6).toLocaleString(locale, { maximumFractionDigits: 2 }) + " m";
+  if (Math.abs(n) >= 10000) return "€ " + Math.round(n / 1000).toLocaleString(locale) + " k";
+  return "€ " + Math.round(n).toLocaleString(locale);
+}
+function fmtFull(n) { return isFinite(n) ? "€ " + Math.round(n).toLocaleString(locale) : "—"; }
+function dec(n) { return n.toLocaleString(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function fmtMonths(m) { return (isFinite(m) && m >= 0) ? dec(m) + " " + S.months : "—"; }
+
+/* ---------------- state — the single render source ---------------- */
+var state = { A: {}, filters: { dept: "all", quadrant: "all", alloc: "all", status: "all" }, sort: "value", selected: {} };
+DATA.assumptions.forEach(function (a) { state.A[a.id] = a.default; });
+DATA.opps.forEach(function (o) { if (o.wave === 1 && o.verdict !== "discard") state.selected[o.id] = true; });
+
+var FORMULAS = DATA.formulas || {};
+function oppValue(o) {
+  var f = FORMULAS[o.id];
+  return f ? f(state.A) : NaN;
+}
+function oppPayback(o) {
+  var v = oppValue(o);
+  return (isFinite(v) && v > 0) ? o.year1_cost / (v / 12) : Infinity;
+}
+function portfolio() { return DATA.opps.filter(function (o) { return o.wave >= 1 && o.verdict !== "discard"; }); }
+function selectedOpps() { return DATA.opps.filter(function (o) { return state.selected[o.id]; }); }
+function matchesFilters(o) {
+  var f = state.filters;
+  if (f.dept !== "all" && o.departments.indexOf(f.dept) === -1) return false;
+  if (f.quadrant !== "all" && o.quadrant !== f.quadrant) return false;
+  if (f.alloc !== "all" && o.allocation !== f.alloc) return false;
+  if (f.status !== "all" && o.status !== f.status) return false;
+  return true;
+}
+var ASSUMP_LABEL = {};
+DATA.assumptions.forEach(function (a) { ASSUMP_LABEL[a.id] = L(a.label); });
+function readableFormula(o) {
+  if (!o.formula_text) return "";
+  var s = o.formula_text.replace(/[A-Za-z_][A-Za-z0-9_]*/g, function (id) {
+    return ASSUMP_LABEL[id] ? "[" + ASSUMP_LABEL[id] + "]" : id;
+  });
+  return s.replace(/\*/g, "×").replace(/\//g, "÷");
+}
+
+/* ---------------- static chrome ---------------- */
+function initChrome() {
+  document.documentElement.lang = lang;
+  document.documentElement.style.setProperty("--accent", DATA.accent);
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    var v = S[el.getAttribute("data-i18n")];
+    if (typeof v === "string") el.textContent = v;
+  });
+  document.getElementById("hero-title").textContent = T(S.heroTitle, { client: DATA.client });
+  document.getElementById("hero-lede").textContent = T(S.heroLede, { n: DATA.assumptions.length });
+  document.getElementById("hero-stamp").textContent =
+    T(S.heroStamp, { date: DATA.built.slice(0, 10), sector: DATA.sector || DATA.client });
+  var w = DATA.weights;
+  function wline(spec, names) {
+    return Object.keys(spec).map(function (k) {
+      return spec[k].toLocaleString(locale, { minimumFractionDigits: 2 }) + "×" + names[k];
+    }).join(" + ");
+  }
+  document.getElementById("method-weights").textContent = T(S.methodWeights, {
+    vw: wline(w.value, { hours: S.wHours, quality: S.wQuality, strategic: S.wStrategic }),
+    fw: wline(w.feasibility, { data: S.wData, technical: S.wTechnical, ownership: S.wOwnership }),
+    hi: dec(w.high), rate: Math.round(DATA.day_rate).toLocaleString(locale)
+  });
+  document.getElementById("method-note").innerHTML = S.methodNote;
+  /* keep.md passthrough — hide section when absent */
+  var keep = document.getElementById("keep"), keepNav = document.getElementById("nav-keep");
+  if (DATA.keep_html) document.getElementById("keep-body").innerHTML = DATA.keep_html;
+  else { keep.style.display = "none"; keepNav.style.display = "none"; }
+  document.getElementById("cb-btn").textContent = S.cbBtn;
+  if (!DATA.hourly_id) document.getElementById("st-hours-tile").style.display = "none";
+}
+
+/* ---------------- theme toggle (data-theme wins over @media) ---------------- */
+function initTheme() {
+  var btn = document.getElementById("theme-toggle");
+  btn.textContent = S.themeBtn;
+  function effective() {
+    return document.documentElement.getAttribute("data-theme") ||
+      (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  }
+  btn.addEventListener("click", function () {
+    var next = effective() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    btn.setAttribute("aria-pressed", String(next === "dark"));
+    renderScatter(); // colors resolve via CSS vars; re-render keeps labels crisp
+  });
+}
+
+/* ---------------- assumptions ---------------- */
+function assumpDisplay(a, v) {
+  var num = v.toLocaleString(locale);
+  return a.unit ? num + " " + a.unit : num;
+}
+function initAssumptions() {
+  var grid = document.getElementById("assump-grid");
+  grid.innerHTML = DATA.assumptions.map(function (a) {
+    return '<label><span class="row"><span>' + esc(L(a.label)) + '</span>' +
+      '<output id="o-' + esc(a.id) + '">' + esc(assumpDisplay(a, a.default)) + "</output></span>" +
+      '<input type="range" id="a-' + esc(a.id) + '" min="' + a.min + '" max="' + a.max +
+      '" step="' + a.step + '" value="' + a.default + '" aria-label="' + esc(L(a.label)) + '">' +
+      (a.source ? '<span class="src">' + esc(S.srcLabel) + ": " + esc(a.source) + "</span>" : "") +
+      "</label>";
+  }).join("");
+  DATA.assumptions.forEach(function (a) {
+    var input = document.getElementById("a-" + a.id), out = document.getElementById("o-" + a.id);
+    input.addEventListener("input", function () {
+      state.A[a.id] = +input.value;
+      out.textContent = assumpDisplay(a, +input.value);
+      rerender();
+    });
+  });
+  document.getElementById("assump-reset").addEventListener("click", function () {
+    DATA.assumptions.forEach(function (a) {
+      state.A[a.id] = a.default;
+      document.getElementById("a-" + a.id).value = a.default;
+      document.getElementById("o-" + a.id).textContent = assumpDisplay(a, a.default);
+    });
+    rerender();
+  });
+}
+
+/* ---------------- headline ---------------- */
+function renderHeadline() {
+  var port = portfolio(), total = 0, y1 = 0, hourVal = 0;
+  port.forEach(function (o) {
+    var v = oppValue(o);
+    if (isFinite(v)) { total += v; if (o.uses_hourly) hourVal += v; }
+    y1 += o.year1_cost;
+  });
+  document.getElementById("st-total").textContent = fmt(total);
+  document.getElementById("st-wave1").textContent = port.filter(function (o) { return o.wave === 1; }).length;
+  document.getElementById("st-payback").textContent = total > 0 ? fmtMonths(y1 / (total / 12)) : "—";
+  if (DATA.hourly_id) {
+    var hc = state.A[DATA.hourly_id];
+    document.getElementById("st-hours").textContent =
+      hc > 0 ? "≈ " + Math.round(hourVal / hc).toLocaleString(locale) + " " + S.hoursUnit : "—";
+  }
+}
+
+/* ---------------- filters ---------------- */
+function uniq(arr) { return arr.filter(function (v, i) { return arr.indexOf(v) === i; }); }
+function renderFilters() {
+  var f = document.getElementById("reg-filters");
+  var depts = uniq([].concat.apply([], DATA.opps.map(function (o) { return o.departments; }))).sort();
+  var allocs = uniq(DATA.opps.map(function (o) { return o.allocation; }));
+  var statuses = uniq(DATA.opps.map(function (o) { return o.status; }));
+  var quads = ["quick-win", "big-bet", "fill-in", "discard"].filter(function (q) {
+    return DATA.opps.some(function (o) { return o.quadrant === q; });
+  });
+  function group(label, key, values, names) {
+    var h = '<span class="glabel">' + esc(label) + "</span>";
+    h += '<button data-g="' + key + '" data-v="all"' + (state.filters[key] === "all" ? ' class="on"' : "") + ">" + esc(S.fAll) + "</button>";
+    values.forEach(function (v) {
+      h += '<button data-g="' + key + '" data-v="' + esc(v) + '"' + (state.filters[key] === v ? ' class="on"' : "") + ">" +
+        esc(names ? names[v] || v : v) + "</button>";
+    });
+    return h;
+  }
+  var html = group(S.fDept, "dept", depts) + '<span class="sep"></span>' +
+    group(S.fQuadrant, "quadrant", quads, S.quad) + '<span class="sep"></span>' +
+    group(S.fAlloc, "alloc", allocs, S.alloc) + '<span class="sep"></span>' +
+    group(S.fStatus, "status", statuses, S.status) + '<span class="sep"></span>' +
+    '<button data-sort="value"' + (state.sort === "value" ? ' class="on"' : "") + ">" + esc(S.sortValue) + "</button>" +
+    '<button data-sort="payback"' + (state.sort === "payback" ? ' class="on"' : "") + ">" + esc(S.sortPayback) + "</button>";
+  f.innerHTML = html;
+  f.querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (b.hasAttribute("data-sort")) state.sort = b.getAttribute("data-sort");
+      else {
+        var g = b.getAttribute("data-g"), v = b.getAttribute("data-v");
+        state.filters[g] = (state.filters[g] === v) ? "all" : v;
+      }
+      renderFilters(); renderRegister(); renderScatter();
+    });
+  });
+}
+
+/* ---------------- register ---------------- */
+var QCHIP = { "quick-win": "qw", "big-bet": "bb", "fill-in": "fi", discard: "dc" };
+function allocVar(a) { return "var(--c-" + a.toLowerCase() + ")"; }
+function scoreLine(o) {
+  var w = DATA.weights, s = o.scores;
+  var v = "<b>" + S.valueW + " " + dec(o.value) + "</b> = " +
+    w.value.hours.toLocaleString(locale) + "×" + s.hours + " " + S.wHours + " + " +
+    w.value.quality.toLocaleString(locale) + "×" + s.quality + " " + S.wQuality + " + " +
+    w.value.strategic.toLocaleString(locale) + "×" + s.strategic + " " + S.wStrategic;
+  var f = "<b>" + S.feasW + " " + dec(o.feasibility) + "</b> = " +
+    w.feasibility.data.toLocaleString(locale) + "×" + s.data + " " + S.wData + " + " +
+    w.feasibility.technical.toLocaleString(locale) + "×" + s.technical + " " + S.wTechnical + " + " +
+    w.feasibility.ownership.toLocaleString(locale) + "×" + s.ownership + " " + S.wOwnership;
+  return v + "<br>" + f + "<br><b>" + S.adoption + " " + s.adoption + "/5</b>";
+}
+function costLine(o) {
+  var tpl = o.tooling > 0 ? S.costLine : S.costLineNoTool;
+  return T(tpl, {
+    days: o.days, rate: fmtFull(DATA.day_rate), tooling: fmtFull(o.tooling), y1: "<strong>" + fmtFull(o.year1_cost) + "</strong>"
+  });
+}
+function renderRegister() {
+  var list = DATA.opps.filter(matchesFilters);
+  list.sort(state.sort === "value"
+    ? function (a, b) { return (isFinite(oppValue(b)) ? oppValue(b) : -1) - (isFinite(oppValue(a)) ? oppValue(a) : -1); }
+    : function (a, b) { return oppPayback(a) - oppPayback(b); });
+  var open = {};
+  document.querySelectorAll("#reg-list details[open]").forEach(function (d) { open[d.id] = true; });
+  document.getElementById("reg-list").innerHTML = list.map(function (o) {
+    var v = oppValue(o), isDiscard = o.verdict === "discard";
+    var conf = S.confMap[(o.confidence || "").toLowerCase()] || o.confidence || "";
+    var pains = o.pains.map(function (p) { return '<span class="chip plain">' + esc(p) + "</span>"; }).join(" ");
+    var procs = o.processes.map(function (p) { return '<span class="chip plain">' + esc(p) + "</span>"; }).join(" ");
+    return '<details class="opp' + (isDiscard ? " discard" : "") + '" id="d-' + o.id + '"' + (open["d-" + o.id] ? " open" : "") + ">" +
+      "<summary>" +
+      (!isDiscard ? '<input type="checkbox" class="pick" data-id="' + o.id + '"' +
+        (state.selected[o.id] ? " checked" : "") + ' aria-label="' + esc(S.pick) + " " + o.id + '">' : "") +
+      '<span class="oid">' + o.id + '</span><span class="ot">' + esc(o.title) + "</span>" +
+      '<span class="chip plain"><i style="background:' + allocVar(o.allocation) + '"></i>' + esc(S.alloc[o.allocation] || o.allocation) + "</span>" +
+      '<span class="chip ' + QCHIP[o.quadrant] + '">' + esc(S.quad[o.quadrant]) + "</span>" +
+      '<span class="chip plain">' + (o.wave >= 1 ? S.wave + " " + o.wave : "—") + " · " + esc(o.effort) + "</span>" +
+      '<span class="ov">' + (isFinite(v) ? fmt(v) + S.perYear : "—") + "</span>" +
+      "</summary>" +
+      '<div class="o-body">' +
+      "<div><h4>" + S.hScores + '</h4><p class="scoreline">' + scoreLine(o) + "</p></div>" +
+      "<div><h4>" + S.hPains + "</h4><p>" + (pains || "—") + (procs ? "<br>" + procs : "") + "</p></div>" +
+      (o.formula_text
+        ? '<div class="full"><h4>' + S.hFormula + "</h4><p><code>" + esc(readableFormula(o)) + "</code> = <strong>" +
+          fmt(v) + S.perYear + "</strong></p></div>" : "") +
+      "<div><h4>" + S.hCost + "</h4><p>" + costLine(o) + "</p></div>" +
+      "<div><h4>" + S.hPayback + "</h4><p><strong>" + fmtMonths(oppPayback(o)) + "</strong></p></div>" +
+      '<div class="full"><h4>' + S.hVerdict + '</h4><p><span class="chip ' + QCHIP[o.verdict] + '">' + esc(S.quad[o.verdict]) + "</span>" +
+      (conf ? " · " + S.confidence + ": <strong>" + esc(conf) + "</strong>" : "") +
+      (o.would_change ? "<br><em>" + S.hWouldChange + ":</em> " + esc(o.would_change) : "") + "</p></div>" +
+      (o.enablers ? "<div><h4>" + S.hEnablers + "</h4><p>" + esc(o.enablers) + "</p></div>" : "") +
+      (o.risk ? "<div><h4>" + S.hRisk + "</h4><p>" + esc(o.risk) + "</p></div>" : "") +
+      (o.first_step ? '<div class="full"><h4>' + S.hFirstStep + "</h4><p>" + esc(o.first_step) + "</p></div>" : "") +
+      "</div></details>";
+  }).join("") || '<p class="sub">' + esc(S.noMatch) + "</p>";
+  document.querySelectorAll("#reg-list .pick").forEach(function (cb) {
+    cb.addEventListener("click", function (e) { e.stopPropagation(); });
+    cb.addEventListener("change", function () {
+      if (cb.checked) state.selected[cb.getAttribute("data-id")] = true;
+      else delete state.selected[cb.getAttribute("data-id")];
+      renderRoadmap(); renderConfirmBar();
+    });
+  });
+}
+function openCard(id) {
+  var el = document.getElementById("d-" + id);
+  if (!el) {
+    state.filters = { dept: "all", quadrant: "all", alloc: "all", status: "all" };
+    renderFilters(); renderRegister(); renderScatter();
+    el = document.getElementById("d-" + id);
+  }
+  if (el) { el.open = true; el.scrollIntoView({ behavior: "smooth", block: "center" }); }
+}
+
+/* ---------------- quadrant scatter ---------------- */
+function renderLegend() {
+  var allocs = uniq(DATA.opps.map(function (o) { return o.allocation; }));
+  document.getElementById("viz-legend").innerHTML = allocs.map(function (a) {
+    return '<span class="chip plain"><i style="background:' + allocVar(a) + '"></i>' + esc(S.alloc[a] || a) + "</span>";
+  }).join("") + '<span style="margin-left:auto;color:var(--ink-3);font-size:11.5px">' + esc(S.legendHint) + "</span>";
+}
+function renderScatter() {
+  var W = 940, H = 470, mL = 56, mR = 30, mT = 26, mB = 46;
+  var iw = W - mL - mR, ih = H - mT - mB;
+  var lo = 0.8, hiD = 5.2, span = hiD - lo;
+  var X = function (s) { return mL + ((s - lo) / span) * iw; };
+  var Y = function (s) { return mT + ih - ((s - lo) / span) * ih; };
+  var bx = X(DATA.weights.high), by = Y(DATA.weights.high);
+  var s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(S.hMap) + '">';
+  /* quadrant shading */
+  s += '<rect class="qbg" x="' + bx + '" y="' + mT + '" width="' + (W - mR - bx) + '" height="' + (by - mT) + '" fill="var(--accent)" opacity=".06"/>';
+  s += '<rect class="qbg" x="' + mL + '" y="' + by + '" width="' + (bx - mL) + '" height="' + (mT + ih - by) + '" fill="var(--ink)" opacity=".045"/>';
+  /* gridlines (pointer-events:none via CSS) */
+  for (var g = 1; g <= 5; g++) {
+    s += '<line x1="' + X(g) + '" y1="' + mT + '" x2="' + X(g) + '" y2="' + (mT + ih) + '" stroke="var(--grid)" stroke-width="1"/>';
+    s += '<line x1="' + mL + '" y1="' + Y(g) + '" x2="' + (W - mR) + '" y2="' + Y(g) + '" stroke="var(--grid)" stroke-width="1"/>';
+    s += '<text class="axl" x="' + X(g) + '" y="' + (H - mB + 16) + '" text-anchor="middle">' + g + "</text>";
+    s += '<text class="axl" x="' + (mL - 10) + '" y="' + (Y(g) + 4) + '" text-anchor="end">' + g + "</text>";
+  }
+  /* the 3.5 boundary */
+  s += '<line x1="' + bx + '" y1="' + mT + '" x2="' + bx + '" y2="' + (mT + ih) + '" stroke="var(--ink-3)" stroke-dasharray="4 4" stroke-width="1.2"/>';
+  s += '<line x1="' + mL + '" y1="' + by + '" x2="' + (W - mR) + '" y2="' + by + '" stroke="var(--ink-3)" stroke-dasharray="4 4" stroke-width="1.2"/>';
+  /* quadrant labels */
+  s += '<text class="quad" x="' + (W - mR - 8) + '" y="' + (mT + 16) + '" text-anchor="end">' + esc(S.qQw) + "</text>";
+  s += '<text class="quad" x="' + (mL + 8) + '" y="' + (mT + 16) + '">' + esc(S.qBb) + "</text>";
+  s += '<text class="quad" x="' + (W - mR - 8) + '" y="' + (mT + ih - 10) + '" text-anchor="end">' + esc(S.qFi) + "</text>";
+  s += '<text class="quad" x="' + (mL + 8) + '" y="' + (mT + ih - 10) + '">' + esc(S.qDc) + "</text>";
+  /* axis titles */
+  s += '<text class="axl" x="' + (mL + iw / 2) + '" y="' + (H - 8) + '" text-anchor="middle">' + esc(S.axisX) + "</text>";
+  s += '<text class="axl" transform="translate(16 ' + (mT + ih / 2) + ') rotate(-90)" text-anchor="middle">' + esc(S.axisY) + "</text>";
+  /* dots — jitter same-position groups ≥52px apart, labels to the right */
+  var groups = {};
+  DATA.opps.forEach(function (o) {
+    var k = o.feasibility.toFixed(2) + "|" + o.value.toFixed(2);
+    (groups[k] = groups[k] || []).push(o);
+  });
+  Object.keys(groups).forEach(function (k) {
+    groups[k].forEach(function (o, i) {
+      var n = groups[k].length;
+      var off = n > 1 ? (i - (n - 1) / 2) * 60 : 0; /* >=52px so dot + label clear the neighbour */
+      var cx = Math.max(mL + 12, Math.min(W - mR - 12, X(o.feasibility) + off));
+      var cy = Y(o.value);
+      var dim = matchesFilters(o) ? "" : " dim";
+      s += '<g class="pt' + dim + '" data-opp="' + o.id + '" tabindex="0" style="cursor:pointer" role="button" aria-label="' + o.id + " " + esc(o.title) + '">' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="9" fill="' + allocVar(o.allocation) + '" stroke="var(--card)" stroke-width="2"' +
+        (o.verdict === "discard" ? ' fill-opacity=".45"' : "") + "/>" +
+        '<text class="dotl" x="' + (cx + 12) + '" y="' + (cy + 4) + '">' + o.id + "</text></g>";
+    });
+  });
+  s += "</svg>";
+  document.getElementById("scatter").innerHTML = s;
+  var tip = document.getElementById("tip");
+  document.querySelectorAll("#scatter .pt").forEach(function (g) {
+    var o = DATA.opps.find(function (x) { return x.id === g.getAttribute("data-opp"); });
+    function show(ev) {
+      var v = oppValue(o);
+      tip.innerHTML = "<b>" + o.id + " · " + esc(o.title) + "</b>" +
+        '<span class="figure">' + S.valueW + " " + dec(o.value) + " · " + S.feasW + " " + dec(o.feasibility) +
+        (isFinite(v) ? " · " + fmt(v) + S.perYear : "") + " · " + fmtMonths(oppPayback(o)) + "</span><br>" +
+        '<span class="chip ' + QCHIP[o.quadrant] + '">' + esc(S.quad[o.quadrant]) + "</span>";
+      tip.style.display = "block";
+      var p = ev.touches ? ev.touches[0] : ev;
+      tip.style.left = Math.min(p.clientX + 14, window.innerWidth - 320) + "px";
+      tip.style.top = (p.clientY + 14) + "px";
+    }
+    g.addEventListener("mousemove", show);
+    g.addEventListener("mouseleave", function () { tip.style.display = "none"; });
+    g.addEventListener("click", function () { tip.style.display = "none"; openCard(o.id); });
+    g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCard(o.id); } });
+  });
+}
+
+/* ---------------- roadmap waves ---------------- */
+function renderRoadmap() {
+  var el = document.getElementById("waves");
+  el.innerHTML = [1, 2, 3].map(function (w) {
+    var items = DATA.opps.filter(function (o) { return o.wave === w; })
+      .sort(function (a, b) { return (oppValue(b) || 0) - (oppValue(a) || 0); });
+    var sel = items.filter(function (o) { return state.selected[o.id]; });
+    var v = 0, c = 0;
+    sel.forEach(function (o) { var x = oppValue(o); if (isFinite(x)) v += x; c += o.year1_cost; });
+    var pb = v > 0 ? c / (v / 12) : Infinity;
+    return '<div class="wave"><div class="w-h"><div class="t">' + S.wave + " " + w + '</div>' +
+      '<div class="s">' + esc(S.waveSubs[w]) + " · " + T(S.waveSelected, { n: sel.length, m: items.length }) + "</div>" +
+      '<div class="v">' + T(S.waveTotals, { v: fmt(v), c: fmt(c), p: fmtMonths(pb) }) + "</div></div><ul>" +
+      (items.length ? items.map(function (o) {
+        var x = oppValue(o);
+        return '<li class="' + (state.selected[o.id] ? "" : "off") + '">' +
+          '<span class="oref" data-opp="' + o.id + '">' + o.id + "</span> · " + esc(o.title) +
+          (isFinite(x) ? ' <span class="liv">' + fmt(x) + S.perYear + "</span>" : "") + "</li>";
+      }).join("") : "<li>" + esc(S.waveEmpty) + "</li>") +
+      "</ul></div>";
+  }).join("");
+  el.querySelectorAll(".oref").forEach(function (r) {
+    r.addEventListener("click", function () { openCard(r.getAttribute("data-opp")); });
+  });
+}
+
+/* ---------------- select & confirm ---------------- */
+function selectionTotals() {
+  var v = 0, c = 0;
+  selectedOpps().forEach(function (o) { var x = oppValue(o); if (isFinite(x)) v += x; c += o.year1_cost; });
+  return { n: selectedOpps().length, value: v, cost: c, payback: v > 0 ? c / (v / 12) : Infinity };
+}
+function renderConfirmBar() {
+  var t = selectionTotals();
+  document.getElementById("cb-count").innerHTML = T(esc(S.cbCount), { n: "<b>" + t.n + "</b>" });
+  document.getElementById("cb-value").innerHTML = T(esc(S.cbValue), { v: "<b>" + fmt(t.value) + S.perYear + "</b>" });
+  document.getElementById("cb-cost").innerHTML = T(esc(S.cbCost), { c: "<b>" + fmt(t.cost) + "</b>" });
+  document.getElementById("cb-btn").disabled = t.n === 0;
+}
+function buildExport() {
+  var sel = { wave1: [], wave2: [], wave3: [] };
+  selectedOpps().forEach(function (o) { if (o.wave >= 1) sel["wave" + o.wave].push(o.id); });
+  var t = selectionTotals();
+  return {
+    client: DATA.client, slug: DATA.slug, language: lang,
+    date: DATA.built,                       /* build timestamp of this proposal */
+    confirmed_at: new Date().toISOString(), /* moment of confirmation */
+    selections: sel,
+    assumptions: JSON.parse(JSON.stringify(state.A)),
+    totals: { annual_value: Math.round(t.value), year1_cost: Math.round(t.cost) }
+  };
+}
+function initConfirm() {
+  var dlg = document.getElementById("confirm-dialog");
+  document.getElementById("cb-btn").addEventListener("click", function () {
+    var body = document.getElementById("d-body"), t = selectionTotals();
+    body.innerHTML = [1, 2, 3].map(function (w) {
+      var sel = selectedOpps().filter(function (o) { return o.wave === w; });
+      if (!sel.length) return "";
+      return "<h4>" + S.wave + " " + w + "</h4><ul>" + sel.map(function (o) {
+        return '<li><span class="oid">' + o.id + "</span> " + esc(o.title) +
+          ' <span class="figure">· ' + fmt(oppValue(o)) + S.perYear + "</span></li>";
+      }).join("") + "</ul>";
+    }).join("") || "<p>" + esc(S.dNone) + "</p>";
+    document.getElementById("d-total").textContent =
+      T(S.dTotal, { v: fmt(t.value), c: fmt(t.cost), p: fmtMonths(t.payback) });
+    var a = document.getElementById("d-download");
+    a.setAttribute("download", "roadmap-" + DATA.slug.replace(/^_+/, "") + "-confirmed.json");
+    a.href = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(buildExport(), null, 2));
+    dlg.showModal();
+  });
+  /* refresh the payload right before download in case sliders moved while open */
+  document.getElementById("d-download").addEventListener("click", function () {
+    this.href = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(buildExport(), null, 2));
+  });
+  document.getElementById("d-print").addEventListener("click", function () { dlg.close(); window.print(); });
+  document.getElementById("d-close").addEventListener("click", function () { dlg.close(); });
+}
+
+/* ---------------- one render path ---------------- */
+function rerender() {
+  renderHeadline(); renderRegister(); renderScatter(); renderRoadmap(); renderConfirmBar();
+}
+initChrome(); initTheme(); initAssumptions(); initConfirm();
+renderFilters(); renderLegend(); rerender();
+})();
+
+</script>
+</body>
+</html>

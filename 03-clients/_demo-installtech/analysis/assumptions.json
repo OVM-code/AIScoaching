@@ -1,0 +1,65 @@
+{
+  "assumptions": [
+    {
+      "id": "quotes_per_month",
+      "label": { "nl": "Offertes per maand", "en": "Quotes per month" },
+      "unit": "/maand",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 45,
+      "source": "verkoopworkshop 2026-06-10 §10 (schatting binnendienst) — te kalibreren via telling servermap 'Offertes 2026' in pilotweek 1"
+    },
+    {
+      "id": "minutes_saved_per_quote",
+      "label": { "nl": "Minuten bespaard per offerte", "en": "Minutes saved per quote" },
+      "unit": "min",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "type_note": "conservatief t.o.v. de ±50 min huidige opmaaktijd (§8) — zelfgerapporteerde winst telt 2–3× te hoog, dus laag ingezet",
+      "source": "afgeleid uit verkoopworkshop §8; te meten door 2 weken schaduwdraaien op de laatste 20 offertes (Eerste stap OPP-2)"
+    },
+    {
+      "id": "loaded_hourly_cost",
+      "label": { "nl": "Loonkost per uur (all-in)", "en": "Loaded hourly cost" },
+      "unit": "€/u",
+      "min": 40,
+      "max": 75,
+      "step": 5,
+      "default": 55,
+      "source": "sectorgemiddelde bediende/technieker PC 149.01 — te valideren met de loonstaten via het sociaal secretariaat"
+    },
+    {
+      "id": "jobs_per_week",
+      "label": { "nl": "Werkbonnen per week (hele ploeg)", "en": "Job sheets per week (whole team)" },
+      "unit": "/week",
+      "min": 40,
+      "max": 140,
+      "step": 5,
+      "default": 85,
+      "source": "buitendienstworkshop 2026-06-15 §10 (planner) — te kalibreren via telling van 4 weken bonnen in pilotweek 1"
+    },
+    {
+      "id": "invoices_per_month",
+      "label": { "nl": "Verkoopfacturen per maand", "en": "Sales invoices per month" },
+      "unit": "/maand",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 190,
+      "source": "financiënworkshop 2026-06-17 §5 — exact aantal eenvoudig te trekken uit Exact (verkoopdagboek, laatste 6 maanden)"
+    },
+    {
+      "id": "minutes_per_invoice",
+      "label": { "nl": "Minuten hertypen per verkoopfactuur", "en": "Minutes re-typing per sales invoice" },
+      "unit": "min",
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "default": 12,
+      "source": "financiënworkshop 2026-06-17 §2–3 (schatting administratie) — te meten met een tijdsteekproef van 10 facturen"
+    }
+  ]
+}

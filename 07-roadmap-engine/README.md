@@ -199,6 +199,10 @@ flows/NN-<dept>.process.json   adapted AS-IS flow (optional; standard is default
 Enums — `Type`: `retype | chase | wait | error | skill-bottleneck | no-visibility`.
 `Severity`: `minor | major | critical`.
 
+PAIN ids are numbered **once across the whole engagement** (`PAIN-1…n`), even
+though each department keeps its own `pains.md` — OPP blocks reference them
+globally, and a reused id across departments is ambiguous.
+
 ### `content/NN-<dept>.md` — status header + `## <CODE>` blocks
 
 ```markdown
@@ -262,6 +266,9 @@ Feasibility = 0.40*data  + 0.30*technical + 0.30*ownership        (each 1–5)
 `+ - * / ( )`. `build_proposal.py` validates every token against
 `assumptions.json` and compiles the formula to a static JS function — no runtime
 eval. Every OPP that carries a € value must have a formula; discards may omit it.
+`Aannames` lists **bare assumption ids only**, and must equal the set of ids the
+formula uses; numeric substantiation or calibration prose goes in an optional
+free-form `Cijferbasis` bullet, which the tools ignore.
 
 ### `analysis/assumptions.json`
 

@@ -1,0 +1,10 @@
+{
+  "client": "InstallTech BV",
+  "slug": "_demo-installtech",
+  "language": "nl",
+  "accentColor": "#D9480F",
+  "sector": "HVAC-installatie",
+  "departments": [2, 5, 8],
+  "day_rate": 950,
+  "currency": "EUR"
+}

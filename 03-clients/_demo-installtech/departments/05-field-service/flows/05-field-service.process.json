@@ -1,0 +1,48 @@
+{
+  "id": "field-service-installtech",
+  "domain": 5,
+  "title": { "nl": "Buitendienst & uitvoering", "en": "Field service & execution" },
+  "subtitle": { "nl": "Van servicemelding tot factureerbare werkbon — AS-IS InstallTech", "en": "From service request to billable job report — AS-IS InstallTech" },
+  "lanes": [
+    { "id": "servicedesk", "label": { "nl": "Onthaal / service@", "en": "Front office / service@" } },
+    { "id": "planner", "label": { "nl": "Planner-dispatcher", "en": "Planner / dispatcher" } },
+    { "id": "technieker", "label": { "nl": "Technieker", "en": "Technician" } },
+    { "id": "administratie", "label": { "nl": "Administratie", "en": "Back office" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Servicemelding (telefoon / service@)", "en": "Service request (phone / service@)" }, "lane": "servicedesk" },
+    { "id": "triage", "type": "task", "label": { "nl": "Urgentie inschatten op gevoel", "en": "Judge urgency by feel" }, "lane": "servicedesk", "process": "SVC.010" },
+    { "id": "gw-contract", "type": "gateway", "label": { "nl": "Onder onderhoudscontract?", "en": "Under maintenance contract?" }, "lane": "servicedesk" },
+    { "id": "contract", "type": "task", "label": { "nl": "Contract opzoeken in Excel van 2019", "en": "Look up contract in the 2019 Excel" }, "lane": "servicedesk", "process": "SVC.070" },
+    { "id": "plannen", "type": "task", "label": { "nl": "Inplannen op planbord + Outlook-agenda", "en": "Schedule on wall board + Outlook calendar" }, "lane": "planner", "process": "SVC.020" },
+    { "id": "voorbereiden", "type": "task", "label": { "nl": "Werkvoorbereiding: bellen naar bureau voor historiek", "en": "Job prep: phone the office for history" }, "lane": "technieker", "process": "SVC.030" },
+    { "id": "uitvoeren", "type": "task", "label": { "nl": "Interventie uitvoeren (vakwerk)", "en": "Execute intervention (craft work)" }, "lane": "technieker", "process": "SVC.040" },
+    { "id": "gw-opgelost", "type": "gateway", "label": { "nl": "Opgelost in één bezoek?", "en": "Fixed in one visit?" }, "lane": "technieker" },
+    { "id": "vervolg", "type": "task", "label": { "nl": "\"Ik kom nog eens terug\" — leeft in het hoofd", "en": "\"I'll come back later\" — lives in the head" }, "lane": "technieker", "process": "SVC.060" },
+    { "id": "werkbon-papier", "type": "task", "label": { "nl": "Papieren drieluikbon invullen en laten aftekenen", "en": "Fill in & sign the paper triplicate job sheet" }, "lane": "technieker", "process": "SVC.050" },
+    { "id": "tijd", "type": "task", "label": { "nl": "Uren op de bon; vrijdag week reconstrueren", "en": "Hours on the sheet; reconstruct week on Friday" }, "lane": "technieker", "process": "SVC.090" },
+    { "id": "werkbon-foto", "type": "task", "label": { "nl": "Foto van de bon in de WhatsApp-groep", "en": "Photo of the sheet into the WhatsApp group" }, "lane": "technieker", "process": "SVC.050" },
+    { "id": "overtypen", "type": "task", "label": { "nl": "Handschrift ontcijferen en overtypen", "en": "Decipher handwriting & re-type" }, "lane": "administratie", "process": "SVC.050" },
+    { "id": "controleren", "type": "task", "label": { "nl": "Werkbon controleren voor facturatie", "en": "Check job sheet for invoicing" }, "lane": "administratie", "process": "SVC.050" },
+    { "id": "end", "type": "end", "label": { "nl": "Naar facturatie (FIN.010)", "en": "To invoicing (FIN.010)" }, "lane": "administratie" }
+  ],
+  "flows": [
+    { "from": "start", "to": "triage" },
+    { "from": "triage", "to": "gw-contract" },
+    { "from": "gw-contract", "to": "contract", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "contract", "to": "plannen" },
+    { "from": "gw-contract", "to": "plannen", "label": { "nl": "nee", "en": "no" } },
+    { "from": "plannen", "to": "voorbereiden" },
+    { "from": "voorbereiden", "to": "uitvoeren" },
+    { "from": "uitvoeren", "to": "gw-opgelost" },
+    { "from": "gw-opgelost", "to": "vervolg", "label": { "nl": "nee", "en": "no" } },
+    { "from": "vervolg", "to": "plannen", "label": { "nl": "tweede bezoek — als de klant belt", "en": "second visit — if the customer calls" } },
+    { "from": "gw-opgelost", "to": "werkbon-papier", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "vervolg", "to": "werkbon-papier" },
+    { "from": "werkbon-papier", "to": "tijd" },
+    { "from": "tijd", "to": "werkbon-foto" },
+    { "from": "werkbon-foto", "to": "overtypen", "label": { "nl": "soms pas vrijdag", "en": "sometimes only on Friday" } },
+    { "from": "overtypen", "to": "controleren" },
+    { "from": "controleren", "to": "end" }
+  ]
+}

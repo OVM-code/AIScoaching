@@ -1,0 +1,44 @@
+{
+  "id": "finance-installtech",
+  "domain": 8,
+  "title": { "nl": "Financiën & administratie", "en": "Finance & administration" },
+  "subtitle": { "nl": "Van werkbon tot btw-kwartaal — AS-IS InstallTech", "en": "From job sheet to VAT quarter — AS-IS InstallTech" },
+  "lanes": [
+    { "id": "boekhouding", "label": { "nl": "Administratie / boekhouding", "en": "Back office / bookkeeping" } },
+    { "id": "zaakvoerder", "label": { "nl": "Zaakvoerder", "en": "Owner / manager" } },
+    { "id": "accountant", "label": { "nl": "Externe accountant", "en": "External accountant" } }
+  ],
+  "nodes": [
+    { "id": "start", "type": "start", "label": { "nl": "Werkbonnen komen binnen (papier / WhatsApp-foto)", "en": "Job sheets arrive (paper / WhatsApp photo)" }, "lane": "boekhouding" },
+    { "id": "verzamelen", "type": "task", "label": { "nl": "Bonnen verzamelen, handschrift ontcijferen, prijzen opzoeken", "en": "Collect sheets, decipher handwriting, look up prices" }, "lane": "boekhouding", "process": "FIN.010" },
+    { "id": "factureren", "type": "task", "label": { "nl": "Factuur hertypen in Exact en via Peppol versturen", "en": "Re-type invoice into Exact & send via Peppol" }, "lane": "boekhouding", "process": "FIN.010" },
+    { "id": "gw-betaald", "type": "gateway", "label": { "nl": "Betaald binnen termijn?", "en": "Paid within terms?" }, "lane": "boekhouding" },
+    { "id": "aanmanen", "type": "task", "label": { "nl": "Bel- en mailronde als Dirk erom vraagt", "en": "Call & mail round when the owner asks" }, "lane": "boekhouding", "process": "FIN.040" },
+    { "id": "aankoopfacturen", "type": "task", "label": { "nl": "Aankoopfacturen één voor één intikken", "en": "Key in purchase invoices one by one" }, "lane": "boekhouding", "process": "FIN.020" },
+    { "id": "betalen", "type": "task", "label": { "nl": "Wekelijkse betaalrun voorbereiden", "en": "Prepare weekly payment run" }, "lane": "boekhouding", "process": "FIN.030" },
+    { "id": "goedkeuren", "type": "task", "label": { "nl": "Aftekenen met kaartlezer (vier ogen)", "en": "Sign off with card reader (four eyes)" }, "lane": "zaakvoerder", "process": "FIN.030" },
+    { "id": "afletteren", "type": "task", "label": { "nl": "Uittreksels afpunten (maandags)", "en": "Reconcile statements (Mondays)" }, "lane": "boekhouding", "process": "FIN.030" },
+    { "id": "gw-btw", "type": "gateway", "label": { "nl": "Btw-kwartaal?", "en": "VAT quarter?" }, "lane": "accountant" },
+    { "id": "btw", "type": "task", "label": { "nl": "Btw-aangifte indienen (loopt vlot sinds Peppol)", "en": "File VAT return (smooth since Peppol)" }, "lane": "accountant", "process": "FIN.060" },
+    { "id": "nacalculeren", "type": "task", "label": { "nl": "Nacalculatie enkel voor pijnlijke werven", "en": "Job costing only for painful jobs" }, "lane": "boekhouding", "process": "FIN.080" },
+    { "id": "cashflow", "type": "task", "label": { "nl": "Banksaldo + buikgevoel", "en": "Bank balance + gut feel" }, "lane": "zaakvoerder", "process": "FIN.090" },
+    { "id": "end", "type": "end", "label": { "nl": "Kwartaal afgesloten", "en": "Quarter closed" }, "lane": "zaakvoerder" }
+  ],
+  "flows": [
+    { "from": "start", "to": "verzamelen", "label": { "nl": "±3 weken na de werken", "en": "±3 weeks after the work" } },
+    { "from": "verzamelen", "to": "factureren" },
+    { "from": "factureren", "to": "gw-betaald" },
+    { "from": "gw-betaald", "to": "aanmanen", "label": { "nl": "nee (±25%)", "en": "no (±25%)" } },
+    { "from": "aanmanen", "to": "gw-betaald", "label": { "nl": "herinnering", "en": "reminder" } },
+    { "from": "gw-betaald", "to": "aankoopfacturen", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "aankoopfacturen", "to": "betalen" },
+    { "from": "betalen", "to": "goedkeuren" },
+    { "from": "goedkeuren", "to": "afletteren" },
+    { "from": "afletteren", "to": "gw-btw" },
+    { "from": "gw-btw", "to": "btw", "label": { "nl": "ja", "en": "yes" } },
+    { "from": "btw", "to": "nacalculeren" },
+    { "from": "gw-btw", "to": "nacalculeren", "label": { "nl": "nee", "en": "no" } },
+    { "from": "nacalculeren", "to": "cashflow" },
+    { "from": "cashflow", "to": "end" }
+  ]
+}
